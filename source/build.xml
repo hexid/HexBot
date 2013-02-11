@@ -1,0 +1,77 @@
+<project default="default" xmlns:fx="javafx:com.sun.javafx.tools.ant" basedir=".">
+	<property name="version.num" value="2.2.1"/>
+	<property name="source.dir" value="src/main/java"/>
+	<property name="resource.dir" value="src/main/resources"/>
+
+	<property name="build.dir" value="target"/>
+	<property name="class.dir" value="${build.dir}/classes"/>
+
+	<property name="lib.dir" value="${build.dir}/lib"/>
+	<property name="temp.lib" value="${lib.dir}/temp"/>
+
+	<property name="bin.dir" value="${build.dir}"/>
+	<property name="file.jar" value="${bin.dir}/HexBot.jar"/>
+
+	<property name="main.class" value="net.hexid.hexbot.HexBot"/>
+	<property environment="env"/>
+
+	<taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
+		 uri="javafx:com.sun.javafx.tools.ant"
+		 classpath="${env.JAVA_HOME}/lib/ant-javafx.jar"/>
+
+	<target name="default" depends="clean, download, compile, unzip, javafx-jar"/>
+
+	<target name="clean">
+		<mkdir dir="${build.dir}"/>
+		<delete dir="${class.dir}"/>
+	</target>
+
+	<target name="download">
+		<mkdir dir="${lib.dir}"/>
+		<get dest="${lib.dir}" skipexisting="true">
+			<url url="http://central.maven.org/maven2/org/jfxtras/jfxtras-labs/2.2-r4/jfxtras-labs-2.2-r4.jar"/>
+		</get>
+	</target>
+
+	<target name="compile">
+		<mkdir dir="${class.dir}"/>
+		<path id="project.classpath">
+			<fileset dir="${lib.dir}">
+				<include name="*.jar"/>
+			</fileset>
+			<fileset dir="${env.JAVA_HOME}/jre/lib">
+				<include name="jfxrt.jar"/>
+			</fileset>
+		</path>
+		<javac destdir="${class.dir}">
+			<src path="${source.dir}"/>
+			<classpath refid="project.classpath"/>
+		</javac>
+	</target>
+
+	<target name="unzip">
+		<unzip dest="${temp.lib}">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>  
+		</unzip>
+	</target>
+
+	<target name="javafx-jar">
+		<fx:jar destfile="${file.jar}">
+			<fx:application id="hexBotGUI" name="HexBot" mainClass="${main.class}"/>
+
+			<fx:fileset dir="${class.dir}"/>
+			<fx:fileset dir="${temp.lib}"/>
+			<fx:fileset dir="${resource.dir}"/>
+
+			<manifest>
+				<attribute name="Implementation-Vendor" value="Hexid"/>
+				<attribute name="Implementation-Title" value="HexBot"/>
+				<attribute name="Implementation-Version" value="${version.num}"/>
+			</manifest>
+		</fx:jar>
+
+		<delete dir="${temp.dir}"/>
+	</target>
+</project>
