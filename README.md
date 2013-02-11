@@ -15,3 +15,4 @@ Current Bots Include:
 Usage:
  * java -jar HexBot.jar botName [botArgs]
  * java -jar HexBot.jar ['gui' , botName]
+
