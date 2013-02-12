@@ -10,13 +10,16 @@ import net.hexid.Utils;
 
 public class Bots {
 	private static TreeMap<String, HashMap<String, String>> bots = new TreeMap();
-	public static void addBot(String simpleName, final String longName, final String classPath, final String fileName) {
-		bots.put(simpleName.toLowerCase(), new HashMap<String, String>() {{
+	public static void addBot(String shortName, final String longName, 
+			final String cliClassPath, final String guiClassPath, final String fileName) {
+		bots.put(shortName.toLowerCase(), new HashMap<String, String>() {{
 			put("longName", longName);
-			put("classPath", classPath);
+			put("cliClassPath", cliClassPath);
+			put("guiClassPath", guiClassPath);
 			put("fileName", fileName);
 		}});
 	}
+
 	public static void removeInvalidBots() {
 		Iterator<Entry<String, HashMap<String, String>>> iter = bots.entrySet().iterator();
 		while(iter.hasNext()) {
@@ -35,12 +38,18 @@ public class Bots {
 	public static HashMap<String, String> getBot(String botName) {
 		return bots.get(botName.toLowerCase()); // get the data associated with a bot
 	}
+	public static boolean hasBot(String botName) {
+		return bots.containsKey(botName.toLowerCase());
+	}
 	
 	public static String getBotLongName(String botName) {
 		return getFromBot(botName, "longName");
 	}
-	public static String getBotClassPath(String botName) {
-		return getFromBot(botName, "classPath");
+	public static String getBotCliClassPath(String botName) {
+		return getFromBot(botName, "cliClassPath");
+	}
+	public static String getBotGuiClassPath(String botName) {
+		return getFromBot(botName, "guiClassPath");
 	}
 	public static String getBotFileName(String botName) {
 		return getFromBot(botName, "fileName");
@@ -49,21 +58,18 @@ public class Bots {
 		// if the bot exists then get the value from that bot, otherwise null
 		return (hasBot(botName)) ? getBot(botName).get(value) : null;
 	}
-	
-	public static boolean hasBot(String botName) {
-		return bots.containsKey(botName.toLowerCase());
-	}
-	
+
 	public static File getJarDir() {
 		return new File(Bots.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParentFile();
 	}
-	
+
 	public static String getBotEnvPath(String oldEnvPath) {
 		String dir = getJarDir().getPath();
-    String phantom = Utils.join(File.separator, dir, "libs", "phantomjs", "bin");
-    String phantomBin = Utils.join(File.separator, dir, "libs", "phantomjs");
-    String casper = Utils.join(File.separator, dir, "libs", "casperjs", (File.pathSeparator.equals(":") ? "bin" : "batchbin"));
-    return Utils.join(File.pathSeparator, oldEnvPath, phantomBin, phantom, casper);
+		String phantom = Utils.join(File.separator, dir, "libs", "phantomjs", "bin");
+		String phantomBin = Utils.join(File.separator, dir, "libs", "phantomjs");
+		String casper = Utils.join(File.separator, dir, "libs", "casperjs", 
+				(File.pathSeparator.equals(":") ? "bin" : "batchbin"));
+		return Utils.join(File.pathSeparator, oldEnvPath, phantomBin, phantom, casper);
 	}
 	
 	public static String getBotFile(String botName) {

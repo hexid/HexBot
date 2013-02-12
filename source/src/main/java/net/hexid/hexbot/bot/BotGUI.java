@@ -44,7 +44,7 @@ public class BotGUI extends javafx.application.Application {
 
 	protected void addTab(String botName) {
 		try {
-			tabPane.addBotTab((BotTab)Class.forName(Bots.getBotClassPath(botName)+"Tab").newInstance());
+			tabPane.addBotTab((BotTab)Class.forName(Bots.getBotGuiClassPath(botName)).newInstance());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

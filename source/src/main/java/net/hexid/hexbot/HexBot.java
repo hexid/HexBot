@@ -7,9 +7,9 @@ import net.hexid.hexbot.bot.BotCLI;
 
 public class HexBot {
 	public HexBot() {
-		Bots.addBot("astral", "Astral WoW", "net.hexid.hexbot.bots.Astral", "Astral.coffee");
-		Bots.addBot("bing", "Bing Rewards", "net.hexid.hexbot.bots.Bing", "Bing.coffee");
-		Bots.addBot("imgur", "Imgur Albums", "net.hexid.hexbot.bots.Imgur", "Imgur.coffee");
+		Bots.addBot("astral", "Astral WoW", "net.hexid.hexbot.bots.Astral", "net.hexid.hexbot.bots.AstralTab", "Astral.coffee");
+		Bots.addBot("bing", "Bing Rewards", "net.hexid.hexbot.bots.Bing", "net.hexid.hexbot.bots.BingTab", "Bing.coffee");
+		Bots.addBot("imgur", "Imgur Albums", "net.hexid.hexbot.bots.Imgur", "net.hexid.hexbot.bots.ImgurTab", "Imgur.coffee");
 	}
 
 	public static void main(String[] args) {

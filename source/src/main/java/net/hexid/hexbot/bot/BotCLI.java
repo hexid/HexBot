@@ -17,7 +17,7 @@ public class BotCLI {
 	}
 	public BotCLI(ArrayList<String> args) throws Exception {
 		String botName = args.remove(0);
-		botClass = Bots.getBotClassPath(botName);
+		botClass = Bots.getBotCliClassPath(botName);
 		if(botClass != null) {
 			bot = (Bot)Class.forName(botClass).getConstructor(ArrayList.class).newInstance(args);
 			createProcess();
