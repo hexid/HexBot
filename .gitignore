@@ -1,6 +1,3 @@
 output/
 releases/
-CompressHexBot.sh
-!libs/*/README_HexBot
-libs/casperjs/**
-libs/phantomjs/**
+libs/**/**
