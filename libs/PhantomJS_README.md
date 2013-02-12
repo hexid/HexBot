@@ -1,3 +1,5 @@
+#HexBot
+
 Download either the binary or source from http://phantomjs.org/download.html
 
 Currently tested with version `1.8.1`
