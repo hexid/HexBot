@@ -15,8 +15,8 @@ import net.hexid.hexbot.bot.Bots;
 
 public class ImgurTab extends net.hexid.hexbot.bot.BotTab {
 	private String albumData;
-  private TextField albumField;
-  private Button downloadAlbumButton;
+	private TextField albumField;
+	private Button downloadAlbumButton;
 	
 	public ImgurTab() {
 		super();
@@ -43,7 +43,7 @@ public class ImgurTab extends net.hexid.hexbot.bot.BotTab {
 		// to call the bot in the command line
 		ArrayList<String> data = new ArrayList<String>();
 
-    data.add("--output="+Utils.join(java.io.File.separator, Bots.getJarDir().getPath(), "output", "Imgur"));
+		data.add("--output="+Utils.join(java.io.File.separator, Bots.getJarDir().getPath(), "output", "Imgur"));
 		data.add("--album="+albumData);
 		return data;
 	}
@@ -63,9 +63,9 @@ public class ImgurTab extends net.hexid.hexbot.bot.BotTab {
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
 						exit();
-            albumData = albumField.getText();
+						albumData = albumField.getText();
 						createProcess();
-            downloadAlbumButton.setDisable(true);
+						downloadAlbumButton.setDisable(true);
 					}
 				}).text("Download Album").build();
 		HBox.setHgrow(downloadAlbumButton, Priority.NEVER);

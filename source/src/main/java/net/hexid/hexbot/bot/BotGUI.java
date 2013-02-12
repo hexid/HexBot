@@ -37,7 +37,7 @@ public class BotGUI extends javafx.application.Application {
 			System.out.println("Available bots: " + Bots.getAvailableBots());
 		}
 
-    stage.setTitle("HexBot by Hexid");
+		stage.setTitle("HexBot by Hexid");
 		stage.setScene(new javafx.scene.Scene(root, 500, 300));
 		stage.show();
 	}
