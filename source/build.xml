@@ -1,5 +1,5 @@
 <project default="default" xmlns:fx="javafx:com.sun.javafx.tools.ant" basedir=".">
-	<property name="version.num" value="2.2.1"/>
+	<property name="version.num" value="1.0.1"/>
 	<property name="source.dir" value="src/main/java"/>
 	<property name="resource.dir" value="src/main/resources"/>
 
