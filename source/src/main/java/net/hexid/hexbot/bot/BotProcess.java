@@ -25,8 +25,6 @@ public class BotProcess extends Thread {
 		botExecuteData.add(1, Bots.getBotFile(bot));
 
 		String processData = Utils.join(" ", botExecuteData);
-		System.out.println("test");
-		System.out.println(processData);
 		String pathName;
 		if(File.pathSeparator.equals(";")) { // if windows
 			pathName = "Path";

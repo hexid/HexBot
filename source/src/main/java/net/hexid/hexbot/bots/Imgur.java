@@ -20,7 +20,6 @@ public class Imgur implements net.hexid.hexbot.bot.Bot {
 			System.out.println("botArgs: album [output]");
 			System.exit(1);
 		}
-		System.out.println(Arrays.toString(botArgs.toArray()));
 		return botArgs;
 	}
 	public void processExitCode(int exitCode) {
