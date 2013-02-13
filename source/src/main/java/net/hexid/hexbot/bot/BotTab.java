@@ -1,8 +1,5 @@
 package net.hexid.hexbot.bot;
 
-import java.util.ArrayList;
-
-import javafx.application.Application.Parameters;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;

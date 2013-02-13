@@ -1,5 +1,6 @@
 package net.hexid.hexbot.bots;
 
+import java.io.File;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -43,7 +44,7 @@ public class ImgurTab extends net.hexid.hexbot.bot.BotTab {
 		// to call the bot in the command line
 		ArrayList<String> data = new ArrayList<String>();
 
-		data.add("--output="+Utils.join(java.io.File.separator, Bots.getJarDir().getPath(), "output", "Imgur"));
+		data.add("--output="+Utils.join(File.separator, Bots.getPWD().getPath(), "output", "Imgur"));
 		data.add("--album="+albumData);
 		return data;
 	}

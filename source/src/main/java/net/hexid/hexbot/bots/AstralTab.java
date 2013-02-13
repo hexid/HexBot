@@ -51,13 +51,17 @@ public class AstralTab extends net.hexid.hexbot.bot.BotTab {
 		}
 	}
 
+	/**
+	 * @return Console parameters for the bot
+	 */
 	public ArrayList<String> getBotExecuteData() {
 		// returns the data that will be used
 		// to call the bot in the command line
-		return new ArrayList<String>() {{
-			add("--username="+usernameData);
-			add("--password="+passwordData);
-		}};
+		ArrayList<String> data = new ArrayList<String>();
+		
+		data.add("--username="+usernameData);
+		data.add("--password="+passwordData);
+		return data;
 	}
 	
 	protected Node[] createBottomOutputContent() {

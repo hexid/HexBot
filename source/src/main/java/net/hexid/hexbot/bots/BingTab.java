@@ -25,7 +25,6 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 
 	public BingTab() {
 		super();
-		//setText(getName());
 	}
 	public String getShortName() {
 		return "Bing";
@@ -65,16 +64,16 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 	}
 	
 	protected Node[] createBottomOutputContent() {
-		repeatProcessButton = ButtonBuilder.create()
+		repeatProcessButton = ButtonBuilder.create().text("Repeat")
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
 						createProcess();
 					}
-				}).text("Repeat").disable(true).maxWidth(Double.MAX_VALUE)
-				.build();
+				}).disable(true).maxWidth(Double.MAX_VALUE).build();
 		HBox.setHgrow(repeatProcessButton, Priority.ALWAYS);
-		returnToLoginButton = ButtonBuilder.create().maxWidth(Double.MAX_VALUE)
-				.text("Setup").onAction(new EventHandler<ActionEvent>() {
+
+		returnToLoginButton = ButtonBuilder.create().text("Setup")
+				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
 						setContent(createSetupContent(false));
 					}
@@ -128,8 +127,7 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 		HBox.setHgrow(delayToLabel, Priority.NEVER);
 		delayMax = new ListSpinner<>(5, 120, 1);
 		HBox.setHgrow(delayMax, Priority.ALWAYS);
-		delay.getChildren()
-				.addAll(delayLabel, delayMin, delayToLabel, delayMax);
+		delay.getChildren().addAll(delayLabel, delayMin, delayToLabel, delayMax);
 
 		HBox button = new HBox(7.5d);
 		VBox.setMargin(button, inset);

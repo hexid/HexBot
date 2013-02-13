@@ -3,14 +3,27 @@ package net.hexid;
 import java.util.List;
 
 public class Utils {
-	public static String join(String glue, String... s) {
+	/**
+	 * Combine strings with a common string
+	 * @param glue
+	 * @param str
+	 * @return A single string 
+	 */
+	public static String join(String glue, String... str) {
 		StringBuilder sb = new StringBuilder();
 		int i;
-		for(i = 0; i < s.length-1; i++)
-			sb.append(s[i] + glue);
-		return sb.toString() + s[i];
+		for(i = 0; i < str.length-1; i++)
+			sb.append(str[i] + glue);
+		return sb.toString() + str[i];
 	}
-	public static String join(String glue, List<String> s) {
-		return join(glue, s.toArray(new String[0]));
+	
+	/**
+	 * Combine a list of strings with a common string
+	 * @param glue
+	 * @param str
+	 * @return {@link #join(String, String...)}
+	 */
+	public static String join(String glue, List<String> str) {
+		return join(glue, str.toArray(new String[0]));
 	}
 }

@@ -3,7 +3,6 @@ package net.hexid.hexbot.bot;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import net.hexid.Utils;
@@ -26,19 +25,24 @@ public class BotProcess extends Thread {
 		botExecuteData.add(1, Bots.getBotFile(bot));
 
 		String processData = Utils.join(" ", botExecuteData);
+		System.out.println("test");
+		System.out.println(processData);
 		String pathName;
-		if(File.pathSeparator.equals(";")) {
+		if(File.pathSeparator.equals(";")) { // if windows
 			pathName = "Path";
 			botExecuteData = Arrays.asList(new String[]{"cmd.exe","/C",processData});
-		} else {
+		} else { // if unix
 			pathName = "PATH";
 			botExecuteData = Arrays.asList(new String[]{"/usr/bin/env","bash","-c",processData});
 		}
 
+		// create a processbuilder with the bot's commands and combine input and error streams
 		ProcessBuilder pb = new ProcessBuilder(botExecuteData).redirectErrorStream(true);
+		
+		// append phantomjs and casperjs to the path (runs local installs first)
 		pb.environment().put(pathName, Bots.getBotEnvPath(pb.environment().get(pathName)));
 
-		return pb.start();
+		return pb.start(); // execute the process
 	}
 
 	protected void processInput(final String in) {
