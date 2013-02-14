@@ -10,6 +10,7 @@
 casper = require('casper').create(
   pageSettings:
     loadImages:false, loadPlugins:false # don't load images or plugins
+    webSecurityEnabled:false # disable xss so that images can be downloaded without changing urls
     userAgent:'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.58 Safari/537.22'
   verbose:false; logLevel:'debug' # output logs at specified level
 ); fs = require('fs')
@@ -51,14 +52,13 @@ casper.start "http://imgur.com/a/#{ARGS[0]}/layout/blog", ->
 
 casper.then ->
   infoFile = "#{folder}0 - #{ARGS[0]}.txt"
-  @echo 'Downloading...'
+  @echo 'Downloading album...'
   fs.write infoFile, "#{albumDesc}\n\n", 'w' # override old file (if exists)
   @each imgs, (self,img) ->
     name = img.link.match /[\w_.-]*?(?=\?)|[\w_.-]*$/ # find the file name from the link
-    self.thenOpen img.link, ->
-      self.download img.link, "#{folder}#{++count} - #{name}", 'GET' # download the image
-      if img.desc then fs.write infoFile, "#{count}_#{name}) #{img.desc}\n", 'a' # output the image description
-      self.echo "   #{count} - #{name}" # tell the user about the image
+    self.download img.link, "#{folder}#{++count} - #{name}", 'GET' # download the image
+    if img.desc then fs.write infoFile, "#{count}_#{name}) #{img.desc}\n", 'a' # output the image description
+    self.echo "   #{count} - #{name}" # tell the user about the image
 
 casper.run ->
   @echo "Finished downloading album (#{count} images)."; @exit 0
