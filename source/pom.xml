@@ -28,7 +28,7 @@
             <plugin>
                 <groupId>com.zenjava</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>1.3</version>
+                <version>1.4</version>
                 <configuration>
                     <executableJarFileName>${project.name}.jar</executableJarFileName>
                     <mainClass>net.hexid.hexbot.HexBot</mainClass>
