@@ -13,6 +13,7 @@ casper = require('casper').create(
     userAgent:'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.58 Safari/537.22'
   verbose:false; logLevel:'debug' # output logs at specified level
 )
+CONSONANTS='bcdfghjklmnpqrstvwxyz'; VOWELS='aeiou'
 ARGS=[]; DASHBOARD='http://www.bing.com/rewards/dashboard'
 cliCount=0; offers=[]; executed=0; facebookLogin=false
 CLI=[{c:0,n:'email',     d:''},{c:1,n:'password',d:''},
@@ -67,12 +68,14 @@ casper.then openDailyOffers = ->
 
 casper.then execQueries = ->
   @echo "Executing #{ARGS[2]} quer#{if ARGS[2] is 1 then 'y' else 'ies'}." # tell user how many queries are being executed
-  @repeat ARGS[2], execQuery = -> # repeat `queryCount` times
+  @repeat ARGS[2], execQuery = -> # repeat `queryCount` tiems
     @wait Math.floor(Math.random() * ((ARGS[4] - ARGS[3]) * 1000 + 1)) + (ARGS[3] * 1000), -> # wait between queries
-      @thenOpen 'http://randomword.setgetgo.com/get.php', execQuery = -> # visit site to retrieve random word
-        if not @exists 'body > *' # if body does not have any children (check to make sure the site is correct)
-          word = @fetchText('body').trim() # get the random word (without excess whitespace)
-          @thenOpen ("http://www.bing.com/search?q=#{word}"), -> @echo "#{++executed}) #{word}" # query bing with the word
+      word = ''; len = Math.floor(Math.random()*5)+5
+      for i in [1..len] by 2 # generate a random word (length of 5..9 letters)
+        word += CONSONANTS[Math.floor(Math.random()*CONSONANTS.length)] # add a consonant
+        if i<len then word += VOWELS[Math.floor(Math.random()*VOWELS.length)] # add a vowel if there is room
+      word = word[0].toUpperCase() + word[1..-1] # capitalize the first letter of the word
+      @thenOpen ("http://www.bing.com/search?q=#{word}"), -> @echo "#{++executed}) #{word}" # query bing with the word
 
 casper.thenOpen DASHBOARD, getTotalPoints = -> # get the number of unused points on the account
   totalPoints = @evaluate -> document.querySelector('#user-status .user-balance .data-value-text').innerText
