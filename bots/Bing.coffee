@@ -10,7 +10,7 @@
 casper = require('casper').create(
   pageSettings:
     loadImages:false, loadPlugins:false # don't load images or plugins
-    userAgent:'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.58 Safari/537.22'
+    userAgent:'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.84 Safari/537.22'
   verbose:false; logLevel:'debug' # output logs at specified level
 )
 CONSONANTS='bcdfghjklmnpqrstvwxyz'; VOWELS='aeiou'
@@ -30,7 +30,7 @@ if '' in ARGS[0..1] # if the username or password was not set
   casper.echo 'argErr: username and password cannot be empty'; casper.exit 1
 if ARGS[4] < ARGS[3] then ARGS[4] = ARGS[3] # to make sure that maxTime >= minTime
 
-casper.echo 'Logging in...' # give immediate output to the user
+casper.echo 'Logging in...' # give near-immediate output to the user
 casper.start 'http://www.bing.com/rewards/signin', ->
   if @exists '#WLSignin' then @click '#WLSignin' # Go to the windows live login page
   else @echo 'Connection error occurred.'; @exit 3 # exit if it isn't the right page
@@ -60,15 +60,14 @@ casper.thenOpen DASHBOARD, getDashboardItems = ->
 
 casper.then openDailyOffers = ->
   @each offers, (self,offer) -> # iterate over offers
-    if offer is 'Login'
-      @echo "Error logging in as #{ARGS[0]}."; @exit 2 # login failed
+    if offer is 'Login' then @echo "Error logging in as #{ARGS[0]}."; @exit 2 # login failed
     self.thenOpen offer # visit the offer
   @echo "Logged in successfully as #{ARGS[0]}." # tell user that login was successful
   @echo "#{offers.length} daily offer#{if offers.length is 1 then '' else 's'} clicked."
 
 casper.then execQueries = ->
   @echo "Executing #{ARGS[2]} quer#{if ARGS[2] is 1 then 'y' else 'ies'}." # tell user how many queries are being executed
-  @repeat ARGS[2], execQuery = -> # repeat `queryCount` tiems
+  @repeat ARGS[2], execQuery = -> # repeat `queryCount` times
     @wait Math.floor(Math.random() * ((ARGS[4] - ARGS[3]) * 1000 + 1)) + (ARGS[3] * 1000), -> # wait between queries
       word = ''; len = Math.floor(Math.random()*5)+5
       for i in [1..len] by 2 # generate a random word (length of 5..9 letters)

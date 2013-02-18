@@ -11,7 +11,7 @@ casper = require('casper').create(
   pageSettings:
     loadImages:false, loadPlugins:false # don't load images or plugins
     webSecurityEnabled:false # disable xss so that images can be downloaded without changing urls
-    userAgent:'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.58 Safari/537.22'
+    userAgent:'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.84 Safari/537.22'
   verbose:false; logLevel:'debug' # output logs at specified level
 ); fs = require('fs')
 

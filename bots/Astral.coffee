@@ -6,10 +6,10 @@
   2 = error logging in
 ###
 casper = require('casper').create(
-  verbose:false; logLevel:'debug'
   pageSettings:
     loadImages:false, loadPlugins:false # don't load images or plugins (flash, silverlight, etc.)
-    userAgent:'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.58 Safari/537.22'
+    userAgent:'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.84 Safari/537.22'
+  verbose:false; logLevel:'debug'
 )
 
 ARGS=[]; cliCount=0; FIRST_LOGIN=true; count=0
