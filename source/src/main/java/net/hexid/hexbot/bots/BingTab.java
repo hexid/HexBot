@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import jfxtras.labs.scene.control.ListSpinner;
 
 public class BingTab extends net.hexid.hexbot.bot.BotTab {
-	private Button returnToLoginButton, repeatProcessButton, loginButton;
+	private Button returnToLoginButton, repeatProcessButton, stopProcessButton, loginButton;
 	private ListSpinner<Integer> queryCount, delayMin, delayMax;
 	private int queryCountData, delayMinData, delayMaxData;
 	private String emailData, passwordData;
@@ -45,6 +45,7 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 		default: // unknown error
 			returnToLoginButton.setDisable(false);
 			repeatProcessButton.setDisable(false);
+			stopProcessButton.setDisable(true);
 			break;
 		}
 	}
@@ -79,8 +80,15 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 					}
 				}).disable(true).maxWidth(Double.MAX_VALUE).build();
 		HBox.setHgrow(returnToLoginButton, Priority.ALWAYS);
+
+		stopProcessButton = ButtonBuilder.create().text("Stop")
+				.onAction(new EventHandler<ActionEvent>() {
+					public void handle(ActionEvent e) {
+						process.exit(); // exit code may vary (143 encountered during tests)
+					}
+				}).build();
 		
-		return new Node[]{repeatProcessButton, returnToLoginButton};
+		return new Node[]{repeatProcessButton, returnToLoginButton, stopProcessButton};
 	}
 
 	public VBox createSetupContent(boolean setDefaultValues) {
