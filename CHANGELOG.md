@@ -1,6 +1,11 @@
 HexBot Changelog
 ==========
 
+###v1.0.2
+- Bing GUI can now has a button to stop itself mid-execution
+- Updated Bing Bot to generate a random word when it can't be retrieved online
+- Fixed Maven build script
+
 ###v1.0.1
 - Passing `gui` to the jar is no longer case-sensitive
 - Moved library READMEs to be in `lib/` instead of their respective folders
