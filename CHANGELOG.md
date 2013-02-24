@@ -4,7 +4,8 @@ HexBot Changelog
 ###v1.0.2
 - Bing GUI can now has a button to stop itself mid-execution
 - Updated Bing Bot to generate a random word when it can't be retrieved online
-- Fixed Maven build script
+- Fixed Maven build script (updated javafx-maven-plugin to 1.5)
+- Updated Imgur Bot to match album id from more URL variants
 
 ###v1.0.1
 - Passing `gui` to the jar is no longer case-sensitive

@@ -1,4 +1,4 @@
-HexBot v1.0.1
+HexBot v1.0.2
 ==========
 
 ###Installation:
