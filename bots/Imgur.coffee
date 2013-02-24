@@ -31,7 +31,7 @@ if not ARGS[1].match(new RegExp(".+\\#{sep}$"))
   ARGS[1] += sep # add the path separator if it is missing from the end
 
 folder = "#{ARGS[1]}#{ARGS[0]}#{sep}"
-matches = ARGS[0].match /^(?:(?:(?:https?:\/\/)?imgur.com\/)?(?:\/?a\/)(\w+)(?:\?\w+)?)|(\w+)$/i
+matches = ARGS[0].match /^(?:(?:(?:(?:https?:\/\/)?imgur\.com)?(?:\/?a\/)(\w+)|(\w+))(?:(?:\?|#|\/)(?:.+)?)?)$/i
 ARGS[0] = matches[1] ?= matches[2]
 
 casper.echo "Fetching album #{ARGS[0]} from Imgur."
