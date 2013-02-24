@@ -9,7 +9,7 @@
 ###
 casper = require('casper').create(
   pageSettings:
-    loadImages:true, loadPlugins:true # don't load images or plugins
+    loadImages:false, loadPlugins:false # don't load images or plugins
     userAgent:'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.84 Safari/537.22'
   verbose:false; logLevel:'debug' # output logs at specified level
 )
@@ -69,18 +69,19 @@ casper.then execQueries = ->
   @echo "Executing #{ARGS[2]} quer#{if ARGS[2] is 1 then 'y' else 'ies'}." # tell user how many queries are being executed
   @repeat ARGS[2], execQuery = -> # repeat `queryCount` times
     @wait Math.floor(Math.random() * ((ARGS[4] - ARGS[3]) * 1000 + 1)) + (ARGS[3] * 1000), -> # wait between queries
-      @thenOpen 'http://randomword.setgetgo.com/get.php', -> # visit site to retrieve random word
+      @thenOpen 'http://randomword.setgetgo.com/get.php', (randomWordData) -> # visit site to retrieve random word
         word = ''
-        if not @exists 'body > *' # if page loaded and matches format
+        if randomWordData['status'] is 200 # if page loaded successfully
           word = @fetchText('body').trim() # get the random word (without excess whitespace)
         else
-          len = Math.floor(Math.random()*5)+5
-          for i in [1..len] by 2 # generate a random word (length of 5..9 letters)
+          len = Math.floor(Math.random()*5)+5 # letters in word (5..9)
+          for i in [1..len] by 2 # generate a random word
             word += CONSONANTS[Math.floor(Math.random()*CONSONANTS.length)] # add a consonant
             if i<len then word += VOWELS[Math.floor(Math.random()*VOWELS.length)] # add a vowel if there is room
           if Math.floor(Math.random()*2) is 1 then word = word[0].toUpperCase() + word[1..-1] # randomly capitalize word
-        @thenOpen ("http://www.bing.com/search?scope=web&setmkt=en-US&q="+word), ->
-          @echo "#{++executed}) #{word}" # query bing with the word
+        @thenOpen ("http://www.bing.com/search?scope=web&setmkt=en-US&q="+word), (data) ->
+          if data['status'] is 200 then @echo "#{++executed}) #{word}" # query bing with the word
+          else @echo "Failed) #{word}"
 
 casper.thenOpen DASHBOARD, getTotalPoints = -> # get the number of unused points on the account
   totalPoints = @evaluate -> document.querySelector('#user-status .user-balance .data-value-text').innerText
