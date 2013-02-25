@@ -45,7 +45,7 @@ casper.thenEvaluate (submitLoginData = (user,pass) ->
 
 casper.thenOpen DASHBOARD, getDashboardItems = ->
   [offers,ARGS[2],facebookLogin] = @evaluate (examineDashboard = (offers,queryCount,facebookLogin) ->
-    for e in document.querySelectorAll '.open-check'
+    for e in document.querySelectorAll 'ul.row li a div.check-wrapper div.open-check'
       elem = e.parentNode.parentNode; title = elem.querySelector('.title').innerText
       if title is 'Join Now' then return [['Login'],0] # failed to login
       else if queryCount <= 0 and title in ['Search and Earn','Search Bing']
