@@ -30,25 +30,27 @@ if '' in ARGS[0..1] # if the album or output is not set
 if not ARGS[1].match(new RegExp(".+\\#{sep}$"))
   ARGS[1] += sep # add the path separator if it is missing from the end
 
+matches = ARGS[0].match /^(?:(?:(?:(?:(?:(?:https?:\/\/)?(?:www\.)?imgur\.com)?\/)?a)?\/)?(\w+)(?:[\/?#](?:.+)?)?)$/i
+if matches is null
+  casper.echo "argErr: album id can't be found in `#{ARGS[0]}`"; casper.exit 1
+ARGS[0] = matches[1]
 folder = "#{ARGS[1]}#{ARGS[0]}#{sep}"
-matches = ARGS[0].match /^(?:(?:(?:(?:https?:\/\/)?imgur\.com)?(?:\/?a\/))?(\w+)(?:(?:\?|#|\/)(?:.+)?)?)$/i
-ARGS[0] = matches[1] ?= matches[2]
 
 casper.echo "Fetching album #{ARGS[0]} from Imgur."
-casper.start "http://imgur.com/a/#{ARGS[0]}/layout/blog", ->
-  @reload -> # reload the page to ensure that the page is in the blog layout
-    [imgs, albumDesc] = @evaluate ->
-      images = []
-      for img in document.querySelectorAll('.image')
-        images.push(
-          link: img.querySelector('.album-view-image-link a').href # link to image
-          desc: img.querySelector('.description')?.innerText # description if it exists
-        )
-      return [images, document.querySelector('.panel .description h1').innerText];
-
-    if imgs.length is 0
-      @echo 'Album either empty or not found.'; @exit 2
-    @echo "Found #{imgs.length} images in the album."
+casper.start "http://imgur.com/a/#{ARGS[0]}/layout/blog", (data) ->
+  if data['status'] is 200
+    @reload -> # reload the page to ensure that the page is in the blog layout
+      [imgs, albumDesc] = @evaluate ->
+        images = []
+        for img in document.querySelectorAll('.image')
+          images.push(
+            link: img.querySelector('.album-view-image-link a').href # link to image
+            desc: img.querySelector('.description')?.innerText # description if it exists
+          )
+        return [images, document.querySelector('.panel .description h1').innerText];
+      @echo "Found #{imgs.length} images in the album."
+  else
+    @echo 'Album either empty or not found.'; @exit 2
 
 casper.then ->
   infoFile = "#{folder}0 - #{ARGS[0]}.txt"
