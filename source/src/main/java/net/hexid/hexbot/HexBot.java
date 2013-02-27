@@ -9,6 +9,7 @@ public class HexBot {
 	public HexBot() {
 		Bots.addBot("astral", "Astral WoW", "net.hexid.hexbot.bots.Astral", "net.hexid.hexbot.bots.AstralTab", "Astral.coffee");
 		Bots.addBot("bing", "Bing Rewards", "net.hexid.hexbot.bots.Bing", "net.hexid.hexbot.bots.BingTab", "Bing.coffee");
+		Bots.addBot("xbox", "Xbox Codes", "net.hexid.hexbot.bots.Xbox", "net.hexid.hexbot.bots.XboxTab", "Xbox.coffee");
 		Bots.addBot("imgur", "Imgur Albums", "net.hexid.hexbot.bots.Imgur", "net.hexid.hexbot.bots.ImgurTab", "Imgur.coffee");
 	}
 
