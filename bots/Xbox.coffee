@@ -10,7 +10,7 @@ casper = require('casper').create(
   pageSettings:
     loadImages:false, loadPlugins:false # don't load images or plugins
     userAgent:'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.84 Safari/537.22'
-  verbose:true; logLevel:'debug' # output logs at specified level
+  verbose:false; logLevel:'debug' # output logs at specified level
 )
 ARGS=[]; cliCount=0
 CLI=[{c:0,n:'email',d:''},{c:1,n:'password',d:''},
@@ -24,7 +24,6 @@ for arg in CLI # get the arguments from the command line (unnamed arguments must
   else ARGS[arg.c] = arg.d # use the default value
 if '' in ARGS[0..2] # if the username or password was not set
   casper.echo 'argErr: username, password, and code cannot be empty'; casper.exit 1
-#if ARGS[4] < ARGS[3] then ARGS[4] = ARGS[3] # to make sure that maxTime >= minTime
 
 casper.echo 'Logging in...' # give immediate output to the user
 casper.start 'http://www.xbox.com/', ->
@@ -40,9 +39,14 @@ casper.thenEvaluate (submitLoginData = (user,pass) ->
 ), ARGS[0], ARGS[1]
 
 casper.thenOpen 'https://live.xbox.com/en-US/RedeemCode'
+casper.echo "Entering code: #{ARGS[2]}"
 casper.then redeemCode = ->
   @sendKeys 'input.TokenTextBox', ARGS[2]
   @click '#RedeemCode'
 
+casper.then getStatus = ->
+  @echo @fetchText '#RedeemResults p'
+
 casper.run ->
+  @echo "Finished redeeming code."
   @exit 0
