@@ -7,23 +7,18 @@
   2 = error logging in (most likely an incorrect password)
   3 = internet connection error
 ###
+hexBot = require('./HexBot.coffee')
 casper = require('casper').create(
   pageSettings:
     loadImages:false, loadPlugins:false # don't load images or plugins
     webSecurityEnabled:false # disable xss so that images can be downloaded without changing urls
-    userAgent:'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.84 Safari/537.22'
-  verbose:false; logLevel:'debug' # output logs at specified level
+    userAgent:hexBot.userAgent
 ); fs = require('fs')
-
 sep = require('fs').separator
-imgs=[]; albumDesc=''; count=0; ARGS=[]; cliCount=0
-CLI=[{c:0,n:'album',d:''},{c:1,n:'output',d:''}]
-for arg in CLI # get the arguments from the command line (unnamed arguments must be in order)
-  if casper.cli.has(arg.n) and (typeof casper.cli.raw.get(arg.n)) isnt 'boolean' # if --arg.n=argument not --arg.n
-    ARGS[arg.c] = casper.cli.raw.get arg.n # use the untyped form of the named argument
-  else if casper.cli.has cliCount # if passed without argument name
-    ARGS[arg.c] = casper.cli.get cliCount; cliCount++ # use the numbered argument
-  else ARGS[arg.c] = arg.d # use the default value
+imgs=[]; albumDesc=''; count=0
+
+argData=[{c:0,n:'album',d:''},{c:1,n:'output',d:''}]
+ARGS = hexBot.parseArgs(argData, casper.cli)
 if '' in ARGS[0..1] # if the album or output is not set
   casper.echo 'argErr: album and output cannot be empty'; casper.exit 1
 

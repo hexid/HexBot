@@ -5,21 +5,17 @@
   1 = argument error
   2 = error logging in
 ###
+hexBot = require('./HexBot.coffee')
 casper = require('casper').create(
   pageSettings:
-    loadImages:false, loadPlugins:false # don't load images or plugins (flash, silverlight, etc.)
-    userAgent:'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.84 Safari/537.22'
-  verbose:false; logLevel:'debug'
+    loadImages:false, loadPlugins:false # don't load images or plugins
+    userAgent:hexBot.userAgent
 )
 
-ARGS=[]; cliCount=0; FIRST_LOGIN=true; count=0
-CLI=[{c:0,n:'username',d:''},{c:1,n:'password',d:''}]#{count, name, default}#
-for arg in CLI # get the arguments from the command line (unnamed arguments must be in order)
-  if casper.cli.has(arg.n) and (typeof casper.cli.raw.get(arg.n)) isnt 'boolean' # if --arg.n=argument not --arg.n
-    ARGS[arg.c] = casper.cli.get arg.n # use the named argument
-  else if casper.cli.has cliCount # if passed without argument name
-    ARGS[arg.c] = casper.cli.get cliCount; cliCount++ # use the numbered argument
-  else ARGS[arg.c] = arg.d # use the default value
+FIRST_LOGIN=true; count=0
+
+argData=[{c:0,n:'username',d:''},{c:1,n:'password',d:''}]#{count, name, default}#
+ARGS = hexBot.parseArgs(argData, casper.cli)
 if '' in ARGS[0..1] # if the username or password was not set
   casper.echo 'argErr: username and password cannot be empty'; casper.exit 1
 

@@ -7,25 +7,20 @@
   2 = error logging in (most likely an incorrect password)
   3 = internet connection error
 ###
+hexBot = require('./HexBot.coffee')
 casper = require('casper').create(
   pageSettings:
     loadImages:false, loadPlugins:false # don't load images or plugins
-    userAgent:'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.84 Safari/537.22'
-  verbose:false; logLevel:'debug' # output logs at specified level
+    userAgent:hexBot.userAgent
 )
 CONSONANTS='bcdfghjklmnpqrstvwxyz'; VOWELS='aeiou'
-ARGS=[]; DASHBOARD='http://www.bing.com/rewards/dashboard'
-cliCount=0; offers=[]; executed=0; facebookLogin=false
-CLI=[{c:0,n:'email',     d:''},{c:1,n:'password',d:''},
-     {c:2,n:'queryCount',d:0 },#{count, name, default}#
-     {c:3,n:'minTime',   d:20},{c:4,n:'maxTime', d:40}]
+DASHBOARD='http://www.bing.com/rewards/dashboard'
+offers=[]; executed=0; facebookLogin=false
 
-for arg in CLI # get the arguments from the command line (unnamed arguments must be in order)
-  if casper.cli.has(arg.n) and (typeof casper.cli.raw.get(arg.n)) isnt 'boolean' # if --arg.n=argument and not --arg.n
-    ARGS[arg.c] = casper.cli.get arg.n # use the named argument
-  else if casper.cli.has cliCount # if passed without argument name
-    ARGS[arg.c] = casper.cli.get cliCount; cliCount++ # use the numbered argument
-  else ARGS[arg.c] = arg.d # use the default value
+argData=[{c:0,n:'email',     d:''},{c:1,n:'password',d:''},
+         {c:2,n:'queryCount',d:0 },#{count, name, default}#
+         {c:3,n:'minTime',   d:20},{c:4,n:'maxTime', d:40}]
+ARGS = hexBot.parseArgs(argData, casper.cli)
 if '' in ARGS[0..1] # if the username or password was not set
   casper.echo 'argErr: username and password cannot be empty'; casper.exit 1
 if ARGS[4] < ARGS[3] then ARGS[4] = ARGS[3] # to make sure that maxTime >= minTime
