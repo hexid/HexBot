@@ -3,21 +3,19 @@
 #Return Codes#
   0 = no errors encountered
   1 = argument error
-  2 = error logging in
+  2 = error logging in (most likely an incorrect password)
 ###
-hexBot = require('./HexBot.coffee')
+hexBot = require('./libs/HexBot.coffee')
 casper = require('casper').create(
   pageSettings:
-    loadImages:false, loadPlugins:false # don't load images or plugins
+    loadImages:false
+    loadPlugins:false # don't load images or plugins
     userAgent:hexBot.userAgent
 )
-
 FIRST_LOGIN=true; count=0
 
 argData=[{c:0,n:'username',d:''},{c:1,n:'password',d:''}]#{count, name, default}#
-ARGS = hexBot.parseArgs(argData, casper.cli)
-if '' in ARGS[0..1] # if the username or password was not set
-  casper.echo 'argErr: username and password cannot be empty'; casper.exit 1
+ARGS = hexBot.parseArgsWithErrorMsg(argData, casper, 0, 1, 'username and password')
 
 login = ->
   casper.thenEvaluate ((user, pass) ->
@@ -27,12 +25,14 @@ login = ->
   ), ARGS[0], ARGS[1]
   casper.then ->
     if @getTitle() is 'Login'
-      @echo "Error logging in as #{ARGS[0]}."; @exit 2
+      @echo "Error logging in as #{ARGS[0]}."
+      @exit 2
     @echo "Logged in as #{ARGS[0]}."
     FIRST_LOGIN = false
 
 casper.on 'url.changed', (url) ->
-  if not FIRST_LOGIN and url.match '^http://www.astralwow.info/Account/Login.aspx' then login()
+  if not FIRST_LOGIN and url.match '^http://www.astralwow.info/Account/Login.aspx'
+    login()
 
 casper.echo "Logging in..."
 casper.start "http://www.astralwow.info/Account/Login.aspx", -> login()
@@ -54,4 +54,5 @@ casper.thenOpen "http://www.astralwow.info/Account/Vote.aspx", ->
         count++
 
 casper.run ->
-  @echo "#{count} voting site#{if count is 1 then '' else 's'} clicked."; @exit()
+  @echo "#{count} voting site#{if count is 1 then '' else 's'} clicked."
+  @exit()

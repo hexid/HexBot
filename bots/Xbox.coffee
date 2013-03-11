@@ -6,24 +6,25 @@
   2 = error logging in (most likely an incorrect password)
   3 = internet connection error
 ###
-hexBot = require('./HexBot.coffee')
+hexBot = require('./libs/HexBot.coffee')
 casper = require('casper').create(
   pageSettings:
-    loadImages:false, loadPlugins:false # don't load images or plugins
+    loadImages:false
+    loadPlugins:false
     userAgent:hexBot.userAgent
-  verbose:false; logLevel:'debug' # output logs at specified level
 )
 
 argData=[{c:0,n:'email',d:''},{c:1,n:'password',d:''},
          {c:2,n:'code' ,d:''}]#{count, name, default}#
-ARGS = hexBot.parseArgs(argData, casper.cli)
-if '' in ARGS[0..2] # if the username or password was not set
-  casper.echo 'argErr: username, password, and code cannot be empty'; casper.exit 1
+ARGS = hexBot.parseArgsWithErrorMsg(argData, casper, 0, 2, 'username, password, and code')
 
 casper.echo 'Logging in...' # give immediate output to the user
 casper.start 'http://www.xbox.com/', ->
-  if @exists 'a[name="RpsSignInLink"]' then @click 'a[name="RpsSignInLink"]' # Go to the windows live login page
-  else @echo 'Connection error occurred.'; @exit 3 # exit if it isn't the right page
+  if @exists 'a[name="RpsSignInLink"]'
+    @click 'a[name="RpsSignInLink"]' # Go to the windows live login page
+  else
+    @echo 'Connection error occurred.'
+    @exit 3 # exit if it isn't the right page
 
 casper.thenEvaluate (submitLoginData = (user,pass) ->
   f = document.querySelector 'form[name="f1"]' # login form

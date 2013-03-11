@@ -7,10 +7,11 @@
   2 = error logging in (most likely an incorrect password)
   3 = internet connection error
 ###
-hexBot = require('./HexBot.coffee')
+hexBot = require('./libs/HexBot.coffee')
 casper = require('casper').create(
   pageSettings:
-    loadImages:false, loadPlugins:false # don't load images or plugins
+    loadImages:false
+    loadPlugins:false
     userAgent:hexBot.userAgent
 )
 CONSONANTS='bcdfghjklmnpqrstvwxyz'; VOWELS='aeiou'
@@ -20,15 +21,15 @@ offers=[]; executed=0; facebookLogin=false
 argData=[{c:0,n:'email',     d:''},{c:1,n:'password',d:''},
          {c:2,n:'queryCount',d:0 },#{count, name, default}#
          {c:3,n:'minTime',   d:20},{c:4,n:'maxTime', d:40}]
-ARGS = hexBot.parseArgs(argData, casper.cli)
-if '' in ARGS[0..1] # if the username or password was not set
-  casper.echo 'argErr: username and password cannot be empty'; casper.exit 1
-if ARGS[4] < ARGS[3] then ARGS[4] = ARGS[3] # to make sure that maxTime >= minTime
+ARGS = hexBot.parseArgsWithErrorMsg(argData, casper, 0, 1, 'username and password')
+if ARGS[4] < ARGS[3] then ARGS[4] = ARGS[3] # ensure that maxTime >= minTime
 
 casper.echo 'Logging in...' # give near-immediate output to the user
 casper.start 'http://www.bing.com/rewards/signin', ->
-  if @exists '#WLSignin' then @click '#WLSignin' # Go to the windows live login page
-  else @echo 'Connection error occurred.'; @exit 3 # exit if it isn't the right page
+  if not @exists '#WLSignin'
+    @echo 'Connection error occurred.'
+    @exit 3 # exit if it isn't the right page
+  @click '#WLSignin' # Go to the windows live login page
 
 casper.thenEvaluate (submitLoginData = (user,pass) ->
   f = document.querySelector 'form[name="f1"]' # login form
@@ -41,13 +42,17 @@ casper.thenEvaluate (submitLoginData = (user,pass) ->
 casper.thenOpen DASHBOARD, getDashboardItems = ->
   [offers,ARGS[2],facebookLogin] = @evaluate (examineDashboard = (offers,queryCount,facebookLogin) ->
     for e in document.querySelectorAll 'ul.row li a div.check-wrapper div.open-check'
-      elem = e.parentNode.parentNode; title = elem.querySelector('.title').innerText
-      if title is 'Join Now' then return [['Login'],0] # failed to login
+      elem = e.parentNode.parentNode 
+      title = elem.querySelector('.title').innerText
+      if title is 'Join Now' # failed to login
+        return [['Login'],0] # return fake offer to tell bot to halt
       else if queryCount <= 0 and title in ['Search and Earn','Search Bing']
         [earn,per,upTo] = elem.querySelector('.desc').innerText.match(/\d+/g)[0..2]
         soFar = elem.querySelector('.progress').innerText.match(/\d+/)[0]
-        queryCount = Math.ceil(per * (upTo - soFar) / earn) # queriesPerPts * remainingPoints / earnedPerQueries
-      else if title is 'Connect to Facebook' then facebookLogin = true # free points by logging in with facebook
+        # remainingQueries = queriesPerPts * remainingPoints / earnedPerQueries
+        queryCount = Math.ceil(per * (upTo - soFar) / earn)
+      else if title is 'Connect to Facebook'
+        facebookLogin = true # free points by logging in with facebook
       else if title not in ['Refer a Friend','Bing Newsletter']
         offers.push elem.href # add the link of the offer
     return [offers,queryCount,facebookLogin]
@@ -55,34 +60,45 @@ casper.thenOpen DASHBOARD, getDashboardItems = ->
 
 casper.then openDailyOffers = ->
   @each offers, (self,offer) -> # iterate over offers
-    if offer is 'Login' then @echo "Error logging in as #{ARGS[0]}."; @exit 2 # login failed
+    if offer is 'Login'
+      @echo "Error logging in as #{ARGS[0]}."
+      @exit 2 # login failed
     self.thenOpen offer # visit the offer
   @echo "Logged in successfully as #{ARGS[0]}." # tell user that login was successful
   @echo "#{offers.length} daily offer#{if offers.length is 1 then '' else 's'} clicked."
 
 casper.then execQueries = ->
-  @echo "Executing #{ARGS[2]} quer#{if ARGS[2] is 1 then 'y' else 'ies'}." # tell user how many queries are being executed
+  # tell user how many queries are being executed
+  @echo "Executing #{ARGS[2]} quer#{if ARGS[2] is 1 then 'y' else 'ies'}."
   @repeat ARGS[2], execQuery = -> # repeat `queryCount` times
-    @wait Math.floor(Math.random() * ((ARGS[4] - ARGS[3]) * 1000 + 1)) + (ARGS[3] * 1000), -> # wait between queries
-      @thenOpen 'http://randomword.setgetgo.com/get.php', (randomWordData) -> # visit site to retrieve random word
+    # wait between queries
+    @wait Math.floor(Math.random() * ((ARGS[4] - ARGS[3]) * 1000 + 1)) + (ARGS[3] * 1000), ->
+      # visit site to retrieve random word
+      @thenOpen 'http://randomword.setgetgo.com/get.php', (randomWordData) ->
         word = ''
         if randomWordData['status'] is 200 # if page loaded successfully
           word = @fetchText('body').trim() # get the random word (without excess whitespace)
-        else
+        else # generate a random word
           len = Math.floor(Math.random()*5)+5 # letters in word (5..9)
-          for i in [1..len] by 2 # generate a random word
+          for i in [1..len] by 2 # add letters two at a time (consonant followed by a vowel)
             word += CONSONANTS[Math.floor(Math.random()*CONSONANTS.length)] # add a consonant
-            if i<len then word += VOWELS[Math.floor(Math.random()*VOWELS.length)] # add a vowel if there is room
-          if Math.floor(Math.random()*2) is 1 then word = word[0].toUpperCase() + word[1..-1] # randomly capitalize word
+            if i < len # add a vowel if there is room
+              word += VOWELS[Math.floor(Math.random()*VOWELS.length)]
+          if Math.floor(Math.random()*2) is 1
+            word = word[0].toUpperCase() + word[1..-1] # randomly capitalize word
         @thenOpen ("http://www.bing.com/search?scope=web&setmkt=en-US&q="+word), (data) ->
-          if data['status'] is 200 then @echo "#{++executed}) #{word}" # query bing with the word
-          else @echo "Failed) #{word}"
+          if data['status'] is 200
+            @echo "#{++executed}) #{word}" # query bing with the word
+          else
+            @echo "Failed) #{word}"
 
 casper.thenOpen DASHBOARD, getTotalPoints = -> # get the number of unused points on the account
-  totalPoints = @evaluate -> document.querySelector('#user-status .user-balance .data-value-text').innerText
+  totalPoints = @evaluate -> 
+    document.querySelector('#user-status .user-balance .data-value-text').innerText
   @echo "You currently have #{totalPoints} points on this account."
 
 casper.run ->
   @echo "Completed #{executed}/#{ARGS[2]} quer#{if executed is 1 then 'y' else 'ies'}."
-  if facebookLogin then @echo "Earn more points by linking your Facebook account."
+  if facebookLogin # if there was an offer to log in with a facebook account
+    @echo "Earn more points by linking your Facebook account (not done through bot)."
   @exit executed-ARGS[2] # exit with code (-failed)
