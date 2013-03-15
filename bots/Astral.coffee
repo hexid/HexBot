@@ -9,13 +9,13 @@ hexBot = require('./libs/HexBot.coffee')
 casper = require('casper').create(
   pageSettings:
     loadImages:false
-    loadPlugins:false # don't load images or plugins
+    loadPlugins:false
     userAgent:hexBot.userAgent
 )
 FIRST_LOGIN=true; count=0
 
-argData=[{c:0,n:'username',d:''},{c:1,n:'password',d:''}]#{count, name, default}#
-ARGS = hexBot.parseArgsWithErrorMsg(argData, casper, 0, 1, 'username and password')
+argData=[{name:'username'},{name:'password'}]
+ARGS = hexBot.parseArgs(argData, casper)
 
 login = ->
   casper.thenEvaluate ((user, pass) ->

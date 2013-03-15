@@ -14,9 +14,8 @@ casper = require('casper').create(
     userAgent:hexBot.userAgent
 )
 
-argData=[{c:0,n:'email',d:''},{c:1,n:'password',d:''},
-         {c:2,n:'code' ,d:''}]#{count, name, default}#
-ARGS = hexBot.parseArgsWithErrorMsg(argData, casper, 0, 2, 'username, password, and code')
+argData=[{name:'email'},{name:'password'},{name:'code'}]
+ARGS = hexBot.parseArgs(argData, casper)
 
 casper.echo 'Logging in...' # give immediate output to the user
 casper.start 'http://www.xbox.com/', ->
@@ -40,8 +39,9 @@ casper.then redeemCode = ->
   @sendKeys 'input.TokenTextBox', ARGS[2]
   @click '#RedeemCode'
 
-casper.then getStatus = ->
+casper.waitForSelector('#RedeemResults', getStatus = ->
   @echo @fetchText '#RedeemResults p'
+)
 
 casper.run ->
   @echo "Finished redeeming code."

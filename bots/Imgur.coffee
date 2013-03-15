@@ -17,8 +17,8 @@ casper = require('casper').create(
 )
 imgs=[]; albumDesc=''; count=0
 
-argData=[{c:0,n:'album',d:''},{c:1,n:'output',d:''}]#{count, name, default}#
-ARGS = hexBot.parseArgsWithErrorMsg(argData, casper, 0, 1, 'album and output')
+argData=[{name:'album'},{name:'output'}]
+ARGS = hexBot.parseArgs(argData, casper)
 
 if not ARGS[1].match(new RegExp(".+\\#{fs.separator}$"))
   ARGS[1] += fs.separator # add the path separator if it is missing from the end

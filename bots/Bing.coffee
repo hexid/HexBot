@@ -18,10 +18,9 @@ CONSONANTS='bcdfghjklmnpqrstvwxyz'; VOWELS='aeiou'
 DASHBOARD='http://www.bing.com/rewards/dashboard'
 offers=[]; executed=0; facebookLogin=false
 
-argData=[{c:0,n:'email',     d:''},{c:1,n:'password',d:''},
-         {c:2,n:'queryCount',d:0 },#{count, name, default}#
-         {c:3,n:'minTime',   d:20},{c:4,n:'maxTime', d:40}]
-ARGS = hexBot.parseArgsWithErrorMsg(argData, casper, 0, 1, 'username and password')
+argData=[{name:'email'},{name:'password'},{name:'queryCount',default:0},
+         {name:'minTime',default:20},{name:'maxTime',default:40}]
+ARGS = hexBot.parseArgs(argData, casper)
 if ARGS[4] < ARGS[3] then ARGS[4] = ARGS[3] # ensure that maxTime >= minTime
 
 casper.echo 'Logging in...' # give near-immediate output to the user
