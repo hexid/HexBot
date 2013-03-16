@@ -12,7 +12,7 @@ exports.parseArgs = (argumentData, casper) ->
   for arg in argumentData # get the arguments from the command line
     if casper.cli.raw.has arg.name
       ARGS[argCount] = casper.cli.raw.get arg.name # use the option argument
-    else if casper.cli.raw.has cliCount
+    else if casper.cli.raw.has posArg
       ARGS[argCount] = casper.cli.raw.get posArg # use the positional argument
       posArg++ # move to the next positional argument
     else if arg.default? # use the default value if one exists
