@@ -118,15 +118,26 @@ public class Bots {
 
 	public static String getBotEnvPath(String oldEnvPath) {
 		String dir = getPWD().getPath();
-		String phantom = Utils.join(File.separator, dir, "libs", "phantomjs", "bin");
-		String phantomBin = Utils.join(File.separator, dir, "libs", "phantomjs");
-		String casper = Utils.join(File.separator, dir, "libs", "casperjs", 
-				(File.pathSeparator.equals(":") ? "bin" : "batchbin"));
-		return Utils.join(File.pathSeparator, oldEnvPath, phantomBin, phantom, casper);
+		String sysSpecific = System.getProperty("os.name").toLowerCase();
+		String casperBin = "bin";
+		if(sysSpecific.contains("win")) {
+			sysSpecific = "windows";
+			casperBin = "batchbin";
+		} else if(sysSpecific.contains("mac")) {
+			sysSpecific = "macosx";
+		} else {
+			sysSpecific += ("-" + System.getProperty("os.arch"));
+		}
+		System.out.println(sysSpecific);
+		String phantom = Utils.joinPath(dir, "libs", "phantomjs");
+		String phantomBin = Utils.joinPath(phantom, "bin");
+		String phantomOS = Utils.joinPath(phantomBin, sysSpecific);
+		String casper = Utils.joinPath(dir, "libs", "casperjs", casperBin);
+		return Utils.join(File.pathSeparator, oldEnvPath, phantomOS, phantomBin, phantom, casper);
 	}
 	
 	public static String getBotFile(String botName) {
-		return Utils.join(File.separator, getPWD().getPath(), "bots", getBotFileName(botName));
+		return Utils.joinPath(getPWD().getPath(), "bots", getBotFileName(botName));
 	}
 	public static String getBotFile(Bot bot) {
 		return getBotFile(bot.getShortName());

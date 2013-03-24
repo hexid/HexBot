@@ -1,5 +1,8 @@
 package net.hexid;
 
+import java.util.List;
+import java.io.File;
+
 public class Utils {
 	/**
 	 * Combine strings with a common string
@@ -21,7 +24,14 @@ public class Utils {
 	 * @param str
 	 * @return {@link #join(String, String...)}
 	 */
-	public static String join(String glue, java.util.List<String> str) {
+	public static String join(String glue, List<String> str) {
 		return join(glue, str.toArray(new String[0]));
+	}
+	
+	public static String joinPath(String... str) {
+		return join(File.separator, str);
+	}
+	public static String joinPath(List<String> str) {
+		return join(File.separator, str);
 	}
 }
