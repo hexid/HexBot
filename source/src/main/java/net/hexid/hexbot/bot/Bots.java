@@ -120,6 +120,7 @@ public class Bots {
 		String dir = getPWD().getPath();
 		String sysSpecific = System.getProperty("os.name").toLowerCase();
 		String casperBin = "bin";
+
 		if(sysSpecific.contains("win")) {
 			sysSpecific = "windows";
 			casperBin = "batchbin";
@@ -128,7 +129,7 @@ public class Bots {
 		} else {
 			sysSpecific += ("-" + System.getProperty("os.arch"));
 		}
-		System.out.println(sysSpecific);
+
 		String phantom = Utils.joinPath(dir, "libs", "phantomjs");
 		String phantomBin = Utils.joinPath(phantom, "bin");
 		String phantomOS = Utils.joinPath(phantomBin, sysSpecific);
