@@ -10,14 +10,14 @@ hexBot = require('./libs/HexBot.coffee')
 fs = require('fs')
 casper = require('casper').create(
   pageSettings:
-    loadImages:false
-    loadPlugins:false
-    webSecurityEnabled:false # disable xss so that images can be downloaded without changing urls
-    userAgent:hexBot.userAgent
+    loadImages: false
+    loadPlugins: false
+    userAgent: hexBot.userAgent
+    webSecurityEnabled: false # disable xss so that images can be downloaded without changing urls
 )
-imgs=[]; albumDesc=''; count=0
+imgs = []; albumDesc = ''; count = 0
 
-argData=[{name:'album'},{name:'output'}]
+argData = [{name:'album'}, {name:'output'}]
 ARGS = hexBot.parseArgs(argData, casper)
 
 if not ARGS[1].match(new RegExp(".+\\#{fs.separator}$"))

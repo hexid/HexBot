@@ -9,12 +9,12 @@
 hexBot = require('./libs/HexBot.coffee')
 casper = require('casper').create(
   pageSettings:
-    loadImages:false
-    loadPlugins:false
-    userAgent:hexBot.userAgent
+    loadImages: false
+    loadPlugins: false
+    userAgent: hexBot.userAgent
 )
 
-argData=[{name:'email'},{name:'password'},{name:'code'}]
+argData = [{name:'email'}, {name:'password'}, {name:'code'}]
 ARGS = hexBot.parseArgs(argData, casper)
 
 casper.echo 'Logging in...' # give immediate output to the user
@@ -25,24 +25,25 @@ casper.start 'http://www.xbox.com/', ->
     @echo 'Connection error occurred.'
     @exit 3 # exit if it isn't the right page
 
-casper.thenEvaluate (submitLoginData = (user,pass) ->
-  f = document.querySelector 'form[name="f1"]' # login form
-  f.querySelector('input[name="login"]').value  = user # username input
-  f.querySelector('input[name="passwd"]').value = pass # password input
-  f.querySelector('input[name="KMSI"]').checked = true # keep me signed in
-  f.querySelector('input[name="SI"]').click() # login button
-), ARGS[0], ARGS[1]
+casper.then submitLoginData = ->
+  @fill 'form[name="f1"]',
+    login: ARGS[0]
+    passwd: ARGS[1]
+    KMSI: true
+  , true
 
-casper.thenOpen 'https://live.xbox.com/en-US/RedeemCode'
-casper.echo "Entering code: #{ARGS[2]}"
+casper.thenOpen 'https://live.xbox.com/en-US/RedeemCode', ->
+  casper.echo "Entering code: #{ARGS[2]}"
+
 casper.then redeemCode = ->
   @sendKeys 'input.TokenTextBox', ARGS[2]
   @click '#RedeemCode'
 
-casper.waitForSelector('#RedeemResults', getStatus = ->
-  @echo @fetchText '#RedeemResults p'
-)
+casper.then ->
+  casper.waitForSelector('#RedeemResults', getStatus = ->
+    @echo @fetchText '#RedeemResults p'
+  )
 
 casper.run ->
-  @echo "Finished redeeming code."
+  @echo 'Finished redeeming code.'
   @exit 0

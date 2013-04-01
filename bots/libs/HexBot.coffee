@@ -3,11 +3,11 @@
 #require = patchRequire(global.require)
 #utils = require('utils')
 
-exports.userAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.33 Safari/537.31'
+exports.userAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.40 Safari/537.31'
 
-#argumentData = [{name:'argName1',default:'default1'}, {name:'argName2'}, ...]
+#argumentData = [{name:'argName1',default:'optionalArg'}, {name:'argName2'}, ...]
 exports.parseArgs = (argumentData, casper) ->
-  ARGS=[]; missingRequired=[]; posArg=1; argCount=0
+  ARGS = []; missingRequired = []; posArg = 0; argCount = 0
 
   for arg in argumentData # get the arguments from the command line
     if casper.cli.raw.has arg.name
@@ -17,7 +17,7 @@ exports.parseArgs = (argumentData, casper) ->
       posArg++ # move to the next positional argument
     else if arg.default? # use the default value if one exists
       ARGS[argCount] = arg.default
-    else # if no default value is given then it is a require argument
+    else # if no default value is given then it is a required argument
       missingRequired.push arg.name
     argCount++
 
