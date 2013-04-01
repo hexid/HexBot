@@ -1,6 +1,16 @@
 HexBot Changelog
 ==========
 
+###v1.0.3
+- Create module that will hold variables/functions useful to most/all bots
+  - `userAgent`
+  - `parseArgs(argData, casper)`
+- Released beta version of Xbox Code Redeemer
+  - At current stage, there is no output on success
+- Fix spacing and refactor code in bots
+- Require at least CasperJS 1.1.0-DEV
+- Upgrade to PhantomJS 1.9
+
 ###v1.0.2
 - Bing GUI can now has a button to stop itself mid-execution
 - Updated Bing Bot to generate a random word when it can't be retrieved online
