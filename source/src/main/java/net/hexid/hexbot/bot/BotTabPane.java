@@ -12,7 +12,7 @@ public class BotTabPane extends javafx.scene.control.TabPane {
 		// kill the process and remove the tab from the list when closed
 		tab.setOnClosed(new javafx.event.EventHandler<Event>() {
 			public void handle(Event e) {
-				tab.exit(); // stop the bot process in the tab
+				tab.destroyProcess(); // stop the bot process in the tab
 			}
 		});
 		getTabs().add(tab);

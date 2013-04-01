@@ -59,7 +59,7 @@ public class BotProcess extends Thread {
 			e.printStackTrace();
 		}
 	}
-	public void exit() {
+	public void destroy() {
 		process.destroy();
 	}
 }

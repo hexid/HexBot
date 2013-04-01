@@ -63,7 +63,7 @@ public class ImgurTab extends net.hexid.hexbot.bot.BotTab {
 		downloadAlbumButton = ButtonBuilder.create()
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
-						exit();
+						destroyProcess();
 						albumData = albumField.getText();
 						createProcess();
 						downloadAlbumButton.setDisable(true);

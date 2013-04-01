@@ -79,7 +79,7 @@ public class XboxTab extends net.hexid.hexbot.bot.BotTab {
 		stopProcessButton = ButtonBuilder.create().text("Stop")
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
-						process.exit(); // exit code may vary (143 encountered during tests)
+						process.destroy(); // exit code may vary (143 encountered during tests)
 					}
 				}).build();
 		

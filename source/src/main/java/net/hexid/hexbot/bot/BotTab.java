@@ -31,7 +31,7 @@ public abstract class BotTab extends javafx.scene.control.Tab implements Bot {
 		}
 	}
 
-	protected abstract Node defaultContent();
+	protected abstract Node defaultContent(); // what is shown when the tab is created
 	protected abstract Node[] createBottomOutputContent();
 	protected VBox createOutputContent() { // create an output pane
 		VBox outputContent = new VBox();
@@ -54,9 +54,9 @@ public abstract class BotTab extends javafx.scene.control.Tab implements Bot {
 		return outputContent;
 	}
 
-	public void exit() { // stop the process, if one exists
+	public void destroyProcess() { // stop the process, if one exists
 		if(process != null)
-			process.exit();
+			process.destroy();
 	}
 
 	public void appendOutput(String str) {
