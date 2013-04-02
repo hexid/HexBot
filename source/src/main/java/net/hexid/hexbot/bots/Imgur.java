@@ -1,7 +1,5 @@
 package net.hexid.hexbot.bots;
 
-import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import net.hexid.Utils;
@@ -15,7 +13,7 @@ public class Imgur implements net.hexid.hexbot.bot.Bot {
 
 	public List<String> getBotExecuteData() {
 		if(botArgs.size() == 1) {
-			botArgs.add("--output=" + Utils.join(File.separator, Bots.getPWD().getPath(), "output", "Imgur"));
+			botArgs.add("--output=" + Utils.joinPath(Bots.getPWD().getPath(), "output", "Imgur"));
 		} else if(botArgs.size() != 2) {
 			System.out.println("botArgs: album [output]");
 			System.exit(1);

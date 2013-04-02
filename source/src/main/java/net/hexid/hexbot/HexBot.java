@@ -17,6 +17,7 @@ public class HexBot {
 	public static void main(String[] args) {
 		new HexBot();
 		Bots.removeInvalidBots();
+
 		if((args.length >= 1 && args[0].equalsIgnoreCase("gui"))) {
 			BotGUI.init(Arrays.copyOfRange(args, 1, args.length));
 		} else if(args.length == 0) {

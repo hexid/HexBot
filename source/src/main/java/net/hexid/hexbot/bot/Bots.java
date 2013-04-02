@@ -130,15 +130,15 @@ public class Bots {
 			sysSpecific += ("-" + System.getProperty("os.arch"));
 		}
 
-		String phantom = Utils.joinPath(dir, "libs", "phantomjs");
-		String phantomBin = Utils.joinPath(phantom, "bin");
-		String phantomOS = Utils.joinPath(phantomBin, sysSpecific);
-		String casper = Utils.joinPath(dir, "libs", "casperjs", casperBin);
+		String phantom = Utils.joinFile(dir, "libs", "phantomjs");
+		String phantomBin = Utils.joinFile(phantom, "bin");
+		String phantomOS = Utils.joinFile(phantomBin, sysSpecific);
+		String casper = Utils.joinFile(dir, "libs", "casperjs", casperBin);
 		return Utils.join(File.pathSeparator, oldEnvPath, phantomOS, phantomBin, phantom, casper);
 	}
 	
 	public static String getBotFile(String botName) {
-		return Utils.joinPath(getPWD().getPath(), "bots", getBotFileName(botName));
+		return Utils.joinFile(getPWD().getPath(), "bots", getBotFileName(botName));
 	}
 	public static String getBotFile(Bot bot) {
 		return getBotFile(bot.getShortName());

@@ -22,16 +22,16 @@ public class Utils {
 	 * Combine a list of strings with a common string
 	 * @param glue
 	 * @param str
-	 * @return {@link #join(String, String...)}
+	 * @return {@link #join(String,String...)}
 	 */
 	public static String join(String glue, List<String> str) {
 		return join(glue, str.toArray(new String[0]));
 	}
-	
-	public static String joinPath(String... str) {
+
+	public static String joinFile(String... str) {
 		return join(File.separator, str);
 	}
-	public static String joinPath(List<String> str) {
+	public static String joinFile(List<String> str) {
 		return join(File.separator, str);
 	}
 }
