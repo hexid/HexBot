@@ -31,7 +31,12 @@ public class Utils {
 	public static String joinFile(String... str) {
 		return join(File.separator, str);
 	}
-	public static String joinFile(List<String> str) {
-		return join(File.separator, str);
+
+	/**
+	 * Get the directory that the application is being run from
+	 * @return directory
+	 */
+	public static File getPWD() {
+		return new File(Utils.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParentFile();
 	}
 }

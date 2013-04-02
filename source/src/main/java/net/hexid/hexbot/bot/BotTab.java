@@ -12,15 +12,16 @@ public abstract class BotTab extends javafx.scene.control.Tab implements Bot {
 	protected TextArea output;
 
 	public BotTab() {
-		super(); // call Tab's default constructor
+		super();
 		setText(getShortName());
-
-		// change to the default content
 		setContent(defaultContent());
 	}
+
 	public abstract String getShortName();
-	
 	public abstract void processExitCode(int exitCode);
+	protected abstract Node defaultContent(); // what is shown when the tab is created
+	protected abstract Node[] createBottomOutputContent();
+
 	protected void createProcess() {
 		setContent(createOutputContent()); // change to output mode
 		try { // create a new bot process and start it
@@ -31,8 +32,6 @@ public abstract class BotTab extends javafx.scene.control.Tab implements Bot {
 		}
 	}
 
-	protected abstract Node defaultContent(); // what is shown when the tab is created
-	protected abstract Node[] createBottomOutputContent();
 	protected VBox createOutputContent() { // create an output pane
 		VBox outputContent = new VBox();
 
@@ -59,13 +58,13 @@ public abstract class BotTab extends javafx.scene.control.Tab implements Bot {
 			process.destroy();
 	}
 
+	/**
+	 * Append a string to the output and move the cursor to the end of that string
+	 * @param str
+	 */
 	public void appendOutput(String str) {
 		if(output != null) {
-			// Append the string to the end of the output, adding a
-			// blank line before the string if the output is not blank
 			output.appendText((output.getText().equals("") ? "" : '\n') + str);
-
-			// Sets the caret at the beginning of the last line appended
 			output.positionCaret(output.getLength() - str.length() + 2);
 		}
 	}

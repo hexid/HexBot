@@ -12,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import net.hexid.Utils;
-import net.hexid.hexbot.bot.Bots;
 
 public class ImgurTab extends net.hexid.hexbot.bot.BotTab {
 	private String albumData;
@@ -44,7 +43,7 @@ public class ImgurTab extends net.hexid.hexbot.bot.BotTab {
 		// to call the bot in the command line
 		ArrayList<String> data = new ArrayList<String>();
 
-		data.add("--output="+Utils.join(File.separator, Bots.getPWD().getPath(), "output", "Imgur"));
+		data.add("--output="+Utils.joinFile(Utils.getPWD().getPath(), "output", "Imgur"));
 		data.add("--album="+albumData);
 		return data;
 	}
