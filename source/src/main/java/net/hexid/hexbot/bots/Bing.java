@@ -10,7 +10,7 @@ public class Bing implements net.hexid.hexbot.bot.Bot {
 	}
 
 	public List<String> getBotExecuteData() {
-		if(botArgs.size() <= 0 || botArgs.size() > 4) {
+		if(botArgs.size() == 0 || botArgs.size() > 4) {
 			System.out.println("botArgs: email [, queryCount [, minDelay [, maxDelay]]]");
 			System.exit(1);
 		} else {
