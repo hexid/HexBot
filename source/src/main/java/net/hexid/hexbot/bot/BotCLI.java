@@ -27,6 +27,7 @@ public class BotCLI {
 		}
 	}
 	protected void createProcess() {
+		System.out.println("Executing " + bot.getShortName() + " bot.");
 		try { // create a new bot process and start it
 			process = new BotProcess(bot);
 			process.start();
