@@ -14,7 +14,7 @@ casper = require('casper').create(
     userAgent: hexBot.userAgent
 )
 
-argData = [{name:'email'}, {name:'password'}, {name:'code'}]
+argData = [{name:'email'}, {name:'password'}, {name:'code',csv:true}]
 ARGS = hexBot.parseArgs(argData, casper)
 
 casper.echo 'Logging in...' # give immediate output to the user
@@ -26,24 +26,19 @@ casper.start 'http://www.xbox.com/', ->
     @exit 3 # exit if it isn't the right page
 
 casper.then submitLoginData = ->
-  @fill 'form[name="f1"]',
-    login: ARGS[0]
-    passwd: ARGS[1]
-    KMSI: true
-  , true
+  require('./libs/Microsoft.coffee').login(@, ARGS[0], ARGS[1])
 
-casper.thenOpen 'https://live.xbox.com/en-US/RedeemCode', ->
-  casper.echo "Entering code: #{ARGS[2]}"
-
-casper.then redeemCode = ->
-  @sendKeys 'input.TokenTextBox', ARGS[2]
-  @click '#RedeemCode'
-
-casper.then ->
-  casper.waitForSelector('#RedeemResults', getStatus = ->
-    @echo @fetchText '#RedeemResults p'
-  )
+casper.each ARGS[2], enterCodes = (self, code) ->
+  self.thenOpen 'https://live.xbox.com/en-US/RedeemCode', ->
+    @echo "Entering code: #{code}"
+  self.then redeemCode = ->
+    @sendKeys 'input.TokenTextBox', code
+    @click '#RedeemCode'
+  self.then ->
+    @waitForSelector('#RedeemResults', getStatus = ->
+      @echo @fetchText '#RedeemResults p'
+    )
 
 casper.run ->
-  @echo 'Finished redeeming code.'
+  @echo 'Finished redeeming code#{if ARGS[2].length == 1 then '' else 's'}.'
   @exit 0

@@ -30,13 +30,7 @@ casper.start 'http://www.bing.com/rewards/signin', goToLogin = ->
   @click '#WLSignin' # Go to the windows live login page
 
 casper.then submitLoginData = ->
-  @thenEvaluate (submitLoginData = (user,pass) ->
-    f = document.querySelector 'form[name="f1"]' # login form
-    f.querySelector('input[name="login"]').value  = user # username input
-    f.querySelector('input[name="passwd"]').value = pass # password input
-    f.querySelector('input[name="KMSI"]').checked = true # keep me signed in
-    f.querySelector('input[name="SI"]').click() # login button
-  ), ARGS[0], ARGS[1]
+  require('./libs/Microsoft.coffee').login(@, ARGS[0], ARGS[1])
 
 casper.thenOpen DASHBOARD, openDashboard = ->
   [offers, ARGS[2], facebookLogin] = @evaluate (examineDashboard = (offers, queryCount, facebookLogin) ->
