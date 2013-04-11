@@ -40,5 +40,5 @@ casper.each ARGS[2], enterCodes = (self, code) ->
     )
 
 casper.run ->
-  @echo 'Finished redeeming code#{if ARGS[2].length == 1 then '' else 's'}.'
+  @echo "Finished redeeming code#{if ARGS[2].length == 1 then '' else 's'}."
   @exit 0
