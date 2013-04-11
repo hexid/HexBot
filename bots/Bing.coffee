@@ -20,6 +20,8 @@ offers = []; executed = 0; facebookLogin = false
 argData = [{name:'email'}, {name:'password'}, {name:'queryCount',default:0},
            {name:'minTime',default:20}, {name:'maxTime',default:40}]
 ARGS = hexBot.parseArgs(argData, casper)
+ARGS[4] = Math.abs ARGS[4]
+ARGS[3] = Math.abs ARGS[3]
 if ARGS[4] < ARGS[3] then ARGS[4] = ARGS[3] # ensure that maxTime >= minTime
 
 casper.echo 'Logging in...' # give near-immediate output to the user
