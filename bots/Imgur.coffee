@@ -24,7 +24,7 @@ if not ARGS[1].match(new RegExp(".+\\#{fs.separator}$"))
 
 casper.start()
 
-for i in [0..ARGS[0].length-1] by 1
+for i in [0...ARGS[0].length] by 1
   matches = ARGS[0][i].match /^(?:(?:(?:(?:(?:(?:https?:\/\/)?(?:www\.)?imgur\.com)?\/)?a)?\/)?(\w+)(?:[\/?#](?:.+)?)?)$/i
   if matches is null
     casper.echo "argErr: album id can't be found in `#{ARGS[1]}`"
