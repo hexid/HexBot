@@ -18,11 +18,11 @@ public class HexBot {
 		new HexBot();
 		Bots.removeInvalidBots();
 
-		if((args.length >= 1 && args[0].equalsIgnoreCase("gui"))) {
-			BotGUI.init(Arrays.copyOfRange(args, 1, args.length));
-		} else if(args.length == 0) {
-			BotGUI.init(args);
-		} else {
+		// if more than 1 argument and the first
+		// is `gui` -- or there are no arguments
+		if((args.length >= 1 && args[0].equalsIgnoreCase("gui")) || args.length == 0) {
+			BotGUI.init(Arrays.copyOfRange(args, (args.length > 0) ? 1 : 0, args.length));
+		} else { // otherwise use the command line
 			BotCLI.init(args);
 		}
 	}

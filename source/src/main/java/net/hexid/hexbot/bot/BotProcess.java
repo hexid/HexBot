@@ -34,7 +34,7 @@ public class BotProcess extends Thread {
 			botExecuteData = Arrays.asList(new String[]{"/usr/bin/env","bash","-c",processData});
 		}
 
-		// create a processbuilder with the bot's commands and combine input and error streams
+		// create a processbuilder with the bot's commands and combined input and error streams
 		ProcessBuilder pb = new ProcessBuilder(botExecuteData).redirectErrorStream(true);
 		
 		// append phantomjs and casperjs to the path (runs local installs first)
