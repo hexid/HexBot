@@ -15,7 +15,7 @@ casper = require('casper').create(
     userAgent: hexBot.userAgent
 )
 DASHBOARD = 'http://www.bing.com/rewards/dashboard'
-offers = []; executed = 0; facebookLogin = false
+offers = []; executed = 0; facebook = false
 
 argData = [{name:'email'}, {name:'password'}, {name:'queryCount',default:0},
            {name:'minTime',default:20}, {name:'maxTime',default:40}]
@@ -35,7 +35,7 @@ casper.then submitLoginData = ->
   require('./libs/Microsoft.coffee').login(@, ARGS[0], ARGS[1])
 
 casper.thenOpen DASHBOARD, openDashboard = ->
-  [offers, ARGS[2], facebookLogin] = @evaluate (examineDashboard = (offers, queryCount, facebookLogin) ->
+  [offers, ARGS[2], facebook] = @evaluate (examineDashboard = (offers, queryCount, facebook) ->
     for e in document.querySelectorAll 'ul.row li a div.check-wrapper div.open-check'
       elem = e.parentNode.parentNode
       title = elem.querySelector('.title').innerText
@@ -47,11 +47,11 @@ casper.thenOpen DASHBOARD, openDashboard = ->
         # remainingQueries = queriesPerPoint * remainingPoints / earnedPerQueries
         queryCount = Math.ceil(per * (upTo - soFar) / earn)
       else if title is 'Connect to Facebook'
-        facebookLogin = true # free points by logging in with facebook
+        facebook = true # free points by logging in with facebook
       else if title not in ['Refer a Friend', 'Bing Newsletter']
         offers.push elem.href # add the link of the offer
-    return [offers, queryCount, facebookLogin]
-  ), offers, ARGS[2], facebookLogin
+    return [offers, queryCount, facebook]
+  ), offers, ARGS[2], facebook
 
 casper.then openDailyOffers = ->
   @each offers, (self, offer) -> # iterate over offers
@@ -82,7 +82,7 @@ casper.then execQueries = ->
             word = word[0].toUpperCase() + word[1..-1] # randomly capitalize word
         # query bing with the word
         @thenOpen "http://www.bing.com/search?scope=web&setmkt=en-US&q=#{word}", (data) ->
-          @echo "#{if data['status'] is 200 then ++executed else 'Failed'}#{if gener then '-gen' else ''}) #{word}"
+          @echo "#{if data['status'] is 200 then ++executed else 'Failed'}#{if gen then '-gen' else ''}) #{word}"
 
 casper.thenOpen DASHBOARD, getTotalPoints = -> # get the number of unused points on the account
   totalPoints = @getElementInfo('#user-status .user-balance .data-value-text').text
@@ -90,6 +90,6 @@ casper.thenOpen DASHBOARD, getTotalPoints = -> # get the number of unused points
 
 casper.run ->
   @echo "Completed #{executed}/#{ARGS[2]} quer#{if executed is 1 then 'y' else 'ies'}."
-  if facebookLogin # if there was an offer to log in with a facebook account
+  if facebook # if there was an offer to log in with a facebook account
     @echo 'Earn more points by linking your Facebook account (not done through bot).'
   @exit executed - ARGS[2] # exit with code (-failed)
