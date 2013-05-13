@@ -3,7 +3,7 @@
 #require = patchRequire(global.require)
 #utils = require('utils')
 
-exports.userAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.40 Safari/537.31'
+exports.userAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.5 Safari/537.36'
 
 #argumentData = [{name:'argName1',default:'optionalArg'}, {name:'argName2',csv:true}, ...]
 exports.parseArgs = (argumentData, casper) ->
@@ -24,6 +24,6 @@ exports.parseArgs = (argumentData, casper) ->
     argCount++
 
   if missingRequired.length > 0 # if any required arguments were missing
-    casper.echo "argErr: #{missingRequired} cannot be empty."
+    casper.echo "argErr: #{missingRequired} are required parameters."
     casper.exit 1
   return ARGS
