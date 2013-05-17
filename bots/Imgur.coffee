@@ -49,7 +49,7 @@ casper.each ARGS[0], searchAlbum = (self, albumId) ->
                 link: img.querySelector('.album-view-image-link a').href # link to image
                 desc: img.querySelector('h2')?.innerText # description if it exists
               )
-            return [images, document.querySelector('.panel .description h1').innerText]
+            [images, document.querySelector('.panel .description h1').innerText] #return
           @echo "#{albumId}) Found #{imgs.length} images in the album."
       else
         @echo "#{albumId}) Album either empty or not found."

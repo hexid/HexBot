@@ -26,4 +26,4 @@ exports.parseArgs = (argumentData, casper) ->
   if missingRequired.length > 0 # if any required arguments were missing
     casper.echo "argErr: #{missingRequired} are required parameters."
     casper.exit 1
-  return ARGS
+  ARGS # return

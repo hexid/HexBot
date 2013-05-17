@@ -50,7 +50,7 @@ casper.thenOpen DASHBOARD, openDashboard = ->
         facebook = true # free points by logging in with facebook
       else if title not in ['Refer a Friend', 'Bing Newsletter']
         offers.push elem.href # add the link of the offer
-    return [offers, queryCount, facebook]
+    [offers, queryCount, facebook] # return
   ), offers, ARGS[2], facebook
 
 casper.then openDailyOffers = ->
