@@ -1,4 +1,5 @@
 bots/Molten.coffee
+bots/Test.coffee
 output/
 releases/
 libs/**/**
