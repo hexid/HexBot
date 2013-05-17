@@ -19,14 +19,15 @@ public class MoltenTab extends net.hexid.hexbot.bot.BotTab {
 	private String usernameData, passwordData;
 	private TextField usernameField;
 	private PasswordField passwordField;
-	
+
 	public MoltenTab() {
 		super();
 	}
+
 	public String getShortName() {
 		return "Molten";
 	}
-	
+
 	protected Node defaultContent() {
 		return createSetupContent(true);
 	}
@@ -57,7 +58,7 @@ public class MoltenTab extends net.hexid.hexbot.bot.BotTab {
 	public ArrayList<String> getBotExecuteData() {
 		// returns the data that will be used
 		// to call the bot in the command line
-		ArrayList<String> data = new ArrayList<String>();
+		ArrayList<String> data = new ArrayList<>();
 		
 		data.add("--username="+usernameData);
 		data.add("--password="+passwordData);
@@ -80,7 +81,7 @@ public class MoltenTab extends net.hexid.hexbot.bot.BotTab {
 					}
 				}).disable(true).maxWidth(Double.MAX_VALUE).build();
 		HBox.setHgrow(returnToLoginButton, Priority.ALWAYS);
-		
+
 		return new Node[]{repeatProcessButton, returnToLoginButton};
 	}
 

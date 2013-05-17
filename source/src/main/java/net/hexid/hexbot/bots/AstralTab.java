@@ -19,14 +19,15 @@ public class AstralTab extends net.hexid.hexbot.bot.BotTab {
 	private String usernameData, passwordData;
 	private TextField usernameField;
 	private PasswordField passwordField;
-	
+
 	public AstralTab() {
 		super();
 	}
+
 	public String getShortName() {
 		return "Astral";
 	}
-	
+
 	protected Node defaultContent() {
 		return createSetupContent(true);
 	}
@@ -63,7 +64,7 @@ public class AstralTab extends net.hexid.hexbot.bot.BotTab {
 		data.add("--password="+passwordData);
 		return data;
 	}
-	
+
 	protected Node[] createBottomOutputContent() {
 		repeatProcessButton = ButtonBuilder.create()
 				.onAction(new EventHandler<ActionEvent>() {

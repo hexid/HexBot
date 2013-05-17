@@ -23,10 +23,11 @@ public class XboxTab extends net.hexid.hexbot.bot.BotTab {
 	public XboxTab() {
 		super();
 	}
+
 	public String getShortName() {
 		return "Xbox";
 	}
-	
+
 	protected Node defaultContent() {
 		return createSetupContent(true);
 	}
@@ -82,7 +83,7 @@ public class XboxTab extends net.hexid.hexbot.bot.BotTab {
 						process.destroy(); // exit code may vary (143 encountered during tests)
 					}
 				}).build();
-		
+
 		return new Node[]{repeatProcessButton, returnToLoginButton, stopProcessButton};
 	}
 

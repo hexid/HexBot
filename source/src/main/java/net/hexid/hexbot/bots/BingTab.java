@@ -26,16 +26,17 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 	public BingTab() {
 		super();
 	}
+
 	public String getShortName() {
 		return "Bing";
 	}
-	
+
 	protected Node defaultContent() {
 		return createSetupContent(true);
 	}
 
 	public void processExitCode(int exitCode) {
-		switch (exitCode) {
+		switch(exitCode) {
 		case 2: // login error
 			returnToLoginButton.setDisable(false);
 			break;
@@ -53,7 +54,7 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 	public ArrayList<String> getBotExecuteData() {
 		// returns the data that will be used
 		// to call the bot in the command line
-		ArrayList<String> data = new ArrayList<String>();
+		ArrayList<String> data = new ArrayList<>();
 
 		// user-entered data
 		data.add("--email=" + emailData);
@@ -63,7 +64,7 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 		data.add("--delayMax=" + delayMaxData);
 		return data;
 	}
-	
+
 	protected Node[] createBottomOutputContent() {
 		repeatProcessButton = ButtonBuilder.create().text("Repeat")
 				.onAction(new EventHandler<ActionEvent>() {
@@ -87,7 +88,7 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 						process.destroy(); // exit code may vary (143 encountered during tests)
 					}
 				}).build();
-		
+
 		return new Node[]{repeatProcessButton, returnToLoginButton, stopProcessButton};
 	}
 
@@ -153,7 +154,7 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 		HBox.setHgrow(loginButton, Priority.ALWAYS);
 		button.getChildren().addAll(loginButton);
 
-		if (setDefaultValues) { // set the default values
+		if(setDefaultValues) { // set the default values
 			queryCount.setValue(0);
 			delayMin.setValue(20);
 			delayMax.setValue(40);
