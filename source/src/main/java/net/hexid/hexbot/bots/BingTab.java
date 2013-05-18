@@ -36,7 +36,7 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 	}
 
 	public void processExitCode(int exitCode) {
-		stopProcessbutton.setDisable(true);
+		stopProcessButton.setDisable(true);
 
 		switch(exitCode) {
 		case 2: // login error
