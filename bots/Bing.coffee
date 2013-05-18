@@ -72,7 +72,8 @@ casper.then execQueries = ->
         word = ''; gen = false
         # check if the random word was retrieved and if not then generate one
         if not /^[a-zA-Z]{1,20}$/.test (word = @fetchText('body').trim())
-          gen = true; CONSONANTS = 'bcdfghjklmnpqrstvwxyz'; VOWELS = 'aeiou'
+          gen = true; word = ''
+          CONSONANTS = 'bcdfghjklmnpqrstvwxyz'; VOWELS = 'aeiou'
           len = Math.floor(Math.random() * 5) + 5 # letters in word (5..9)
           for i in [1..len] by 2 # add letters two at a time (consonant followed by a vowel)
             word += CONSONANTS[Math.floor(Math.random() * 21)] # add a consonant
