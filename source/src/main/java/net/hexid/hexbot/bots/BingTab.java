@@ -36,6 +36,8 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 	}
 
 	public void processExitCode(int exitCode) {
+		stopProcessbutton.setDisable(true);
+
 		switch(exitCode) {
 		case 2: // login error
 			returnToLoginButton.setDisable(false);
@@ -46,7 +48,6 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 		default: // unknown error
 			returnToLoginButton.setDisable(false);
 			repeatProcessButton.setDisable(false);
-			stopProcessButton.setDisable(true);
 			break;
 		}
 	}
