@@ -33,23 +33,8 @@ public class MoltenTab extends net.hexid.hexbot.bot.BotTab {
 	}
 
 	public void processExitCode(int exitCode) {
-		switch (exitCode) {
-		case 1: // phantomjs/casperjs error
-			break;
-		case 2: // login error
-			returnToLoginButton.setDisable(false);
-			break;
-		case 4: // script not found error (script already executed 1+ times)
-			repeatProcessButton.setDisable(false);
-		case 3: // script not found error (script not executed yet)
-			returnToLoginButton.setDisable(false);
-			break;
-		case 0: // no error
-		default: // unknown error
-			returnToLoginButton.setDisable(false);
-			repeatProcessButton.setDisable(false);
-			break;
-		}
+		returnToLoginButton.setDisable(false);
+		if(exitCode != 2) repeatProcessButton.setDisable(false);
 	}
 
 	/**

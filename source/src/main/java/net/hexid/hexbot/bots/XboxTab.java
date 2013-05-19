@@ -33,19 +33,9 @@ public class XboxTab extends net.hexid.hexbot.bot.BotTab {
 	}
 
 	public void processExitCode(int exitCode) {
-		switch (exitCode) {
-		case 2: // login error
-			returnToLoginButton.setDisable(false);
-			break;
-		case 0: // no error
-		case 1: // phantomjs/casperjs error
-		case 3: // internet connection error
-		default: // unknown error
-			returnToLoginButton.setDisable(false);
-			repeatProcessButton.setDisable(false);
-			stopProcessButton.setDisable(true);
-			break;
-		}
+		stopProcessButton.setDisable(true);
+		returnToLoginButton.setDisable(false);
+		if(exitCode != 2) repeatProcessButton.setDisable(false);
 	}
 
 	public ArrayList<String> getBotExecuteData() {

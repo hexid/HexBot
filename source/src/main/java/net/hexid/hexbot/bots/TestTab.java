@@ -32,7 +32,7 @@ public class TestTab extends net.hexid.hexbot.bot.BotTab {
 
 	public void processExitCode(int exitCode) {
 		// just print the return code and disable the 
-		System.out.println("Exit Code: " + exitCode);
+		appendOutput("Exit Code: " + exitCode);
 		startProcessButton.setDisable(false);
 		stopProcessButton.setDisable(true);
 	}

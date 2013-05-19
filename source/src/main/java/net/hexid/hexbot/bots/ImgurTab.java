@@ -31,12 +31,7 @@ public class ImgurTab extends net.hexid.hexbot.bot.BotTab {
 	}
 
 	public void processExitCode(int exitCode) {
-		switch (exitCode) {
-		case 0: // no error
-		default: // unknown error
-			downloadAlbumButton.setDisable(false);
-			break;
-		}
+		downloadAlbumButton.setDisable(false);
 	}
 
 	public ArrayList<String> getBotExecuteData() {
