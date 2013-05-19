@@ -10,6 +10,7 @@ HexBot Changelog
 - Fix spacing and refactor code in bots
 - Require at least CasperJS 1.1.0-DEV
 - Upgrade to PhantomJS 1.9
+- Added a test bot for use with helping with StackOverflow/Github questions
 
 ###v1.0.2
 - Bing GUI can now has a button to stop itself mid-execution

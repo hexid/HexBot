@@ -20,7 +20,7 @@ HexBot v1.0.3
   - `java -jar HexBot.jar botName [botArgs...]`
 - GUI
   - Double-clicking the `HexBot.jar` file, or
-  - `java -jar HexBot.jar 'gui' [, botName...]`
+  - `java -jar HexBot.jar ['gui' [, botName...]`
 - In both cases, leaving out `botName` will print out a list of currently available bots
   - (i.e. bots that have corresponding files in the `bots` directory)
 
