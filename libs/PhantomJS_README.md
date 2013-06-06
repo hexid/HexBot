@@ -2,7 +2,7 @@
 
 Download either the binary or source from http://phantomjs.org/download.html
 
-Currently tested with version `1.9.0`
+Currently tested with version `1.9.1`
 At least version `1.8.1` is needed (`1.9.1` on Windows)
 
 If you download the source:
