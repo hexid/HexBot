@@ -2,15 +2,17 @@ HexBot Changelog
 ==========
 
 ###v1.0.3
-- Create module that will hold variables/functions useful to most/all bots
+- Create module (bots/libs/HexBot.coffee) that will hold variables/functions useful to most/all bots
   - `userAgent`
-  - `parseArgs(argData, casper)`
+  - `parseArgs(casper, argData)`
+- Create module (bots/libs/Microsoft.coffee) that has Microsoft-specific functions
+  - `login(casper, username, password)`
 - Released beta version of Xbox Code Redeemer
   - At current stage, there is no output on success
 - Fix spacing and refactor code in bots
 - Require at least CasperJS 1.1.0-DEV
-- Upgrade to PhantomJS 1.9
-- Added a test bot for use with helping with StackOverflow/Github questions
+- Upgrade to PhantomJS 1.9.1
+- Added a test bot (java implementation) for use with helping with StackOverflow/Github questions
 
 ###v1.0.2
 - Bing GUI can now has a button to stop itself mid-execution

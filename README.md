@@ -10,10 +10,14 @@ HexBot v1.0.3
 - Inside the `source` directory, run `mvn jfx:build-jar` and copy the jar file from the `source/target` directory to the base directory
 
 ###Current Bots Include:
-- Bing Rewards
-- Astral WoW
-- Imgur Albums
-- Xbox Codes
+- Bing Rewards (bots/Bing.coffee)
+- Astral WoW (bots/Astral.coffee)
+- Imgur Albums (bots/Imgur.coffee)
+- Xbox Codes (bots/Xbox.coffee)
+
+###Current Modules Include:
+- HexBot (bots/libs/HexBot.coffee)
+- Microsoft (bots/libs/Microsoft.coffee)
 
 ###Usage:
 - CLI
@@ -25,7 +29,7 @@ HexBot v1.0.3
   - (i.e. bots that have corresponding files in the `bots` directory)
 
 ###Requirements:
-- PhantomJS >= 1.8.1
+- PhantomJS >= 1.8.1 (>= 1.9.1 for Windows)
 - CasperJS >= 1.1.0-DEV (from [GitHub/n1k0/casperjs](http://github.com/n1k0/casperjs))
 - Maven (for compiling from source)
 - Java (>= 7u6)
