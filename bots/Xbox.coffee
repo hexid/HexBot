@@ -15,7 +15,7 @@ casper = require('casper').create(
 )
 
 argData = [{name:'email'}, {name:'password'}, {name:'code',csv:true}]
-ARGS = hexBot.parseArgs(argData, casper)
+ARGS = hexBot.parseArgs(casper, argData)
 
 casper.echo 'Logging in...' # give immediate output to the user
 casper.start 'http://www.xbox.com/', ->

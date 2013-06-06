@@ -17,7 +17,7 @@ casper = require('casper').create(
 )
 
 argData = [{name:'album',csv:true}, {name:'output'}]
-ARGS = hexBot.parseArgs(argData, casper)
+ARGS = hexBot.parseArgs(casper, argData)
 
 if not ARGS[1].match(new RegExp(".+\\#{fs.separator}$"))
   ARGS[1] += fs.separator # add the path separator if it is missing from the end

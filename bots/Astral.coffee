@@ -15,7 +15,7 @@ casper = require('casper').create(
 FIRST_LOGIN = true; count = 0
 
 argData = [{name:'username'}, {name:'password'}]
-ARGS = hexBot.parseArgs(argData, casper)
+ARGS = hexBot.parseArgs(casper, argData)
 
 login = ->
   casper.thenEvaluate ((user, pass) ->
