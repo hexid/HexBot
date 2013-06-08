@@ -15,7 +15,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import jfxtras.labs.scene.control.ListSpinner;
 
-public class BingTab extends net.hexid.hexbot.bot.BotTab {
+public class BingTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private Button returnToLoginButton, repeatProcessButton, stopProcessButton, loginButton;
 	private ListSpinner<Integer> queryCount, delayMin, delayMax;
 	private int queryCountData, delayMinData, delayMaxData;
@@ -42,11 +42,7 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 	}
 
 	public ArrayList<String> getBotExecuteData() {
-		// returns the data that will be used
-		// to call the bot in the command line
 		ArrayList<String> data = new ArrayList<>();
-
-		// user-entered data
 		data.add("--email=" + emailData);
 		data.add("--password=" + passwordData);
 		data.add("--queryCount=" + queryCountData);
@@ -75,14 +71,14 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 		stopProcessButton = ButtonBuilder.create().text("Stop")
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
-						process.destroy(); // exit code may vary (143 encountered during tests)
+						destroyProcess();
 					}
 				}).build();
 
 		return new Node[]{repeatProcessButton, returnToLoginButton, stopProcessButton};
 	}
 
-	public VBox createSetupContent(boolean setDefaultValues) {
+	private VBox createSetupContent(boolean setDefaultValues) {
 		// create a setup pane withT/withoutF default values
 		VBox tabContent = new VBox();
 		Insets inset = new Insets(17.5d, 15.0d, 0.0d, 15.0d);
@@ -135,9 +131,9 @@ public class BingTab extends net.hexid.hexbot.bot.BotTab {
 					public void handle(ActionEvent e) {
 						emailData = emailField.getText();
 						passwordData = passwordField.getText();
-						queryCountData = queryCount.getValue();
-						delayMinData = delayMin.getValue();
-						delayMaxData = delayMax.getValue();
+						queryCountData = (int)queryCount.getValue();
+						delayMinData = (int)delayMin.getValue();
+						delayMaxData = (int)delayMax.getValue();
 						createProcess();
 					}
 				}).text("Login").maxWidth(Double.MAX_VALUE).build();

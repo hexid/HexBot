@@ -14,7 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class XboxTab extends net.hexid.hexbot.bot.BotTab {
+public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private Button returnToLoginButton, repeatProcessButton, stopProcessButton, loginButton;
 	private String emailData, passwordData, codeData;
 	private TextField emailField, codeField;
@@ -39,11 +39,7 @@ public class XboxTab extends net.hexid.hexbot.bot.BotTab {
 	}
 
 	public ArrayList<String> getBotExecuteData() {
-		// returns the data that will be used
-		// to call the bot in the command line
 		ArrayList<String> data = new ArrayList<String>();
-
-		// user-entered data
 		data.add("--email=" + emailData);
 		data.add("--password=" + passwordData);
 		data.add("--code=" + codeData);
@@ -70,14 +66,14 @@ public class XboxTab extends net.hexid.hexbot.bot.BotTab {
 		stopProcessButton = ButtonBuilder.create().text("Stop")
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
-						process.destroy(); // exit code may vary (143 encountered during tests)
+						destroyProcess();
 					}
 				}).build();
 
 		return new Node[]{repeatProcessButton, returnToLoginButton, stopProcessButton};
 	}
 
-	public VBox createSetupContent(boolean setDefaultValues) {
+	private VBox createSetupContent(boolean setDefaultValues) {
 		// create a setup pane withT/withoutF default values
 		VBox tabContent = new VBox();
 		Insets inset = new Insets(17.5d, 15.0d, 0.0d, 15.0d);

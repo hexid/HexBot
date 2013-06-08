@@ -14,7 +14,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
 
-public class AstralTab extends net.hexid.hexbot.bot.BotTab {
+public class AstralTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private Button returnToLoginButton, repeatProcessButton, loginButton;
 	private String usernameData, passwordData;
 	private TextField usernameField;
@@ -37,14 +37,8 @@ public class AstralTab extends net.hexid.hexbot.bot.BotTab {
 		if(exitCode != 2) repeatProcessButton.setDisable(false);
 	}
 
-	/**
-	 * @return Console parameters for the bot
-	 */
 	public ArrayList<String> getBotExecuteData() {
-		// returns the data that will be used
-		// to call the bot in the command line
 		ArrayList<String> data = new ArrayList<String>();
-		
 		data.add("--username="+usernameData);
 		data.add("--password="+passwordData);
 		return data;
@@ -70,7 +64,7 @@ public class AstralTab extends net.hexid.hexbot.bot.BotTab {
 		return new Node[]{repeatProcessButton, returnToLoginButton};
 	}
 
-	public VBox createSetupContent(boolean setDefaultValues) {
+	private VBox createSetupContent(boolean setDefaultValues) {
 		// create a setup pane withT/withoutF default values
 		VBox tabContent = new VBox();
 		Insets inset = new Insets(17.5d, 15.0d, 0.0d, 15.0d);

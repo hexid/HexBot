@@ -14,7 +14,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
 
-public class MoltenTab extends net.hexid.hexbot.bot.BotTab {
+public class MoltenTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private Button returnToLoginButton, repeatProcessButton, loginButton;
 	private String usernameData, passwordData;
 	private TextField usernameField;
@@ -37,14 +37,8 @@ public class MoltenTab extends net.hexid.hexbot.bot.BotTab {
 		if(exitCode != 2) repeatProcessButton.setDisable(false);
 	}
 
-	/**
-	 * @return Console parameters for the bot
-	 */
 	public ArrayList<String> getBotExecuteData() {
-		// returns the data that will be used
-		// to call the bot in the command line
 		ArrayList<String> data = new ArrayList<>();
-		
 		data.add("--username="+usernameData);
 		data.add("--password="+passwordData);
 		return data;
@@ -59,6 +53,7 @@ public class MoltenTab extends net.hexid.hexbot.bot.BotTab {
 				}).text("Repeat").disable(true).maxWidth(Double.MAX_VALUE)
 				.build();
 		HBox.setHgrow(repeatProcessButton, Priority.ALWAYS);
+
 		returnToLoginButton = ButtonBuilder.create().maxWidth(Double.MAX_VALUE)
 				.text("Setup").onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
@@ -70,7 +65,7 @@ public class MoltenTab extends net.hexid.hexbot.bot.BotTab {
 		return new Node[]{repeatProcessButton, returnToLoginButton};
 	}
 
-	public VBox createSetupContent(boolean setDefaultValues) {
+	private VBox createSetupContent(boolean setDefaultValues) {
 		// create a setup pane withT/withoutF default values
 		VBox tabContent = new VBox();
 		Insets inset = new Insets(17.5d, 15.0d, 0.0d, 15.0d);
@@ -78,7 +73,7 @@ public class MoltenTab extends net.hexid.hexbot.bot.BotTab {
 		HBox username = new HBox(3);
 		VBox.setMargin(username, inset);
 		Label usernameLabel = new Label("Username: ");
-		HBox.setHgrow(usernameLabel, Priority.NEVER);
+		//HBox.setHgrow(usernameLabel, Priority.NEVER);
 		usernameField = new TextField();
 		HBox.setHgrow(usernameField, Priority.ALWAYS);
 		username.getChildren().addAll(usernameLabel, usernameField);
@@ -86,7 +81,7 @@ public class MoltenTab extends net.hexid.hexbot.bot.BotTab {
 		HBox password = new HBox(3);
 		VBox.setMargin(password, inset);
 		Label passwordLabel = new Label("Password: ");
-		HBox.setHgrow(passwordLabel, Priority.NEVER);
+		//HBox.setHgrow(passwordLabel, Priority.NEVER);
 		passwordField = new PasswordField();
 		passwordField.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {

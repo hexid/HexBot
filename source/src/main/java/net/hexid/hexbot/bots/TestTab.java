@@ -15,7 +15,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import jfxtras.labs.scene.control.ListSpinner;
 
-public class TestTab extends net.hexid.hexbot.bot.BotTab {
+public class TestTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private Button startProcessButton, stopProcessButton;
 
 	public TestTab() {
@@ -31,7 +31,8 @@ public class TestTab extends net.hexid.hexbot.bot.BotTab {
 	}
 
 	public void processExitCode(int exitCode) {
-		// just print the return code and disable the 
+		// print the return code and
+		// swap the state of buttons
 		appendOutput("Exit Code: " + exitCode);
 		startProcessButton.setDisable(false);
 		stopProcessButton.setDisable(true);
@@ -55,7 +56,7 @@ public class TestTab extends net.hexid.hexbot.bot.BotTab {
 		stopProcessButton = ButtonBuilder.create().text("Stop")
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
-						process.destroy(); // exit code may vary (143 encountered during tests)
+						destroyProcess();
 					}
 				}).disable(true).maxWidth(Double.MAX_VALUE).build();
 		HBox.setHgrow(stopProcessButton, Priority.ALWAYS);

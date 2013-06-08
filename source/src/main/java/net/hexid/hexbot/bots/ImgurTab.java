@@ -1,6 +1,5 @@
 package net.hexid.hexbot.bots;
 
-import java.io.File;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,7 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import net.hexid.Utils;
 
-public class ImgurTab extends net.hexid.hexbot.bot.BotTab {
+public class ImgurTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private String albumData;
 	private TextField albumField;
 	private Button downloadAlbumButton;
@@ -35,10 +34,7 @@ public class ImgurTab extends net.hexid.hexbot.bot.BotTab {
 	}
 
 	public ArrayList<String> getBotExecuteData() {
-		// returns the data that will be used
-		// to call the bot in the command line
 		ArrayList<String> data = new ArrayList<>();
-
 		data.add("--output="+Utils.joinFile(Utils.getPWD().getPath(), "output", "Imgur"));
 		data.add("--album="+albumData);
 		return data;
@@ -46,13 +42,14 @@ public class ImgurTab extends net.hexid.hexbot.bot.BotTab {
 
 	protected Node[] createBottomOutputContent() {
 		Label albumLabel = new Label("Album ID: ");
+		//HBox.setHgrow(albumLabel, Priority.NEVER);
+
 		albumField = new TextField();
 		albumField.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				downloadAlbumButton.fire();
 			}
 		});
-		HBox.setHgrow(albumLabel, Priority.NEVER);
 		HBox.setHgrow(albumField, Priority.ALWAYS);
 
 		downloadAlbumButton = ButtonBuilder.create()
@@ -64,7 +61,7 @@ public class ImgurTab extends net.hexid.hexbot.bot.BotTab {
 						downloadAlbumButton.setDisable(true);
 					}
 				}).text("Download Album").build();
-		HBox.setHgrow(downloadAlbumButton, Priority.NEVER);
+		//HBox.setHgrow(downloadAlbumButton, Priority.NEVER);
 
 		return new Node[]{albumLabel, albumField, downloadAlbumButton};
 	}
