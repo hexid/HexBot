@@ -28,7 +28,7 @@ public class Bots {
 	}
 
 	/**
-	 * Remove any bots whose file does not exist
+	 * Remove all bots whose file does not exist
 	 */
 	public static void removeInvalidBots() {
 		Iterator<Entry<String, HashMap<String, String>>> iter = bots.entrySet().iterator();
