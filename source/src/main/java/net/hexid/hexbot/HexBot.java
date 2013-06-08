@@ -2,8 +2,8 @@ package net.hexid.hexbot;
 
 import java.util.Arrays;
 import net.hexid.hexbot.bot.Bots;
-import net.hexid.hexbot.bot.BotGUI;
-import net.hexid.hexbot.bot.BotCLI;
+import net.hexid.hexbot.bot.gui.BotGUI;
+import net.hexid.hexbot.bot.cmd.BotCMD;
 
 public class HexBot {
 	public HexBot() {
@@ -24,7 +24,7 @@ public class HexBot {
 		if((args.length >= 1 && args[0].equalsIgnoreCase("gui")) || args.length == 0) {
 			BotGUI.init(Arrays.copyOfRange(args, (args.length > 0) ? 1 : 0, args.length));
 		} else { // otherwise use the command line
-			BotCLI.init(args);
+			BotCMD.init(args);
 		}
 	}
 }
