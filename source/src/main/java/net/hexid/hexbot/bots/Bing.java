@@ -1,15 +1,13 @@
 package net.hexid.hexbot.bots;
 
-import java.util.List;
 import java.util.ArrayList;
 
-public class Bing implements net.hexid.hexbot.bot.Bot {
-	private ArrayList<String> botArgs;
+public class Bing extends net.hexid.hexbot.bot.cmd.BotCommand {
 	public Bing(ArrayList<String> botArgs) {
-		this.botArgs = botArgs;
+		super(botArgs);
 	}
 
-	public List<String> getBotExecuteData() {
+	public ArrayList<String> getBotExecuteData() {
 		if(botArgs.size() == 0 || botArgs.size() > 4) {
 			System.out.println("botArgs: email [, queryCount [, minDelay [, maxDelay]]]");
 			System.exit(1);
@@ -18,9 +16,7 @@ public class Bing implements net.hexid.hexbot.bot.Bot {
 		}
 		return botArgs;
 	}
-	public void processExitCode(int exitCode) {
-		
-	}
+
 	public String getShortName() {
 		return "Bing";
 	}

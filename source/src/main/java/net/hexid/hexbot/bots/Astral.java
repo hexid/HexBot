@@ -3,10 +3,9 @@ package net.hexid.hexbot.bots;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Astral implements net.hexid.hexbot.bot.Bot {
-	private ArrayList<String> botArgs;
+public class Astral extends net.hexid.hexbot.bot.cmd.BotCommand {
 	public Astral(ArrayList<String> botArgs) {
-		this.botArgs = botArgs;
+		super(botArgs);
 	}
 
 	public List<String> getBotExecuteData() {
@@ -18,9 +17,7 @@ public class Astral implements net.hexid.hexbot.bot.Bot {
 		}
 		return botArgs;
 	}
-	public void processExitCode(int exitCode) {
-		
-	}
+
 	public String getShortName() {
 		return "Astral";
 	}
