@@ -1,4 +1,4 @@
-package net.hexid.hexbot.bot;
+package net.hexid.hexbot.bot.gui;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -7,7 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public abstract class BotTab extends javafx.scene.control.Tab implements Bot {
+public abstract class BotTab extends javafx.scene.control.Tab implements net.hexid.hexbot.bot.Bot {
 	protected BotTabProcess process;
 	protected TextArea output;
 

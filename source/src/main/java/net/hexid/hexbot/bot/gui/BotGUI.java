@@ -1,4 +1,4 @@
-package net.hexid.hexbot.bot;
+package net.hexid.hexbot.bot.gui;
 
 import java.util.ArrayList;
 import javafx.event.Event;
@@ -8,6 +8,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuBuilder;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import net.hexid.hexbot.bot.Bots;
 
 public class BotGUI extends javafx.application.Application {
 	protected AnchorPane root;

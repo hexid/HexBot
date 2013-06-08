@@ -1,25 +1,28 @@
-package net.hexid.hexbot.bot;
+package net.hexid.hexbot.bot.cmd;
 
 import java.util.Arrays;
 import java.util.ArrayList;
+import net.hexid.hexbot.bot.Bot;
+import net.hexid.hexbot.bot.Bots;
+import net.hexid.hexbot.bot.BotProcess;
 
-public class BotCLI {
+public class BotCMD {
 	String botClass;
 	BotProcess process;
-	Bot bot;
+	BotCommand bot;
 
 	public static void init(String[] args) {
 		try {
-			new BotCLI(new ArrayList<String>(Arrays.asList(args)));
+			new BotCMD(new ArrayList<String>(Arrays.asList(args)));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	public BotCLI(ArrayList<String> args) throws Exception {
+	public BotCMD(ArrayList<String> args) throws Exception {
 		String botName = args.remove(0);
 		botClass = Bots.getBotCliClassPath(botName);
 		if(botClass != null) {
-			bot = (Bot)Class.forName(botClass).getConstructor(ArrayList.class).newInstance(args);
+			bot = (BotCommand)Class.forName(botClass).getConstructor(ArrayList.class).newInstance(args);
 			createProcess();
 		} else {
 			System.out.println(botName + " is an invalid bot.");
@@ -29,7 +32,7 @@ public class BotCLI {
 	protected void createProcess() {
 		System.out.println("Executing " + bot.getShortName() + " bot.");
 		try { // create a new bot process and start it
-			process = new BotProcess(bot);
+			process = new BotCommandProcess(bot);
 			process.start();
 		} catch (java.io.IOException e) {
 			e.printStackTrace();

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 import net.hexid.Utils;
 
-public class BotProcess extends Thread {
+public abstract class BotProcess extends Thread {
 	private Process process;
 	private Scanner in;
 	protected Bot bot;
@@ -18,7 +18,9 @@ public class BotProcess extends Thread {
 		this.process = createProcess();
 		this.in = new Scanner(this.process.getInputStream());
 	}
-	
+
+	protected abstract void processInput(final String in);
+
 	protected Process createProcess() throws IOException {
 		List<String> botExecuteData = bot.getBotExecuteData();
 		botExecuteData.add(0, "casperjs"); // program (will be added to PATH)
@@ -28,10 +30,10 @@ public class BotProcess extends Thread {
 		String pathName;
 		if(File.pathSeparator.equals(";")) { // if windows
 			pathName = "Path";
-			botExecuteData = Arrays.asList(new String[]{"cmd.exe","/C",processData});
-		} else { // if unix
+			botExecuteData = Arrays.asList(new String[]{"cmd.exe", "/C", processData});
+		} else { // if unix-based
 			pathName = "PATH";
-			botExecuteData = Arrays.asList(new String[]{"/usr/bin/env","bash","-c",processData});
+			botExecuteData = Arrays.asList(new String[]{"/usr/bin/env","bash", "-c", processData});
 		}
 
 		// create a processbuilder with the bot's commands and combined input and error streams
@@ -43,9 +45,6 @@ public class BotProcess extends Thread {
 		return pb.start(); // execute the process
 	}
 
-	protected void processInput(final String in) {
-		System.out.println(in);
-	}
 	@Override public void run() {
 		while(in.hasNext()) {
 			processInput(in.nextLine());
@@ -59,6 +58,7 @@ public class BotProcess extends Thread {
 			e.printStackTrace();
 		}
 	}
+
 	public void destroy() {
 		process.destroy();
 	}
