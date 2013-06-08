@@ -45,17 +45,16 @@ public class MoltenTab extends net.hexid.hexbot.bot.gui.BotTab {
 	}
 	
 	protected Node[] createBottomOutputContent() {
-		repeatProcessButton = ButtonBuilder.create()
+		repeatProcessButton = ButtonBuilder.create().text("Repeat")
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
 						createProcess();
 					}
-				}).text("Repeat").disable(true).maxWidth(Double.MAX_VALUE)
-				.build();
+				}).disable(true).maxWidth(Double.MAX_VALUE).build();
 		HBox.setHgrow(repeatProcessButton, Priority.ALWAYS);
 
-		returnToLoginButton = ButtonBuilder.create().maxWidth(Double.MAX_VALUE)
-				.text("Setup").onAction(new EventHandler<ActionEvent>() {
+		returnToLoginButton = ButtonBuilder.create().text("Setup")
+				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
 						setContent(createSetupContent(false));
 					}
@@ -73,7 +72,6 @@ public class MoltenTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox username = new HBox(3);
 		VBox.setMargin(username, inset);
 		Label usernameLabel = new Label("Username: ");
-		//HBox.setHgrow(usernameLabel, Priority.NEVER);
 		usernameField = new TextField();
 		HBox.setHgrow(usernameField, Priority.ALWAYS);
 		username.getChildren().addAll(usernameLabel, usernameField);
@@ -81,7 +79,6 @@ public class MoltenTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox password = new HBox(3);
 		VBox.setMargin(password, inset);
 		Label passwordLabel = new Label("Password: ");
-		//HBox.setHgrow(passwordLabel, Priority.NEVER);
 		passwordField = new PasswordField();
 		passwordField.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {

@@ -81,7 +81,6 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox email = new HBox(3);
 		VBox.setMargin(email, inset);
 		Label emailLabel = new Label("Email: ");
-		HBox.setHgrow(emailLabel, Priority.NEVER);
 		emailField = new TextField();
 		HBox.setHgrow(emailField, Priority.ALWAYS);
 		email.getChildren().addAll(emailLabel, emailField);
@@ -89,7 +88,6 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox password = new HBox(3);
 		VBox.setMargin(password, inset);
 		Label passwordLabel = new Label("Password: ");
-		HBox.setHgrow(passwordLabel, Priority.NEVER);
 		passwordField = new PasswordField();
 		passwordField.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
@@ -102,7 +100,6 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox code = new HBox(3);
 		VBox.setMargin(code, inset);
 		Label codeLabel = new Label("Code: ");
-		HBox.setHgrow(emailLabel, Priority.NEVER);
 		codeField = new TextField();
 		HBox.setHgrow(codeField, Priority.ALWAYS);
 		code.getChildren().addAll(codeLabel, codeField);

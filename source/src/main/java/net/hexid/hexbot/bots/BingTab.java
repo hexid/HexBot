@@ -86,7 +86,6 @@ public class BingTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox email = new HBox(3);
 		VBox.setMargin(email, inset);
 		Label emailLabel = new Label("Email: ");
-		HBox.setHgrow(emailLabel, Priority.NEVER);
 		emailField = new TextField();
 		HBox.setHgrow(emailField, Priority.ALWAYS);
 		email.getChildren().addAll(emailLabel, emailField);
@@ -94,7 +93,6 @@ public class BingTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox password = new HBox(3);
 		VBox.setMargin(password, inset);
 		Label passwordLabel = new Label("Password: ");
-		HBox.setHgrow(passwordLabel, Priority.NEVER);
 		passwordField = new PasswordField();
 		passwordField.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
@@ -107,7 +105,6 @@ public class BingTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox query = new HBox(3);
 		VBox.setMargin(query, inset);
 		Label queryLabel = new Label("Queries: ");
-		HBox.setHgrow(queryLabel, Priority.NEVER);
 		queryCount = new ListSpinner<>(0, 200, 1);
 		HBox.setHgrow(queryCount, Priority.ALWAYS);
 		query.getChildren().addAll(queryLabel, queryCount);
@@ -115,11 +112,9 @@ public class BingTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox delay = new HBox(3);
 		VBox.setMargin(delay, inset);
 		Label delayLabel = new Label("Delay (Secs): ");
-		HBox.setHgrow(delayLabel, Priority.NEVER);
 		delayMin = new ListSpinner<>(5, 120, 1);
 		HBox.setHgrow(delayMin, Priority.ALWAYS);
 		Label delayToLabel = new Label(" to ");
-		HBox.setHgrow(delayToLabel, Priority.NEVER);
 		delayMax = new ListSpinner<>(5, 120, 1);
 		HBox.setHgrow(delayMax, Priority.ALWAYS);
 		delay.getChildren().addAll(delayLabel, delayMin, delayToLabel, delayMax);

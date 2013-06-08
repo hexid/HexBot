@@ -42,7 +42,6 @@ public class ImgurTab extends net.hexid.hexbot.bot.gui.BotTab {
 
 	protected Node[] createBottomOutputContent() {
 		Label albumLabel = new Label("Album ID: ");
-		//HBox.setHgrow(albumLabel, Priority.NEVER);
 
 		albumField = new TextField();
 		albumField.setOnAction(new EventHandler<ActionEvent>() {
@@ -61,7 +60,6 @@ public class ImgurTab extends net.hexid.hexbot.bot.gui.BotTab {
 						downloadAlbumButton.setDisable(true);
 					}
 				}).text("Download Album").build();
-		//HBox.setHgrow(downloadAlbumButton, Priority.NEVER);
 
 		return new Node[]{albumLabel, albumField, downloadAlbumButton};
 	}
