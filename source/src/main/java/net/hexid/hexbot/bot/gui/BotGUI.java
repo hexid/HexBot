@@ -63,7 +63,8 @@ public class BotGUI extends javafx.application.Application {
 							((Menu)e.getSource()).hide();
 							addTab(botName); // create a new tab
 						}
-					// set the items to be an empty menuItem so that when clicked it will disappear immediately
+					// set the items to be an empty menuItem so that
+					// when clicked it will disappear immediately
 					}).items(new javafx.scene.control.MenuItem()).build());
 		}
 

@@ -62,7 +62,7 @@ public class Bots {
 
 	/**
 	 * @param botName
-	 * @return true if the bot has data
+	 * @return true if a key exists for the bot
 	 */
 	public static boolean hasBot(String botName) {
 		return bots.containsKey(botName.toLowerCase());
