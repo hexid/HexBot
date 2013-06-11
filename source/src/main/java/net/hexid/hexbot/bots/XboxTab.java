@@ -29,7 +29,7 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 	}
 
 	protected Node defaultContent() {
-		return createSetupContent(true);
+		return createSetupContent();
 	}
 
 	public void processExitCode(int exitCode) {
@@ -45,7 +45,7 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 		data.add("--code=" + codeData);
 		return data;
 	}
-	
+
 	protected Node[] createBottomOutputContent() {
 		repeatProcessButton = ButtonBuilder.create().text("Repeat")
 				.onAction(new EventHandler<ActionEvent>() {
@@ -58,7 +58,7 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 		returnToLoginButton = ButtonBuilder.create().text("Setup")
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
-						setContent(createSetupContent(false));
+						setContent(createSetupContent());
 					}
 				}).disable(true).maxWidth(Double.MAX_VALUE).build();
 		HBox.setHgrow(returnToLoginButton, Priority.ALWAYS);
@@ -73,8 +73,7 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 		return new Node[]{repeatProcessButton, returnToLoginButton, stopProcessButton};
 	}
 
-	private VBox createSetupContent(boolean setDefaultValues) {
-		// create a setup pane withT/withoutF default values
+	private VBox createSetupContent() {
 		VBox tabContent = new VBox();
 		Insets inset = new Insets(17.5d, 15.0d, 0.0d, 15.0d);
 
@@ -90,7 +89,7 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 		Label passwordLabel = new Label("Password: ");
 		passwordField = new PasswordField();
 		passwordField.setOnAction(new EventHandler<ActionEvent>() {
-			@Override public void handle(ActionEvent e) {
+			public void handle(ActionEvent e) {
 				loginButton.fire();
 			}
 		});

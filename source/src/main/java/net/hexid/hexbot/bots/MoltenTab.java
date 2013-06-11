@@ -81,7 +81,7 @@ public class MoltenTab extends net.hexid.hexbot.bot.gui.BotTab {
 		Label passwordLabel = new Label("Password: ");
 		passwordField = new PasswordField();
 		passwordField.setOnAction(new EventHandler<ActionEvent>() {
-			@Override public void handle(ActionEvent e) {
+			public void handle(ActionEvent e) {
 				loginButton.fire();
 			}
 		});
@@ -90,14 +90,14 @@ public class MoltenTab extends net.hexid.hexbot.bot.gui.BotTab {
 
 		HBox button = new HBox(7.5d);
 		VBox.setMargin(button, inset);
-		loginButton = ButtonBuilder.create()
+		loginButton = ButtonBuilder.create().text("Login")
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
 						usernameData = usernameField.getText();
 						passwordData = passwordField.getText();
 						createProcess();
 					}
-				}).text("Login").maxWidth(Double.MAX_VALUE).build();
+				}).maxWidth(Double.MAX_VALUE).build();
 		HBox.setHgrow(loginButton, Priority.ALWAYS);
 		button.getChildren().addAll(loginButton);
 
