@@ -23,7 +23,7 @@ public abstract class BotProcess extends Thread {
 
 	protected Process createProcess() throws IOException {
 		List<String> botExecuteData = bot.getBotExecuteData();
-		botExecuteData.add(0, "casperjs"); // program (will be added to PATH)
+		botExecuteData.add(0, "casperjs --no-colors"); // program (will be added to PATH)
 		botExecuteData.add(1, Bots.getBotFile(bot));
 
 		String processData = Utils.join(" ", botExecuteData);
