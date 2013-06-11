@@ -3,6 +3,7 @@ package net.hexid.hexbot.bots;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBuilder;
@@ -12,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.geometry.Insets;
 
 public class AstralTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private Button returnToLoginButton, repeatProcessButton, loginButton;
@@ -102,9 +102,7 @@ public class AstralTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox.setHgrow(loginButton, Priority.ALWAYS);
 		button.getChildren().addAll(loginButton);
 
-		if (setDefaultValues) { // set the default values
-			// no default values
-		} else { // set previous values
+		if(setDefaultValues) { // set previous values
 			usernameField.setText(usernameData);
 			passwordField.setText(passwordData);
 		}
