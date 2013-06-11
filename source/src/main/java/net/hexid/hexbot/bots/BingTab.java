@@ -13,13 +13,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import jfxtras.labs.scene.control.ListSpinner;
+import net.hexid.jfx.IntegerField;
 
 public class BingTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private Button returnToLoginButton, repeatProcessButton, stopProcessButton, loginButton;
-	private ListSpinner<Integer> queryCount, delayMin, delayMax;
-	private int queryCountData, delayMinData, delayMaxData;
-	private String emailData, passwordData;
+	private IntegerField queryCount, delayMin, delayMax;
+	private String emailData, passwordData, queryCountData, delayMinData, delayMaxData;
 	private TextField emailField;
 	private PasswordField passwordField;
 
@@ -95,7 +94,7 @@ public class BingTab extends net.hexid.hexbot.bot.gui.BotTab {
 		Label passwordLabel = new Label("Password: ");
 		passwordField = new PasswordField();
 		passwordField.setOnAction(new EventHandler<ActionEvent>() {
-			@Override public void handle(ActionEvent e) {
+			public void handle(ActionEvent e) {
 				loginButton.fire();
 			}
 		});
@@ -105,17 +104,17 @@ public class BingTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox query = new HBox(3);
 		VBox.setMargin(query, inset);
 		Label queryLabel = new Label("Queries: ");
-		queryCount = new ListSpinner<>(0, 200, 1);
+		queryCount = new IntegerField();
 		HBox.setHgrow(queryCount, Priority.ALWAYS);
 		query.getChildren().addAll(queryLabel, queryCount);
 
 		HBox delay = new HBox(3);
 		VBox.setMargin(delay, inset);
 		Label delayLabel = new Label("Delay (Secs): ");
-		delayMin = new ListSpinner<>(5, 120, 1);
+		delayMin = new IntegerField();
 		HBox.setHgrow(delayMin, Priority.ALWAYS);
 		Label delayToLabel = new Label(" to ");
-		delayMax = new ListSpinner<>(5, 120, 1);
+		delayMax = new IntegerField();
 		HBox.setHgrow(delayMax, Priority.ALWAYS);
 		delay.getChildren().addAll(delayLabel, delayMin, delayToLabel, delayMax);
 
@@ -126,9 +125,9 @@ public class BingTab extends net.hexid.hexbot.bot.gui.BotTab {
 					public void handle(ActionEvent e) {
 						emailData = emailField.getText();
 						passwordData = passwordField.getText();
-						queryCountData = (int)queryCount.getValue();
-						delayMinData = (int)delayMin.getValue();
-						delayMaxData = (int)delayMax.getValue();
+						queryCountData = queryCount.getText();
+						delayMinData = delayMin.getText();
+						delayMaxData = delayMax.getText();
 						createProcess();
 					}
 				}).text("Login").maxWidth(Double.MAX_VALUE).build();
@@ -136,15 +135,15 @@ public class BingTab extends net.hexid.hexbot.bot.gui.BotTab {
 		button.getChildren().addAll(loginButton);
 
 		if(setDefaultValues) { // set the default values
-			queryCount.setValue(0);
-			delayMin.setValue(20);
-			delayMax.setValue(40);
+			queryCount.setInteger(0);
+			delayMin.setInteger(20);
+			delayMax.setInteger(40);
 		} else { // set previous values
 			emailField.setText(emailData);
 			passwordField.setText(passwordData);
-			queryCount.setValue(queryCountData);
-			delayMin.setValue(delayMinData);
-			delayMax.setValue(delayMaxData);
+			queryCount.setText(queryCountData);
+			delayMin.setText(delayMinData);
+			delayMax.setText(delayMaxData);
 		}
 
 		// add all the elements to the container that will be added to the tab

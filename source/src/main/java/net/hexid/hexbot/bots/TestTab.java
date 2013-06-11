@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import jfxtras.labs.scene.control.ListSpinner;
 
 public class TestTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private Button startProcessButton, stopProcessButton;
