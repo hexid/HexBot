@@ -1,6 +1,8 @@
 HexBot v1.0.3
 ==========
 
+![HexBot](/source/src/main/resources/HexBot.png "HexBot")
+
 ###Installation:
 ##### Dependencies
 - Install both [PhantomJS](http://phantomjs.org/download.html) and [CasperJS](http://casperjs.org/installation.html)

@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuBuilder;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import net.hexid.hexbot.bot.Bots;
@@ -36,6 +37,7 @@ public class BotGUI extends javafx.application.Application {
 			System.out.println("Available bots: " + Bots.getAvailableBots());
 		}
 
+		stage.getIcons().add(new Image(BotGUI.class.getResourceAsStream("/HexBot.png")));
 		stage.setTitle("HexBot by Hexid");
 		stage.setScene(new javafx.scene.Scene(root, 550, 300));
 		stage.show();
