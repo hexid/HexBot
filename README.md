@@ -1,7 +1,6 @@
-HexBot v1.0.3
+![HexBot](/source/src/main/resources/HexBot.png "HexBot") v1.0.3
 ==========
 
-![HexBot](/source/src/main/resources/HexBot.png "HexBot")
 
 ###Installation:
 ##### Dependencies
