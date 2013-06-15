@@ -6,12 +6,19 @@
   2 = error logging in (most likely an incorrect password)
 ###
 hexBot = require('./libs/HexBot.coffee')
+casper = hexBot.createCasper(
+  pageSettings:
+    loadImages: false
+    loadPlugins: false
+)
+###
 casper = require('casper').create(
   pageSettings:
     loadImages: false
     loadPlugins: false
     userAgent: hexBot.userAgent
 )
+###
 FIRST_LOGIN = true; count = 0
 
 argData = [{name:'username'}, {name:'password'}]

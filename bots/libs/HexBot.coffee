@@ -1,9 +1,17 @@
 ### Common variables and functions for bots ###
 
-#require = patchRequire(global.require)
-#utils = require('utils')
+require = patchRequire(global.require)
+utils = require('utils')
 
-exports.userAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1530.2 Safari/537.36'
+exports.createCasper = (casperOptions = {}) ->
+  return require('casper').create(
+    utils.mergeObjects(casperOptions,
+      colorizerType: 'Dummy'
+      pageSettings:
+        userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1530.2 Safari/537.36'
+    )
+  )
+
 
 #argumentData = [{name:'argName1',default:'optionalArg'}, {name:'argName2',csv:true}, ...]
 exports.parseArgs = (casper, argumentData) ->
@@ -12,7 +20,7 @@ exports.parseArgs = (casper, argumentData) ->
   for arg in argumentData # get the arguments from the command line
     if casper.cli.raw.has arg.name
       ARGS[argCount] = casper.cli.raw.get arg.name
-    else if casper.cli.raw.has posArg+1
+    else if casper.cli.raw.has posArg + 1
       ARGS[argCount] = casper.cli.raw.get ++posArg
     else if arg.default? # use the default value if one exists
       ARGS[argCount] = arg.default

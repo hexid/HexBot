@@ -8,11 +8,10 @@
   3 = internet connection error
 ###
 hexBot = require('./libs/HexBot.coffee')
-casper = require('casper').create(
+casper = hexBot.createCasper(
   pageSettings:
     loadImages: false
     loadPlugins: false
-    userAgent: hexBot.userAgent
 )
 DASHBOARD = 'http://www.bing.com/rewards/dashboard'
 offers = []; executed = 0; fb = false

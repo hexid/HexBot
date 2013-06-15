@@ -7,11 +7,10 @@
   3 = internet connection error
 ###
 hexBot = require('./libs/HexBot.coffee')
-casper = require('casper').create(
+casper = hexBot.createCasper(
   pageSettings:
     loadImages: false
     loadPlugins: false
-    userAgent: hexBot.userAgent
 )
 
 argData = [{name:'email'}, {name:'password'}, {name:'code',csv:true}]
