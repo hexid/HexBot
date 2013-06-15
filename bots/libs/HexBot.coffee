@@ -4,10 +4,12 @@ require = patchRequire(global.require)
 utils = require('utils')
 
 exports.createCasper = (casperOptions = {}) ->
-  return require('casper').create(
+  require('casper').create(
     utils.mergeObjects(casperOptions,
       colorizerType: 'Dummy'
       pageSettings:
+        loadImages: false
+        loadPlugins: false
         userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1530.2 Safari/537.36'
     )
   )

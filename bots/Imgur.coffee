@@ -10,8 +10,6 @@ hexBot = require('./libs/HexBot.coffee')
 fs = require('fs')
 casper = hexBot.createCasper(
   pageSettings:
-    loadImages: false
-    loadPlugins: false
     webSecurityEnabled: false # disable xss so that images can be downloaded without changing urls
 )
 
