@@ -1,3 +1,13 @@
 output/
 releases/
+source/target/
+
+bots/Molten.coffee
+bots/Test.*
+
+libs/phantomjs/**
+!libs/phantomjs/LICENSE.BSD
+libs/casperjs/**
+!libs/casperjs/LICENSE.md
+
 HexBot.jar
