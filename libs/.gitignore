@@ -1,0 +1,4 @@
+phantomjs/**
+!phantomjs/LICENSE.BSD
+casperjs/**
+!casperjs/LICENSE.md
