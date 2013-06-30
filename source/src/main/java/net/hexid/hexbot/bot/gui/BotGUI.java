@@ -1,11 +1,12 @@
 package net.hexid.hexbot.bot.gui;
 
-import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuBuilder;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -44,8 +45,7 @@ public class BotGUI extends javafx.application.Application {
 	}
 
 	protected void addTab(String botName) {
-		try {
-			// create a new tab based on the bot's guiClassPath
+		try { // create a new tab based on the bot's guiClassPath
 			tabPane.addBotTab((BotTab)Class.forName(Bots.getBotGuiClassPath(botName)).newInstance());
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -54,26 +54,23 @@ public class BotGUI extends javafx.application.Application {
 
 	protected MenuBar createMenuBar() {
 		MenuBar menuBar = new MenuBar();
-		ArrayList<Menu> menus = new ArrayList<>();
+		ObservableList<Menu> menus = menuBar.getMenus();
+		MenuBuilder<? extends MenuBuilder> mb = MenuBuilder.create();
 
-		// iterate over botNames
-		for(final String botName : Bots.botNames()) {
+		for(final String botName : Bots.botNames()) { // iterate over botNames
 			// create a menu item with the bot's long name
-			menus.add(MenuBuilder.create().text(Bots.getBotLongName(botName))
+			menus.add(mb.text(Bots.getBotLongName(botName))
 					.onShown(new EventHandler<Event>() {
 						@Override public void handle(Event e) {
 							((Menu)e.getSource()).hide();
 							addTab(botName); // create a new tab
 						}
-					// set the items to be an empty menuItem so that
-					// when clicked it will disappear immediately
-					}).items(new javafx.scene.control.MenuItem()).build());
+					}).items(new MenuItem()).build());
 		}
 
 		if(menus.size() == 0) // if no bot tabs were created
-			menus.add(MenuBuilder.create().text("No bots found").build());
-		menuBar.getMenus().addAll(menus);
-		
+			menus.add(mb.text("No bots found").build());
+
 		AnchorPane.setTopAnchor(menuBar, 0.0d);
 		AnchorPane.setLeftAnchor(menuBar, 0.0d);
 		AnchorPane.setRightAnchor(menuBar, 0.0d);
