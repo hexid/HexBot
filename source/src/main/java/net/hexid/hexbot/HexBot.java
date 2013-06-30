@@ -15,16 +15,19 @@ public class HexBot {
 		Bots.addBot("xbox", "Xbox Codes", "net.hexid.hexbot.bots.Xbox", "net.hexid.hexbot.bots.XboxTab", "Xbox.coffee");
 	}
 
-	public static void main(String[] args) {
-		new HexBot();
+	protected void init(String[] args) {
 		Bots.removeInvalidBots();
 
-		// if more than 1 argument and the first
-		// is `gui` -- or there are no arguments
+		// if more than 1 argument and the first is `gui` -- or there are no arguments
 		if((args.length >= 1 && args[0].equalsIgnoreCase("gui")) || args.length == 0) {
 			BotGUI.init(Arrays.copyOfRange(args, (args.length > 0) ? 1 : 0, args.length));
 		} else { // otherwise use the command line
 			BotCMD.init(args);
 		}
+	}
+
+	public static void main(String[] args) {
+		HexBot hexbot = new HexBot();
+		hexbot.init(args);
 	}
 }
