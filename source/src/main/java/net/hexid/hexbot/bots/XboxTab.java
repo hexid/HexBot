@@ -47,28 +47,32 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 	}
 
 	protected Node[] createBottomOutputContent() {
-		repeatProcessButton = ButtonBuilder.create().text("Repeat")
-				.onAction(new EventHandler<ActionEvent>() {
-					public void handle(ActionEvent e) {
-						createProcess();
-					}
-				}).disable(true).maxWidth(Double.MAX_VALUE).build();
-		HBox.setHgrow(repeatProcessButton, Priority.ALWAYS);
+		ButtonBuilder<? extends ButtonBuilder> buttons = ButtonBuilder.create();
 
-		returnToLoginButton = ButtonBuilder.create().text("Setup")
-				.onAction(new EventHandler<ActionEvent>() {
-					public void handle(ActionEvent e) {
-						setContent(createSetupContent());
-					}
-				}).disable(true).maxWidth(Double.MAX_VALUE).build();
-		HBox.setHgrow(returnToLoginButton, Priority.ALWAYS);
-
-		stopProcessButton = ButtonBuilder.create().text("Stop")
+		stopProcessButton = buttons.text("Stop")
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
 						destroyProcess();
 					}
 				}).build();
+
+		buttons = buttons.disable(true).maxWidth(Double.MAX_VALUE);
+
+		repeatProcessButton = buttons.text("Repeat")
+				.onAction(new EventHandler<ActionEvent>() {
+					public void handle(ActionEvent e) {
+						createProcess();
+					}
+				}).build();
+		HBox.setHgrow(repeatProcessButton, Priority.ALWAYS);
+
+		returnToLoginButton = buttons.text("Setup")
+				.onAction(new EventHandler<ActionEvent>() {
+					public void handle(ActionEvent e) {
+						setContent(createSetupContent());
+					}
+				}).build();
+		HBox.setHgrow(returnToLoginButton, Priority.ALWAYS);
 
 		return new Node[]{repeatProcessButton, returnToLoginButton, stopProcessButton};
 	}
