@@ -8,7 +8,7 @@
   - Refer to the individual instructions in the `libs` directory.
 
 ##### Compile
-- Inside the `source` directory, run `mvn jfx:build-jar` and copy the jar file from the `source/target` directory to the base directory
+- Inside the `source` directory, run `mvn jfx:jar` and copy the jar file from `source/target/jfx/app/` to the base directory
 
 ###Current Bots Include:
 - Bing Rewards (bots/Bing.coffee)
