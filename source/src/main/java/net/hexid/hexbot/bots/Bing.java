@@ -8,10 +8,10 @@ public class Bing extends net.hexid.hexbot.bot.cmd.BotCommand {
 	}
 
 	public ArrayList<String> getBotExecuteData() {
-		if(botArgs.size() == 0 || botArgs.size() > 4) {
-			System.out.println("botArgs: email [, queryCount [, minDelay [, maxDelay]]]");
+		if(botArgs.size() == 0 || botArgs.size() > 5) {
+			System.out.println("botArgs: email [, password] [, queryCount [, minDelay [, maxDelay]]]");
 			System.exit(1);
-		} else {
+		} else if(botArgs.size() == 1 || botArgs.get(1).matches("-?\\d+(\\.\\d+)?")) {
 			botArgs.add("--password="+new String(System.console().readPassword("Password: ")));
 		}
 		return botArgs;
