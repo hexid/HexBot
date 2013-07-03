@@ -18,8 +18,8 @@ public class HexBot {
 	protected void init(String[] args) {
 		Bots.removeInvalidBots();
 
-		// if more than 1 argument and the first is `gui` -- or there are no arguments
-		if((args.length >= 1 && args[0].equalsIgnoreCase("gui")) || args.length == 0) {
+		// if there are no arguments of the first is `gui`
+		if(args.length == 0 || args[0].equalsIgnoreCase("gui")) {
 			BotGUI.init(Arrays.copyOfRange(args, (args.length > 0) ? 1 : 0, args.length));
 		} else { // otherwise use the command line
 			BotCMD.init(args);
