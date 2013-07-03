@@ -8,5 +8,7 @@ public abstract class BotCommand implements net.hexid.hexbot.bot.Bot {
 		this.botArgs = botArgs;
 	}
 
-	public void processExitCode(int exitCode) {}
+	public void processExitCode(int exitCode) {
+		System.out.println("Exit code: " + exitCode);
+	}
 }
