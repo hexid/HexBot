@@ -44,14 +44,14 @@ public class Bots {
 	public static TreeMap<String, HashMap<String, String>> getBots() {
 		return bots;
 	}
-	
+
 	/**
 	 * @return Array of all bot names (keys to map)
 	 */
 	public static String[] botNames() {
 		return bots.keySet().toArray(new String[0]);
 	}
-	
+
 	/**
 	 * @param botName
 	 * @return HashMap with bot's data
@@ -114,7 +114,7 @@ public class Bots {
 
 		if(sysSpecific.contains("win")) {
 			sysSpecific = "windows";
-			casperBin = "batchbin";
+			casperSysBin = "batchbin";
 		} else if(sysSpecific.contains("mac")) {
 			sysSpecific = "macosx";
 		} else {
