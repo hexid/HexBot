@@ -1,36 +1,54 @@
 ![HexBot](/source/src/main/resources/HexBot.png "HexBot") v1.0.3
-==========
+===
 
 
 ###Installation:
 ##### Dependencies
 - Install both [PhantomJS](http://phantomjs.org/download.html) and [CasperJS](http://casperjs.org/installation.html)
   - Refer to the individual instructions in the `libs` directory.
+  - These can also be installed independently on the system, but the binaries must be included in the PATH environment variable
 
 ##### Compile
-- Inside the `source` directory, run `mvn jfx:jar` and copy the jar file from `source/target/jfx/app/` to the base directory
+    cd source/
+    mvn jfx:jar
+    mv target/jfx/app/HexBot.jar ../HexBot.jar
 
-###Current Bots Include:
-- Bing Rewards (bots/Bing.coffee)
-- Astral WoW (bots/Astral.coffee)
-- Imgur Albums (bots/Imgur.coffee)
-- Xbox Codes (bots/Xbox.coffee)
+---
 
-###Current Modules Include:
-- HexBot (bots/libs/HexBot.coffee)
-- Microsoft (bots/libs/Microsoft.coffee)
+###File Structure
+    # Bots (moving these will remove them from the launcher)
+    bots/Bing.coffee # Bing Rewards
+    bots/Astral.coffee # Astral WoW
+    bots/Imgur.coffee # Imgur Albums
+    bots/Xbox.coffee # Xbox Codes
 
-###Usage:
-- CLI
-  - `java -jar HexBot.jar botName [botArgs...]`
-- GUI
-  - Double-clicking the `HexBot.jar` file, or
-  - `java -jar HexBot.jar ['gui' [, botName...]`
-- In both cases, leaving out `botName` will print out a list of currently available bots
-  - (i.e. bots that have corresponding files in the `bots` directory)
+    # Modules (moving these will cause the associated bots to fail)
+    bots/libs/HexBot.coffee # HexBot
+    bots/libs/Microsoft.coffee # Microsoft
 
-###Requirements:
+    # Libraries (CasperJS/PhantomJS - required to run the bots)
+    $PATH/%PATH% # these take precedence over the libs folder
+    libs/**
+
+    # Launcher
+    HexBot.jar
+
+---
+
+###Usage
+    # CLI
+    java -jar HexBot.jar botName [botArgs...]
+
+    # GUI
+    java -jar HexBot.jar ['gui' [, botName...]
+
+In both cases, leaving out `botName` will print out a list of currently available bots
+
+---
+
+###Requirements
 - PhantomJS >= 1.8.1 (>= 1.9.1 for Windows)
 - CasperJS >= 1.1.0-DEV (from [GitHub/n1k0/casperjs](http://github.com/n1k0/casperjs))
 - Maven (for compiling from source)
-- Java (>= 7u6)
+- Java (>= 7u6 or with JavaFX standalone)
+- Python (only on Linux and Mac)
