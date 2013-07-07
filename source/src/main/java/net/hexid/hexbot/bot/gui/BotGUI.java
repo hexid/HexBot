@@ -35,7 +35,7 @@ public class BotGUI extends javafx.application.Application {
 		}
 		if(tabPane.getTabs().size() == 0) { // if no arguments were passed to the gui
 			System.out.println("args: 'gui' [BotName...]");
-			System.out.println("Available bots: " + Bots.getAvailableBots());
+			System.out.println("Available bots: " + Bots.botNamesString());
 		}
 
 		stage.getIcons().add(new Image(BotGUI.class.getResourceAsStream("/HexBot.png")));

@@ -26,7 +26,7 @@ public class BotCMD {
 			createProcess();
 		} else {
 			System.out.println(botName + " is an invalid bot.");
-			System.out.println("Available bots: " + Bots.getAvailableBots());
+			System.out.println("Available bots: " + Bots.botNamesString());
 		}
 	}
 	protected void createProcess() {
