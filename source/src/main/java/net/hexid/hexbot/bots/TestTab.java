@@ -55,7 +55,7 @@ public class TestTab extends net.hexid.hexbot.bot.gui.BotTab {
 		stopProcessButton = ButtonBuilder.create().text("Stop")
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
-						destroyProcess();
+						killProcess();
 					}
 				}).disable(true).maxWidth(Double.MAX_VALUE).build();
 		HBox.setHgrow(stopProcessButton, Priority.ALWAYS);
