@@ -55,7 +55,7 @@ public abstract class BotTab extends javafx.scene.control.Tab implements net.hex
 
 	public void destroyProcess() { // stop the process, if one exists
 		if(process != null)
-			process.destroy();
+			process.killProcess();
 	}
 
 	/**

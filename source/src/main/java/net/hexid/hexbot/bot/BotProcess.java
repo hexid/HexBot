@@ -38,7 +38,7 @@ public abstract class BotProcess extends Thread {
 
 		// create a processbuilder with the bot's commands and combined input and error streams
 		ProcessBuilder pb = new ProcessBuilder(botExecuteData).redirectErrorStream(true);
-		
+
 		// append phantomjs and casperjs to the path (runs local installs first)
 		pb.environment().put(pathName, Bots.getBotEnvPath(pb.environment().get(pathName)));
 
@@ -59,7 +59,7 @@ public abstract class BotProcess extends Thread {
 		}
 	}
 
-	public void destroy() {
+	public void killProcess() {
 		process.destroy();
 	}
 }
