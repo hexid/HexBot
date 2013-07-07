@@ -1,6 +1,7 @@
 package net.hexid.hexbot.bot;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -45,11 +46,39 @@ public class Bots {
 		return bots;
 	}
 
+	public static String getBotEnvPath(String oldEnvPath) {
+		String dir = Utils.getPWD().getPath();
+		String sysSpecific = System.getProperty("os.name").toLowerCase();
+		String casperBin = "bin";
+
+		if(sysSpecific.contains("win")) {
+			sysSpecific = "windows";
+			casperBin = "batchbin";
+		} else if(sysSpecific.contains("mac")) {
+			sysSpecific = "macosx";
+		} else {
+			sysSpecific += ("-" + System.getProperty("os.arch"));
+		}
+
+		String phantom = Utils.joinFile(dir, "libs", "phantomjs");
+		String phantomBin = Utils.joinFile(phantom, "bin");
+		String phantomOS = Utils.joinFile(phantomBin, sysSpecific);
+		String casper = Utils.joinFile(dir, "libs", "casperjs", casperBin);
+		return Utils.join(File.pathSeparator, oldEnvPath, phantomOS, phantomBin, phantom, casper);
+	}
+
 	/**
 	 * @return Array of all bot names (keys to map)
 	 */
 	public static String[] botNames() {
 		return bots.keySet().toArray(new String[0]);
+	}
+
+	/**
+	 * @return String representation of the array of bot names
+	 */
+	public static String botNamesString() {
+		return java.util.Arrays.toString(botNames());
 	}
 
 	/**
@@ -66,6 +95,16 @@ public class Bots {
 	 */
 	public static boolean hasBot(String botName) {
 		return bots.containsKey(botName.toLowerCase());
+	}
+
+	/**
+	 * Get the specified bot's value at a given key
+	 * @param botName
+	 * @param key Key to query for in bot's HashMap
+	 * @return botData; null if nonexistant
+	 */
+	public static String getFromBot(String botName, String key) {
+		return (hasBot(botName)) ? getBot(botName).get(key) : null;
 	}
 
 	/**
@@ -97,45 +136,10 @@ public class Bots {
 		return getFromBot(botName, "fileName");
 	}
 
-	/**
-	 * Get the specified bot's value at a given key
-	 * @param botName
-	 * @param key Key to query for in bot's HashMap
-	 * @return botData; null if nonexistant
-	 */
-	public static String getFromBot(String botName, String key) {
-		return (hasBot(botName)) ? getBot(botName).get(key) : null;
-	}
-
-	public static String getBotEnvPath(String oldEnvPath) {
-		String dir = Utils.getPWD().getPath();
-		String sysSpecific = System.getProperty("os.name").toLowerCase();
-		String casperBin = "bin";
-
-		if(sysSpecific.contains("win")) {
-			sysSpecific = "windows";
-			casperSysBin = "batchbin";
-		} else if(sysSpecific.contains("mac")) {
-			sysSpecific = "macosx";
-		} else {
-			sysSpecific += ("-" + System.getProperty("os.arch"));
-		}
-
-		String phantom = Utils.joinFile(dir, "libs", "phantomjs");
-		String phantomBin = Utils.joinFile(phantom, "bin");
-		String phantomOS = Utils.joinFile(phantomBin, sysSpecific);
-		String casper = Utils.joinFile(dir, "libs", "casperjs", casperBin);
-		return Utils.join(File.pathSeparator, oldEnvPath, phantomOS, phantomBin, phantom, casper);
-	}
-
 	public static String getBotFile(String botName) {
 		return Utils.joinFile(Utils.getPWD().getPath(), "bots", getBotFileName(botName));
 	}
 	public static String getBotFile(Bot bot) {
 		return getBotFile(bot.getShortName());
-	}
-
-	public static String getAvailableBots() {
-		return java.util.Arrays.toString(bots.keySet().toArray());
 	}
 }
