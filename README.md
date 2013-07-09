@@ -50,5 +50,5 @@ In both cases, leaving out `botName` will print out a list of currently availabl
 - PhantomJS >= 1.8.1 (>= 1.9.1 for Windows)
 - CasperJS >= 1.1.0-DEV (from [GitHub/n1k0/casperjs](http://github.com/n1k0/casperjs))
 - Maven (for compiling from source)
-- Java (>= 7u6 or with JavaFX standalone)
+- Java (>= 7u6 required for GUI)
 - Python (only on Linux and Mac)
