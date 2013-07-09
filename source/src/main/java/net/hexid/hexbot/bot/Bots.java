@@ -106,34 +106,44 @@ public class Bots {
 	public static String getFromBot(String botName, String key) {
 		return (hasBot(botName)) ? getBot(botName).get(key) : null;
 	}
-
 	/**
 	 * @param botName
-	 * @return Full name of the bot; null if bot doesn't exist
+	 * @param key
+	 * @param value
+	 * @return True if the bot exists
 	 */
+	public static boolean setInBot(String botName, String key, String value) {
+		if(hasBot(botName)) {
+			getBot(botName).put(key, value);
+			return true;
+		}
+		return false;
+	}
+
 	public static String getBotLongName(String botName) {
 		return getFromBot(botName, "longName");
 	}
-	/**
-	 * @param botName
-	 * @return Class path for CLI bot; null if bot doesn't exist
-	 */
 	public static String getBotCliClassPath(String botName) {
 		return getFromBot(botName, "cliClassPath");
 	}
-	/**
-	 * @param botName
-	 * @return Class path for GUI bot; null if bot doesn't exist
-	 */
 	public static String getBotGuiClassPath(String botName) {
 		return getFromBot(botName, "guiClassPath");
 	}
-	/**
-	 * @param botName
-	 * @return Bot file name; null if bot doesn't exist
-	 */
 	public static String getBotFileName(String botName) {
 		return getFromBot(botName, "fileName");
+	}
+
+	public static boolean setBotLongName(String botName, String newBotLongName) {
+		return setInBot(botName, "botLongName", newBotLongName);
+	}
+	public static boolean setBotCliClassPath(String botName, String newCliClassPath) {
+		return setInBot(botName, "cliClassPath", newCliClassPath);
+	}
+	public static boolean setBotGuiClassPath(String botName, String newGuiClassPath) {
+		return setInBot(botName, "guiClassPath", newGuiClassPath);
+	}
+	public static boolean setBotFileName(String botName, String newBotFileName) {
+		return setInBot(botName, "fileName", newBotFileName);
 	}
 
 	public static String getBotFile(String botName) {
