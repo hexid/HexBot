@@ -10,7 +10,7 @@ exports.createCasper = (casperOptions = {}) ->
       pageSettings:
         loadImages: false
         loadPlugins: false
-        userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1530.2 Safari/537.36'
+        userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.15 Safari/537.36'
     )
   )
 
