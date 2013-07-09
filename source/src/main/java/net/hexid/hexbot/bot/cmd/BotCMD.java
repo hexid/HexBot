@@ -19,13 +19,18 @@ public class BotCMD {
 		}
 	}
 	public BotCMD(ArrayList<String> args) throws Exception {
-		String botName = args.remove(0);
-		botClass = Bots.getBotCliClassPath(botName);
+		String botName = "";
+		if(args.size() > 0) {
+			botName = args.remove(0);
+			botClass = Bots.getBotCliClassPath(botName);
+		}
+
 		if(botClass != null) {
 			bot = (BotCommand)Class.forName(botClass).getConstructor(ArrayList.class).newInstance(args);
 			createProcess();
 		} else {
-			System.out.println(botName + " is an invalid bot.");
+			if(botName.length() > 0)
+				System.out.println(botName + " is an invalid bot.");
 			System.out.println("Available bots: " + Bots.botNamesString());
 		}
 	}
