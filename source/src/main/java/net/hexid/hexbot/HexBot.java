@@ -11,7 +11,8 @@ public class HexBot {
 		Bots.addBot("bing", "Bing Rewards", "net.hexid.hexbot.bots.Bing", "net.hexid.hexbot.bots.BingTab", "Bing.coffee");
 		Bots.addBot("imgur", "Imgur Albums", "net.hexid.hexbot.bots.Imgur", "net.hexid.hexbot.bots.ImgurTab", "Imgur.coffee");
 		Bots.addBot("molten", "Molten WoW", "net.hexid.hexbot.bots.Molten", "net.hexid.hexbot.bots.MoltenTab", "Molten.coffee");
-		Bots.addBot("test", "Test", "net.hexid.hexbot.bots.Test", "net.hexid.hexbot.bots.TestTab", "Test.coffee");
+		Bots.addBot("test-coffee", "Test-CF", "net.hexid.hexbot.bots.Test", "net.hexid.hexbot.bots.TestTab", "Test.coffee");
+		Bots.addBot("test-js", "Test-JS", "net.hexid.hexbot.bots.Test", "net.hexid.hexbot.bots.TestTab", "Test.js");
 		Bots.addBot("xbox", "Xbox Codes", "net.hexid.hexbot.bots.Xbox", "net.hexid.hexbot.bots.XboxTab", "Xbox.coffee");
 	}
 
