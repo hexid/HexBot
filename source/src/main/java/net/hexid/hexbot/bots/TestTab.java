@@ -19,8 +19,6 @@ import net.hexid.hexbot.bot.Bots;
 
 public class TestTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private Button startProcessButton, stopProcessButton;
-	private ToggleGroup fileExt;
-	private String ext;
 
 	public TestTab(String botID) {
 		super(botID);
@@ -43,18 +41,9 @@ public class TestTab extends net.hexid.hexbot.bot.gui.BotTab {
 	}
 
 	protected Node[] createBottomOutputContent() {
-		fileExt = new ToggleGroup();
-		RadioButton coffee = new RadioButton("Coffee");
-		coffee.setToggleGroup(fileExt);
-		RadioButton js = new RadioButton("JS");
-		js.setToggleGroup(fileExt);
-		fileExt.selectToggle((ext == null || ext.equals("Coffee")) ? coffee : js);
-
 		startProcessButton = ButtonBuilder.create().text("Start")
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
-						ext = ((RadioButton)fileExt.getSelectedToggle()).getText();
-						Bots.setBotFileName("test", "Test." + ext.toLowerCase());
 						createProcess();
 						startProcessButton.setDisable(true);
 						stopProcessButton.setDisable(false);
@@ -70,6 +59,6 @@ public class TestTab extends net.hexid.hexbot.bot.gui.BotTab {
 				}).disable(true).maxWidth(Double.MAX_VALUE).build();
 		HBox.setHgrow(stopProcessButton, Priority.ALWAYS);
 
-		return new Node[]{coffee, js, startProcessButton, stopProcessButton};
+		return new Node[]{startProcessButton, stopProcessButton};
 	}
 }
