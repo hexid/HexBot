@@ -13,19 +13,19 @@ public class Bots {
 
 	/**
 	 * Add a new bot to the list of usable bots
-	 * @param shortName
-	 * @param longName
+	 * @param id
+	 * @param name
 	 * @param cliClassPath
 	 * @param guiClassPath
 	 * @param fileName
 	 */
-	public static void addBot(String sName, String lName, String cli, String gui, String fName) {
+	public static void addBot(String id, String name, String cli, String gui, String file) {
 		HashMap<String, String> bot = new HashMap<>();
-		bot.put("longName", lName);
+		bot.put("botName", name);
 		bot.put("cliClassPath", cli);
 		bot.put("guiClassPath", gui);
-		bot.put("fileName", fName);
-		bots.put(sName.toLowerCase(), bot);
+		bot.put("fileName", file);
+		bots.put(id.toLowerCase(), bot);
 	}
 
 	/**
@@ -68,33 +68,33 @@ public class Bots {
 	}
 
 	/**
-	 * @return Array of all bot names (keys to map)
+	 * @return Array of all bot IDs (keys to map)
 	 */
-	public static String[] botNames() {
+	public static String[] botIDs() {
 		return bots.keySet().toArray(new String[0]);
 	}
 
 	/**
-	 * @return String representation of the array of bot names
+	 * @return String representation of the array of bot IDs
 	 */
-	public static String botNamesString() {
-		return java.util.Arrays.toString(botNames());
+	public static String botIDsString() {
+		return java.util.Arrays.toString(botIDs());
 	}
 
 	/**
-	 * @param botName
+	 * @param botID
 	 * @return HashMap with bot's data
 	 */
-	public static HashMap<String, String> getBot(String botName) {
-		return bots.get(botName.toLowerCase()); // get the data associated with a bot
+	public static HashMap<String, String> getBot(String botID) {
+		return bots.get(botID.toLowerCase()); // get the data associated with a bot
 	}
 
 	/**
-	 * @param botName
+	 * @param botID
 	 * @return true if a key exists for the bot
 	 */
-	public static boolean hasBot(String botName) {
-		return bots.containsKey(botName.toLowerCase());
+	public static boolean hasBot(String botID) {
+		return bots.containsKey(botID.toLowerCase());
 	}
 
 	/**
@@ -103,8 +103,8 @@ public class Bots {
 	 * @param key Key to query for in bot's HashMap
 	 * @return botData; null if nonexistant
 	 */
-	public static String getFromBot(String botName, String key) {
-		return (hasBot(botName)) ? getBot(botName).get(key) : null;
+	public static String getFromBot(String botID, String key) {
+		return (hasBot(botID)) ? getBot(botID).get(key) : null;
 	}
 	/**
 	 * @param botName
@@ -112,44 +112,44 @@ public class Bots {
 	 * @param value
 	 * @return True if the bot exists
 	 */
-	public static boolean setInBot(String botName, String key, String value) {
-		if(hasBot(botName)) {
-			getBot(botName).put(key, value);
+	public static boolean setInBot(String botID, String key, String value) {
+		if(hasBot(botID)) {
+			getBot(botID).put(key, value);
 			return true;
 		}
 		return false;
 	}
 
-	public static String getBotLongName(String botName) {
-		return getFromBot(botName, "longName");
+	public static String getBotName(String botID) {
+		return getFromBot(botID, "botName");
 	}
-	public static String getBotCliClassPath(String botName) {
-		return getFromBot(botName, "cliClassPath");
+	public static String getBotCliClassPath(String botID) {
+		return getFromBot(botID, "cliClassPath");
 	}
-	public static String getBotGuiClassPath(String botName) {
-		return getFromBot(botName, "guiClassPath");
+	public static String getBotGuiClassPath(String botID) {
+		return getFromBot(botID, "guiClassPath");
 	}
-	public static String getBotFileName(String botName) {
-		return getFromBot(botName, "fileName");
-	}
-
-	public static boolean setBotLongName(String botName, String newBotLongName) {
-		return setInBot(botName, "botLongName", newBotLongName);
-	}
-	public static boolean setBotCliClassPath(String botName, String newCliClassPath) {
-		return setInBot(botName, "cliClassPath", newCliClassPath);
-	}
-	public static boolean setBotGuiClassPath(String botName, String newGuiClassPath) {
-		return setInBot(botName, "guiClassPath", newGuiClassPath);
-	}
-	public static boolean setBotFileName(String botName, String newBotFileName) {
-		return setInBot(botName, "fileName", newBotFileName);
+	public static String getBotFileName(String botID) {
+		return getFromBot(botID, "fileName");
 	}
 
-	public static String getBotFile(String botName) {
-		return Utils.joinFile(Utils.getPWD().getPath(), "bots", getBotFileName(botName));
+	public static boolean setBotName(String botID, String newBotName) {
+		return setInBot(botID, "botName", newBotName);
+	}
+	public static boolean setBotCliClassPath(String botID, String newCliClassPath) {
+		return setInBot(botID, "cliClassPath", newCliClassPath);
+	}
+	public static boolean setBotGuiClassPath(String botID, String newGuiClassPath) {
+		return setInBot(botID, "guiClassPath", newGuiClassPath);
+	}
+	public static boolean setBotFileName(String botID, String newBotFileName) {
+		return setInBot(botID, "fileName", newBotFileName);
+	}
+
+	public static String getBotFile(String botID) {
+		return Utils.joinFile(Utils.getPWD().getPath(), "bots", getBotFileName(botID));
 	}
 	public static String getBotFile(Bot bot) {
-		return getBotFile(bot.getShortName());
+		return getBotFile(bot.getBotID());
 	}
 }
