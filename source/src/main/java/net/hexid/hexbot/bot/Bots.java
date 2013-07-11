@@ -40,7 +40,7 @@ public class Bots {
 	}
 
 	/**
-	 * @return TreeMap of botNames linked with HashMaps of botData
+	 * @return TreeMap of botIDs linked with HashMaps of botData
 	 */
 	public static TreeMap<String, HashMap<String, String>> getBots() {
 		return bots;
@@ -99,7 +99,7 @@ public class Bots {
 
 	/**
 	 * Get the specified bot's value at a given key
-	 * @param botName
+	 * @param botID
 	 * @param key Key to query for in bot's HashMap
 	 * @return botData; null if nonexistant
 	 */
@@ -107,7 +107,7 @@ public class Bots {
 		return (hasBot(botID)) ? getBot(botID).get(key) : null;
 	}
 	/**
-	 * @param botName
+	 * @param botID
 	 * @param key
 	 * @param value
 	 * @return True if the bot exists
