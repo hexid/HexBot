@@ -1,5 +1,6 @@
 package net.hexid.hexbot.bot.cmd;
 
+import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.ArrayList;
 import net.hexid.hexbot.bot.Bot;
@@ -19,23 +20,24 @@ public class BotCMD {
 		}
 	}
 	public BotCMD(ArrayList<String> args) throws Exception {
-		String botName = "";
+		String botID = "";
 		if(args.size() > 0) {
-			botName = args.remove(0);
-			botClass = Bots.getBotCliClassPath(botName);
+			botID = args.remove(0);
+			botClass = Bots.getBotCliClassPath(botID);
 		}
 
 		if(botClass != null) {
-			bot = (BotCommand)Class.forName(botClass).getConstructor(ArrayList.class).newInstance(args);
+			Constructor c = Class.forName(botClass).getConstructor(String.class, ArrayList.class);
+			bot = (BotCommand)c.newInstance(botID, args);
 			createProcess();
 		} else {
-			if(botName.length() > 0)
-				System.out.println(botName + " is an invalid bot.");
-			System.out.println("Available bots: " + Bots.botNamesString());
+			if(botID.length() > 0)
+				System.out.println(botID + " is an invalid bot.");
+			System.out.println("Available bots: " + Bots.botIDsString());
 		}
 	}
 	protected void createProcess() {
-		System.out.println("Executing " + bot.getShortName() + " bot.");
+		System.out.println("Executing " + bot.getBotID() + " bot.");
 		try { // create a new bot process and start it
 			process = new BotCommandProcess(bot);
 			process.start();
