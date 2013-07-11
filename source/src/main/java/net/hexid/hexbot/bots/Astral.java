@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Astral extends net.hexid.hexbot.bot.cmd.BotCommand {
-	public Astral(ArrayList<String> botArgs) {
-		super(botArgs);
+	public Astral(String botID, ArrayList<String> botArgs) {
+		super(botID, botArgs);
 	}
 
 	public List<String> getBotExecuteData() {
@@ -16,9 +16,5 @@ public class Astral extends net.hexid.hexbot.bot.cmd.BotCommand {
 			System.exit(1);
 		}
 		return botArgs;
-	}
-
-	public String getShortName() {
-		return "Astral";
 	}
 }

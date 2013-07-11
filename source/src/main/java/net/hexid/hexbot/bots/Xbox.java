@@ -3,8 +3,8 @@ package net.hexid.hexbot.bots;
 import java.util.ArrayList;
 
 public class Xbox extends net.hexid.hexbot.bot.cmd.BotCommand {
-	public Xbox(ArrayList<String> botArgs) {
-		super(botArgs);
+	public Xbox(String botID, ArrayList<String> botArgs) {
+		super(botID, botArgs);
 	}
 
 	public ArrayList<String> getBotExecuteData() {
@@ -15,9 +15,5 @@ public class Xbox extends net.hexid.hexbot.bot.cmd.BotCommand {
 			botArgs.add("--password="+new String(System.console().readPassword("Password: ")));
 		}
 		return botArgs;
-	}
-
-	public String getShortName() {
-		return "Xbox";
 	}
 }

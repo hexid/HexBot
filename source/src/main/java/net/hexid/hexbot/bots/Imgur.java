@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import net.hexid.Utils;
 
 public class Imgur extends net.hexid.hexbot.bot.cmd.BotCommand {
-	public Imgur(ArrayList<String> botArgs) {
-		super(botArgs);
+	public Imgur(String botID, ArrayList<String> botArgs) {
+		super(botID, botArgs);
 	}
 
 	public ArrayList<String> getBotExecuteData() {
@@ -16,9 +16,5 @@ public class Imgur extends net.hexid.hexbot.bot.cmd.BotCommand {
 			System.exit(1);
 		}
 		return botArgs;
-	}
-
-	public String getShortName() {
-		return "Imgur";
 	}
 }

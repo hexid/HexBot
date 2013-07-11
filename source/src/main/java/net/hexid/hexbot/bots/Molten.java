@@ -3,8 +3,8 @@ package net.hexid.hexbot.bots;
 import java.util.ArrayList;
 
 public class Molten extends net.hexid.hexbot.bot.cmd.BotCommand {
-	public Molten(ArrayList<String> botArgs) {
-		super(botArgs);
+	public Molten(String botID, ArrayList<String> botArgs) {
+		super(botID, botArgs);
 	}
 
 	public ArrayList<String> getBotExecuteData() {
@@ -15,9 +15,5 @@ public class Molten extends net.hexid.hexbot.bot.cmd.BotCommand {
 			System.exit(1);
 		}
 		return botArgs;
-	}
-
-	public String getShortName() {
-		return "Molten";
 	}
 }
