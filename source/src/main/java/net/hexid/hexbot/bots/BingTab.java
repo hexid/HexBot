@@ -22,12 +22,8 @@ public class BingTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private TextField emailField;
 	private PasswordField passwordField;
 
-	public BingTab() {
-		super();
-	}
-
-	public String getShortName() {
-		return "Bing";
+	public BingTab(String botID) {
+		super(botID);
 	}
 
 	protected Node defaultContent() {

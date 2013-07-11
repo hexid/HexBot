@@ -20,12 +20,8 @@ public class MoltenTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private TextField usernameField;
 	private PasswordField passwordField;
 
-	public MoltenTab() {
-		super();
-	}
-
-	public String getShortName() {
-		return "Molten";
+	public MoltenTab(String botID) {
+		super(botID);
 	}
 
 	protected Node defaultContent() {
@@ -43,7 +39,7 @@ public class MoltenTab extends net.hexid.hexbot.bot.gui.BotTab {
 		data.add("--password="+passwordData);
 		return data;
 	}
-	
+
 	protected Node[] createBottomOutputContent() {
 		repeatProcessButton = ButtonBuilder.create().text("Repeat")
 				.onAction(new EventHandler<ActionEvent>() {

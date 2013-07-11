@@ -20,12 +20,8 @@ public class AstralTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private TextField usernameField;
 	private PasswordField passwordField;
 
-	public AstralTab() {
-		super();
-	}
-
-	public String getShortName() {
-		return "Astral";
+	public AstralTab(String botID) {
+		super(botID);
 	}
 
 	protected Node defaultContent() {
@@ -59,7 +55,7 @@ public class AstralTab extends net.hexid.hexbot.bot.gui.BotTab {
 					}
 				}).disable(true).maxWidth(Double.MAX_VALUE).build();
 		HBox.setHgrow(returnToLoginButton, Priority.ALWAYS);
-		
+
 		return new Node[]{repeatProcessButton, returnToLoginButton};
 	}
 

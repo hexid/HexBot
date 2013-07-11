@@ -17,12 +17,8 @@ public class ImgurTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private TextField albumField;
 	private Button downloadAlbumButton;
 
-	public ImgurTab() {
-		super();
-	}
-
-	public String getShortName() {
-		return "Imgur";
+	public ImgurTab(String botID) {
+		super(botID);
 	}
 
 	protected Node defaultContent() {

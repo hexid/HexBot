@@ -22,12 +22,8 @@ public class TestTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private ToggleGroup fileExt;
 	private String ext;
 
-	public TestTab() {
-		super();
-	}
-
-	public String getShortName() {
-		return "Test";
+	public TestTab(String botID) {
+		super(botID);
 	}
 
 	protected Node defaultContent() {

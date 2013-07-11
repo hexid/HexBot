@@ -20,12 +20,8 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private TextField emailField, codeField;
 	private PasswordField passwordField;
 
-	public XboxTab() {
-		super();
-	}
-
-	public String getShortName() {
-		return "Xbox";
+	public XboxTab(String botID) {
+		super(botID);
 	}
 
 	protected Node defaultContent() {
