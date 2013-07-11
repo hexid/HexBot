@@ -6,21 +6,27 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import net.hexid.hexbot.bot.Bots;
 
 public abstract class BotTab extends javafx.scene.control.Tab implements net.hexid.hexbot.bot.Bot {
 	protected BotTabProcess process;
 	protected TextArea output;
+	protected String botID;
 
-	public BotTab() {
+	public BotTab(String botID) {
 		super();
-		setText(getShortName());
+		this.botID = botID;
+		setText(Bots.getBotName(botID));
 		setContent(defaultContent());
 	}
 
-	public abstract String getShortName();
 	public abstract void processExitCode(int exitCode);
 	protected abstract Node defaultContent(); // what is shown when the tab is created
 	protected abstract Node[] createBottomOutputContent();
+
+	public String getBotID() {
+		return botID;
+	}
 
 	protected void createProcess() {
 		setContent(createOutputContent()); // change to output mode

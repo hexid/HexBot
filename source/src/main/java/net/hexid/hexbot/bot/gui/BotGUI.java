@@ -1,5 +1,6 @@
 package net.hexid.hexbot.bot.gui;
 
+import java.lang.reflect.Constructor;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -35,18 +36,19 @@ public class BotGUI extends javafx.application.Application {
 		}
 		if(tabPane.getTabs().size() == 0) { // if no arguments were passed to the gui
 			System.out.println("args: 'gui' [BotName...]");
-			System.out.println("Available bots: " + Bots.botNamesString());
+			System.out.println("Available bots: " + Bots.botIDsString());
 		}
 
 		stage.getIcons().add(new Image(BotGUI.class.getResourceAsStream("/HexBot.png")));
 		stage.setTitle("HexBot by Hexid");
-		stage.setScene(new javafx.scene.Scene(root, 550, 300));
+		stage.setScene(new javafx.scene.Scene(root, 630, 300));
 		stage.show();
 	}
 
-	protected void addTab(String botName) {
+	protected void addTab(String botID) {
 		try { // create a new tab based on the bot's guiClassPath
-			tabPane.addBotTab((BotTab)Class.forName(Bots.getBotGuiClassPath(botName)).newInstance());
+			Constructor c = Class.forName(Bots.getBotGuiClassPath(botID)).getConstructor(String.class);
+			tabPane.addBotTab((BotTab)c.newInstance(botID));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -57,13 +59,13 @@ public class BotGUI extends javafx.application.Application {
 		ObservableList<Menu> menus = menuBar.getMenus();
 		MenuBuilder<? extends MenuBuilder> mb = MenuBuilder.create();
 
-		for(final String botName : Bots.botNames()) { // iterate over botNames
+		for(final String botID : Bots.botIDs()) { // iterate over botNames
 			// create a menu item with the bot's long name
-			menus.add(mb.text(Bots.getBotLongName(botName))
+			menus.add(mb.text(Bots.getBotName(botID))
 					.onShown(new EventHandler<Event>() {
 						@Override public void handle(Event e) {
 							((Menu)e.getSource()).hide();
-							addTab(botName); // create a new tab
+							addTab(botID); // create a new tab
 						}
 					}).items(new MenuItem()).build());
 		}
