@@ -8,11 +8,11 @@ public class Xbox extends net.hexid.hexbot.bot.cmd.BotCommand {
 	}
 
 	public ArrayList<String> getBotExecuteData() {
-		if(botArgs.size() < 2 || botArgs.size() > 3) {
+		if(botArgs.size() == 2) {
+			botArgs.add("--password="+new String(System.console().readPassword("Password: ")));
+		} else if(botArgs.size() != 3) {
 			System.out.println("botArgs: email [, password] , code");
 			System.exit(1);
-		} else if(botArgs.size() == 2) {
-			botArgs.add("--password="+new String(System.console().readPassword("Password: ")));
 		}
 		return botArgs;
 	}
