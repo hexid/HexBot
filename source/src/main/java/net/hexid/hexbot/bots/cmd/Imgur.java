@@ -1,4 +1,4 @@
-package net.hexid.hexbot.bots;
+package net.hexid.hexbot.bots.cmd;
 
 import java.util.ArrayList;
 import net.hexid.Utils;
@@ -12,7 +12,7 @@ public class Imgur extends net.hexid.hexbot.bot.cmd.BotCommand {
 		if(botArgs.size() == 1) {
 			botArgs.add("--output=" + Utils.joinFile(Utils.getPWD().getPath(), "output", "Imgur"));
 		} else if(botArgs.size() != 2) {
-			System.out.println("botArgs: album [output]");
+			System.out.println("botArgs: album [, output]");
 			System.exit(1);
 		}
 		return botArgs;

@@ -1,4 +1,4 @@
-package net.hexid.hexbot.bots;
+package net.hexid.hexbot.bots.cmd;
 
 import java.util.ArrayList;
 

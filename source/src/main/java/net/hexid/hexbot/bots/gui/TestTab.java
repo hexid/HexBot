@@ -1,4 +1,4 @@
-package net.hexid.hexbot.bots;
+package net.hexid.hexbot.bots.gui;
 
 import java.util.ArrayList;
 import javafx.event.ActionEvent;

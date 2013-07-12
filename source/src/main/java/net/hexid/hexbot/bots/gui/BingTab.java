@@ -1,4 +1,4 @@
-package net.hexid.hexbot.bots;
+package net.hexid.hexbot.bots.gui;
 
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
@@ -13,19 +13,21 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import net.hexid.jfx.IntegerField;
 
-public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
+public class BingTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private Button returnToLoginButton, repeatProcessButton, stopProcessButton, loginButton;
-	private String emailData, passwordData, codeData;
-	private TextField emailField, codeField;
+	private IntegerField queryCount, delayMin, delayMax;
+	private String emailData, passwordData, queryCountData, delayMinData, delayMaxData;
+	private TextField emailField;
 	private PasswordField passwordField;
 
-	public XboxTab(String botID) {
+	public BingTab(String botID) {
 		super(botID);
 	}
 
 	protected Node defaultContent() {
-		return createSetupContent();
+		return createSetupContent(true);
 	}
 
 	public void processExitCode(int exitCode) {
@@ -35,10 +37,12 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 	}
 
 	public ArrayList<String> getBotExecuteData() {
-		ArrayList<String> data = new ArrayList<String>();
+		ArrayList<String> data = new ArrayList<>();
 		data.add("--email=" + emailData);
 		data.add("--password=" + passwordData);
-		data.add("--code=" + codeData);
+		data.add("--queryCount=" + queryCountData);
+		data.add("--delayMin=" + delayMinData);
+		data.add("--delayMax=" + delayMaxData);
 		return data;
 	}
 
@@ -65,7 +69,7 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 		returnToLoginButton = buttons.text("Setup")
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
-						setContent(createSetupContent());
+						setContent(createSetupContent(false));
 					}
 				}).build();
 		HBox.setHgrow(returnToLoginButton, Priority.ALWAYS);
@@ -73,7 +77,8 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 		return new Node[]{repeatProcessButton, returnToLoginButton, stopProcessButton};
 	}
 
-	private VBox createSetupContent() {
+	private VBox createSetupContent(boolean setDefaultValues) {
+		// create a setup pane withT/withoutF default values
 		VBox tabContent = new VBox();
 		Insets inset = new Insets(17.5d, 15.0d, 0.0d, 15.0d);
 
@@ -96,12 +101,22 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox.setHgrow(passwordField, Priority.ALWAYS);
 		password.getChildren().addAll(passwordLabel, passwordField);
 
-		HBox code = new HBox(3);
-		VBox.setMargin(code, inset);
-		Label codeLabel = new Label("Code: ");
-		codeField = new TextField();
-		HBox.setHgrow(codeField, Priority.ALWAYS);
-		code.getChildren().addAll(codeLabel, codeField);
+		HBox query = new HBox(3);
+		VBox.setMargin(query, inset);
+		Label queryLabel = new Label("Queries: ");
+		queryCount = new IntegerField();
+		HBox.setHgrow(queryCount, Priority.ALWAYS);
+		query.getChildren().addAll(queryLabel, queryCount);
+
+		HBox delay = new HBox(3);
+		VBox.setMargin(delay, inset);
+		Label delayLabel = new Label("Delay (Secs): ");
+		delayMin = new IntegerField();
+		HBox.setHgrow(delayMin, Priority.ALWAYS);
+		Label delayToLabel = new Label(" to ");
+		delayMax = new IntegerField();
+		HBox.setHgrow(delayMax, Priority.ALWAYS);
+		delay.getChildren().addAll(delayLabel, delayMin, delayToLabel, delayMax);
 
 		HBox button = new HBox(7.5d);
 		VBox.setMargin(button, inset);
@@ -110,19 +125,29 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 					public void handle(ActionEvent e) {
 						emailData = emailField.getText();
 						passwordData = passwordField.getText();
-						codeData = codeField.getText();
+						queryCountData = queryCount.getText();
+						delayMinData = delayMin.getText();
+						delayMaxData = delayMax.getText();
 						createProcess();
 					}
 				}).text("Login").maxWidth(Double.MAX_VALUE).build();
 		HBox.setHgrow(loginButton, Priority.ALWAYS);
 		button.getChildren().addAll(loginButton);
 
-		emailField.setText(emailData);
-		passwordField.setText(passwordData);
-		codeField.setText(codeData);
+		if(setDefaultValues) { // set the default values
+			queryCount.setInteger(0);
+			delayMin.setInteger(20);
+			delayMax.setInteger(40);
+		} else { // set previous values
+			emailField.setText(emailData);
+			passwordField.setText(passwordData);
+			queryCount.setText(queryCountData);
+			delayMin.setText(delayMinData);
+			delayMax.setText(delayMaxData);
+		}
 
 		// add all the elements to the container that will be added to the tab
-		tabContent.getChildren().addAll(email, password, code, button);
+		tabContent.getChildren().addAll(email, password, query, delay, button);
 		return tabContent;
 	}
 }

@@ -1,4 +1,4 @@
-package net.hexid.hexbot.bots;
+package net.hexid.hexbot.bots.gui;
 
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
@@ -14,13 +14,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class AstralTab extends net.hexid.hexbot.bot.gui.BotTab {
+public class MoltenTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private Button returnToLoginButton, repeatProcessButton, loginButton;
 	private String usernameData, passwordData;
 	private TextField usernameField;
 	private PasswordField passwordField;
 
-	public AstralTab(String botID) {
+	public MoltenTab(String botID) {
 		super(botID);
 	}
 
@@ -34,7 +34,7 @@ public class AstralTab extends net.hexid.hexbot.bot.gui.BotTab {
 	}
 
 	public ArrayList<String> getBotExecuteData() {
-		ArrayList<String> data = new ArrayList<String>();
+		ArrayList<String> data = new ArrayList<>();
 		data.add("--username="+usernameData);
 		data.add("--password="+passwordData);
 		return data;
@@ -48,6 +48,7 @@ public class AstralTab extends net.hexid.hexbot.bot.gui.BotTab {
 					}
 				}).disable(true).maxWidth(Double.MAX_VALUE).build();
 		HBox.setHgrow(repeatProcessButton, Priority.ALWAYS);
+
 		returnToLoginButton = ButtonBuilder.create().text("Setup")
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
@@ -67,7 +68,6 @@ public class AstralTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox username = new HBox(3);
 		VBox.setMargin(username, inset);
 		Label usernameLabel = new Label("Username: ");
-		HBox.setHgrow(usernameLabel, Priority.NEVER);
 		usernameField = new TextField();
 		HBox.setHgrow(usernameField, Priority.ALWAYS);
 		username.getChildren().addAll(usernameLabel, usernameField);
@@ -75,7 +75,6 @@ public class AstralTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox password = new HBox(3);
 		VBox.setMargin(password, inset);
 		Label passwordLabel = new Label("Password: ");
-		HBox.setHgrow(passwordLabel, Priority.NEVER);
 		passwordField = new PasswordField();
 		passwordField.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
@@ -87,18 +86,18 @@ public class AstralTab extends net.hexid.hexbot.bot.gui.BotTab {
 
 		HBox button = new HBox(7.5d);
 		VBox.setMargin(button, inset);
-		loginButton = ButtonBuilder.create()
+		loginButton = ButtonBuilder.create().text("Login")
 				.onAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
 						usernameData = usernameField.getText();
 						passwordData = passwordField.getText();
 						createProcess();
 					}
-				}).text("Login").maxWidth(Double.MAX_VALUE).build();
+				}).maxWidth(Double.MAX_VALUE).build();
 		HBox.setHgrow(loginButton, Priority.ALWAYS);
 		button.getChildren().addAll(loginButton);
 
-		if(setDefaultValues) { // set previous values
+		if(!setDefaultValues) { // set previous values
 			usernameField.setText(usernameData);
 			passwordField.setText(passwordData);
 		}
