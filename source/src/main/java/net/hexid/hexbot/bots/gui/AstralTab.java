@@ -67,7 +67,6 @@ public class AstralTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox username = new HBox(3);
 		VBox.setMargin(username, inset);
 		Label usernameLabel = new Label("Username: ");
-		HBox.setHgrow(usernameLabel, Priority.NEVER);
 		usernameField = new TextField();
 		HBox.setHgrow(usernameField, Priority.ALWAYS);
 		username.getChildren().addAll(usernameLabel, usernameField);
@@ -75,7 +74,6 @@ public class AstralTab extends net.hexid.hexbot.bot.gui.BotTab {
 		HBox password = new HBox(3);
 		VBox.setMargin(password, inset);
 		Label passwordLabel = new Label("Password: ");
-		HBox.setHgrow(passwordLabel, Priority.NEVER);
 		passwordField = new PasswordField();
 		passwordField.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
