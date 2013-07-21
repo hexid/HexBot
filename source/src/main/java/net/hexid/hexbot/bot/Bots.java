@@ -9,7 +9,8 @@ import java.util.TreeMap;
 import net.hexid.Utils;
 
 public class Bots {
-	private static TreeMap<String, HashMap<String, String>> bots = new TreeMap<>();
+	private static TreeMap<String, String[]> bots = new TreeMap<>();
+	private static int INDEX_NAME = 0, INDEX_CLI = 1, INDEX_GUI = 2, INDEX_FILE = 3;
 
 	/**
 	 * Add a new bot to the list of usable bots
@@ -20,29 +21,23 @@ public class Bots {
 	 * @param fileName
 	 */
 	public static void addBot(String id, String name, String cli, String gui, String file) {
-		HashMap<String, String> bot = new HashMap<>();
-		bot.put("botName", name);
-		bot.put("cliClassPath", cli);
-		bot.put("guiClassPath", gui);
-		bot.put("fileName", file);
-		bots.put(id.toLowerCase(), bot);
+		bots.put(id.toLowerCase(), new String[]{name, cli, gui, file});
 	}
 
 	/**
 	 * Remove all bots whose file does not exist
 	 */
 	public static void removeInvalidBots() {
-		Iterator<Entry<String, HashMap<String, String>>> iter = bots.entrySet().iterator();
-		while(iter.hasNext()) {
+		Iterator<Entry<String, String[]>> iter = bots.entrySet().iterator();
+		while(iter.hasNext())
 			if(!(new File(getBotFile(iter.next().getKey()))).exists())
 				iter.remove();
-		}
 	}
 
 	/**
 	 * @return TreeMap of botIDs linked with HashMaps of botData
 	 */
-	public static TreeMap<String, HashMap<String, String>> getBots() {
+	public static TreeMap<String, String[]> getBots() {
 		return bots;
 	}
 
@@ -60,10 +55,10 @@ public class Bots {
 			sysSpecific += ("-" + System.getProperty("os.arch"));
 		}
 
+		String casper = Utils.joinFile(dir, "libs", "casperjs", casperBin);
 		String phantom = Utils.joinFile(dir, "libs", "phantomjs");
 		String phantomBin = Utils.joinFile(phantom, "bin");
 		String phantomOS = Utils.joinFile(phantomBin, sysSpecific);
-		String casper = Utils.joinFile(dir, "libs", "casperjs", casperBin);
 		return Utils.join(File.pathSeparator, oldEnvPath, phantomOS, phantomBin, phantom, casper);
 	}
 
@@ -85,7 +80,7 @@ public class Bots {
 	 * @param botID
 	 * @return HashMap with bot's data
 	 */
-	public static HashMap<String, String> getBot(String botID) {
+	public static String[] getBot(String botID) {
 		return bots.get(botID.toLowerCase()); // get the data associated with a bot
 	}
 
@@ -103,8 +98,8 @@ public class Bots {
 	 * @param key Key to query for in bot's HashMap
 	 * @return botData; null if nonexistant
 	 */
-	public static String getFromBot(String botID, String key) {
-		return (hasBot(botID)) ? getBot(botID).get(key) : null;
+	public static String getFromBot(String botID, int index) {
+		return (hasBot(botID)) ? getBot(botID)[index] : null;
 	}
 	/**
 	 * @param botID
@@ -112,38 +107,38 @@ public class Bots {
 	 * @param value
 	 * @return True if the bot exists
 	 */
-	public static boolean setInBot(String botID, String key, String value) {
+	public static boolean setInBot(String botID, int index, String value) {
 		if(hasBot(botID)) {
-			getBot(botID).put(key, value);
+			getBot(botID)[index] = value;
 			return true;
 		}
 		return false;
 	}
 
 	public static String getBotName(String botID) {
-		return getFromBot(botID, "botName");
+		return getFromBot(botID, Bots.INDEX_NAME);
 	}
 	public static String getBotCliClassPath(String botID) {
-		return getFromBot(botID, "cliClassPath");
+		return getFromBot(botID, Bots.INDEX_CLI);
 	}
 	public static String getBotGuiClassPath(String botID) {
-		return getFromBot(botID, "guiClassPath");
+		return getFromBot(botID, Bots.INDEX_GUI);
 	}
 	public static String getBotFileName(String botID) {
-		return getFromBot(botID, "fileName");
+		return getFromBot(botID, Bots.INDEX_FILE);
 	}
 
 	public static boolean setBotName(String botID, String newBotName) {
-		return setInBot(botID, "botName", newBotName);
+		return setInBot(botID, Bots.INDEX_NAME, newBotName);
 	}
 	public static boolean setBotCliClassPath(String botID, String newCliClassPath) {
-		return setInBot(botID, "cliClassPath", newCliClassPath);
+		return setInBot(botID, Bots.INDEX_CLI, newCliClassPath);
 	}
 	public static boolean setBotGuiClassPath(String botID, String newGuiClassPath) {
-		return setInBot(botID, "guiClassPath", newGuiClassPath);
+		return setInBot(botID, Bots.INDEX_GUI, newGuiClassPath);
 	}
 	public static boolean setBotFileName(String botID, String newBotFileName) {
-		return setInBot(botID, "fileName", newBotFileName);
+		return setInBot(botID, Bots.INDEX_FILE, newBotFileName);
 	}
 
 	public static String getBotFile(String botID) {
