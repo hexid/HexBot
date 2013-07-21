@@ -1,17 +1,13 @@
 package net.hexid.hexbot.bot.cmd;
 
 import java.util.ArrayList;
+import net.hexid.hexbot.bot.Bot;
 
-public abstract class BotCommand implements net.hexid.hexbot.bot.Bot {
-	protected String botID;
+public abstract class BotCommand extends Bot {
 	protected ArrayList<String> botArgs;
 	public BotCommand(String botID, ArrayList<String> botArgs) {
-		this.botID = botID;
+		super(botID);
 		this.botArgs = botArgs;
-	}
-
-	public String getBotID() {
-		return botID;
 	}
 
 	public void processExitCode(int exitCode) {
