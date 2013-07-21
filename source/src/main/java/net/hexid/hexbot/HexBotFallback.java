@@ -12,15 +12,13 @@ public class HexBotFallback extends HexBot {
 	protected void init(String[] args) {
 		Bots.removeInvalidBots();
 
-		if(args.length > 0 && args[0].equalsIgnoreCase("gui")) {
+		if(args.length > 0 && args[0].equalsIgnoreCase("gui"))
 			args = Arrays.copyOfRange(args, 1, args.length);
-		}
 
 		BotCMD.init(args);
 	}
 
 	public static void main(String[] args) {
-		HexBotFallback hexbotFallback = new HexBotFallback();
-		hexbotFallback.init(args);
+		new HexBotFallback().init(args);
 	}
 }

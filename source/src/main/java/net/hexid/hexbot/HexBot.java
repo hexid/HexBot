@@ -1,6 +1,7 @@
 package net.hexid.hexbot;
 
 import java.util.Arrays;
+import java.util.Scanner;
 import net.hexid.hexbot.bot.Bots;
 import net.hexid.hexbot.bot.gui.BotGUI;
 import net.hexid.hexbot.bot.cmd.BotCMD;
@@ -20,15 +21,13 @@ public class HexBot {
 		Bots.removeInvalidBots();
 
 		// if there are no arguments of the first is `gui`
-		if(args.length == 0 || args[0].equalsIgnoreCase("gui")) {
+		if(args.length == 0 || args[0].equalsIgnoreCase("gui"))
 			BotGUI.init(Arrays.copyOfRange(args, (args.length > 0) ? 1 : 0, args.length));
-		} else { // otherwise use the command line
+		else // otherwise use the command line
 			BotCMD.init(args);
-		}
 	}
 
 	public static void main(String[] args) {
-		HexBot hexbot = new HexBot();
-		hexbot.init(args);
+		new HexBot().init(args);
 	}
 }
