@@ -1,39 +1,44 @@
 package net.hexid.hexbot.bot.gui;
 
+import java.io.IOException;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import net.hexid.hexbot.bot.Bot;
 import net.hexid.hexbot.bot.Bots;
 
-public abstract class BotTab extends javafx.scene.control.Tab implements net.hexid.hexbot.bot.Bot {
+public abstract class BotTab extends Bot {
 	protected BotTabProcess process;
 	protected TextArea output;
-	protected String botID;
+	protected Tab tab;
 
 	public BotTab(String botID) {
-		super();
-		this.botID = botID;
-		setText(Bots.getBotName(botID));
+		super(botID);
+		tab = new Tab(Bots.getBotName(botID));
 		setContent(defaultContent());
+	}
+
+	public Tab getTab() {
+		return tab;
+	}
+	protected void setContent(Node node) {
+		tab.setContent(node);
 	}
 
 	public abstract void processExitCode(int exitCode);
 	protected abstract Node defaultContent(); // what is shown when the tab is created
 	protected abstract Node[] createBottomOutputContent();
 
-	public String getBotID() {
-		return botID;
-	}
-
 	protected void createProcess() {
-		setContent(createOutputContent()); // change to output mode
+		tab.setContent(createOutputContent()); // change to output mode
 		try { // create a new bot process and start it
 			process = new BotTabProcess(this);
 			process.start();
-		} catch (java.io.IOException e) {
+		} catch (IOException e) {
 			appendOutput(e.getMessage());
 		}
 	}
