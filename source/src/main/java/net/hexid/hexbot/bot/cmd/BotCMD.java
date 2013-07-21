@@ -1,6 +1,5 @@
 package net.hexid.hexbot.bot.cmd;
 
-import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.ArrayList;
 import net.hexid.hexbot.bot.Bot;
@@ -27,8 +26,9 @@ public class BotCMD {
 		}
 
 		if(botClass != null) {
-			Constructor c = Class.forName(botClass).getConstructor(String.class, ArrayList.class);
-			bot = (BotCommand)c.newInstance(botID, args);
+			bot = (BotCommand)Class.forName(botClass)
+					.getConstructor(String.class, ArrayList.class)
+					.newInstance(botID, args);
 			createProcess();
 		} else {
 			if(botID.length() > 0)

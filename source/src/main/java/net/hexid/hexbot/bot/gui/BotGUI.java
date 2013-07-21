@@ -1,6 +1,5 @@
 package net.hexid.hexbot.bot.gui;
 
-import java.lang.reflect.Constructor;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -47,8 +46,8 @@ public class BotGUI extends javafx.application.Application {
 
 	protected void addTab(String botID) {
 		try { // create a new tab based on the bot's guiClassPath
-			Constructor c = Class.forName(Bots.getBotGuiClassPath(botID)).getConstructor(String.class);
-			tabPane.addBotTab((BotTab)c.newInstance(botID));
+			tabPane.addBotTab((BotTab)Class.forName(Bots.getBotGuiClassPath(botID))
+					.getConstructor(String.class).newInstance(botID));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
