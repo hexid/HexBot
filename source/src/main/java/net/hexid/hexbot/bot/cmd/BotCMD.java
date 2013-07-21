@@ -18,12 +18,11 @@ public class BotCMD {
 			e.printStackTrace();
 		}
 	}
+
 	public BotCMD(ArrayList<String> args) throws Exception {
 		String botID = "";
-		if(args.size() > 0) {
-			botID = args.remove(0);
-			botClass = Bots.getBotCliClassPath(botID);
-		}
+		if(args.size() > 0)
+			botClass = Bots.getBotCliClassPath(botID = args.remove(0));
 
 		if(botClass != null) {
 			bot = (BotCommand)Class.forName(botClass)
@@ -36,8 +35,9 @@ public class BotCMD {
 			System.out.println("Available bots: " + Bots.botIDsString());
 		}
 	}
+
 	protected void createProcess() {
-		System.out.println("Executing " + bot.getBotID() + " bot.");
+		System.out.println("Executing " + bot.getBotID());
 		try { // create a new bot process and start it
 			process = new BotCommandProcess(bot);
 			process.start();
