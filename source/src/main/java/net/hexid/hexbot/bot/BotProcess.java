@@ -15,13 +15,13 @@ public abstract class BotProcess extends Thread {
 	public BotProcess(Bot bot) throws IOException {
 		super();
 		this.bot = bot;
-		this.process = createProcess();
+		this.process = startProcess();
 		this.in = new Scanner(this.process.getInputStream());
 	}
 
 	protected abstract void processInput(final String in);
 
-	protected Process createProcess() throws IOException {
+	protected Process startProcess() throws IOException {
 		List<String> botExecuteData = bot.getBotExecuteData();
 		botExecuteData.add(0, "casperjs"); // program (will be added to PATH)
 		botExecuteData.add(1, Bots.getBotFile(bot));
@@ -46,9 +46,9 @@ public abstract class BotProcess extends Thread {
 	}
 
 	@Override public void run() {
-		while(in.hasNext()) {
+		while(in.hasNext())
 			processInput(in.nextLine());
-		}
+
 		in.close();
 
 		try {
