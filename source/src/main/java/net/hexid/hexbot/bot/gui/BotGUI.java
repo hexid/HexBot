@@ -25,18 +25,12 @@ public class BotGUI extends javafx.application.Application {
 		tabPane = createTabPane();
 		root.getChildren().addAll(tabPane, createMenuBar());
 
-		// if there are arguments
-		if(getParameters().getRaw().size() > 0) {
-			// iterate over each argument (names of bots)
-			for(String arg : getParameters().getRaw()) {
-				// add a new tab if the argument is the name of a bot
-				if(Bots.hasBot(arg)) addTab(arg);
-			}
-		}
-		if(tabPane.getTabs().size() == 0) { // if no arguments were passed to the gui
-			System.out.println("args: 'gui' [BotName...]");
-			System.out.println("Available bots: " + Bots.botIDsString());
-		}
+		if(getParameters().getRaw().size() > 0) // if there are arguments
+			for(String arg : getParameters().getRaw()) // iterate over bot names
+				if(Bots.hasBot(arg)) addTab(arg); // add bot if the name exists
+
+		if(tabPane.getTabs().size() == 0) // if no arguments were passed to the gui
+			System.out.println("args: 'gui' [BotName...]\nAvailable bots: " + Bots.botIDsString());
 
 		stage.getIcons().add(new Image(BotGUI.class.getResourceAsStream("/HexBot.png")));
 		stage.setTitle("HexBot by Hexid");
@@ -58,7 +52,7 @@ public class BotGUI extends javafx.application.Application {
 		ObservableList<Menu> menus = menuBar.getMenus();
 		MenuBuilder<? extends MenuBuilder> mb = MenuBuilder.create();
 
-		for(final String botID : Bots.botIDs()) { // iterate over botNames
+		for(final String botID : Bots.botIDs()) // iterate over botNames
 			// create a menu item with the bot's long name
 			menus.add(mb.text(Bots.getBotName(botID))
 					.onShown(new EventHandler<Event>() {
@@ -67,7 +61,6 @@ public class BotGUI extends javafx.application.Application {
 							addTab(botID); // create a new tab
 						}
 					}).items(new MenuItem()).build());
-		}
 
 		if(menus.size() == 0) // if no bot tabs were created
 			menus.add(mb.text("No bots found").build());
