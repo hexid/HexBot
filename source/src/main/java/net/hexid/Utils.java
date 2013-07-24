@@ -11,11 +11,12 @@ public class Utils {
 	 * @return A single string
 	 */
 	public static String join(String glue, String... str) {
-		StringBuilder sb = new StringBuilder();
-		int i;
-		for(i = 0; i < str.length-1; i++)
-			sb.append(str[i] + glue);
-		return sb.toString() + str[i];
+		if(str.length > 0) {
+			StringBuilder sb = new StringBuilder(str[0]);
+			for(int i = 1; i < str.length; i++)
+				sb.append(glue).append(str[i]);
+			return sb.toString();
+		} else return "";
 	}
 
 	/**
@@ -38,5 +39,14 @@ public class Utils {
 	 */
 	public static File getPWD() {
 		return new File(Utils.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParentFile();
+	}
+
+	public static String[] appendStrToArray(String[] arr, String str) {
+		String[] array = new String[arr.length+1];
+		for(int i = 0; i < arr.length-1; i++) {
+			array[i] = arr[i];
+		}
+		array[arr.length] = str;
+		return array;
 	}
 }
