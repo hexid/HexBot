@@ -22,22 +22,20 @@ public abstract class BotProcess extends Thread {
 	protected abstract void processInput(final String in);
 
 	protected Process startProcess() throws IOException {
-		List<String> botExecuteData = bot.getBotExecuteData();
-		botExecuteData.add(0, "casperjs"); // program (will be added to PATH)
-		botExecuteData.add(1, Bots.getBotFile(bot));
-
-		String processData = Utils.join(" ", botExecuteData);
+		List<String> processData;
+		String botExecuteData = Utils.join(" ", "casperjs", Bots.getBotFile(bot),
+				Utils.join(" ", bot.getBotExecuteData()));
 		String pathName;
 		if(File.pathSeparator.equals(";")) { // if windows
 			pathName = "Path";
-			botExecuteData = Arrays.asList(new String[]{"cmd.exe", "/C", processData});
+			processData = Arrays.asList(new String[]{"cmd.exe", "/C", botExecuteData});
 		} else { // if unix-based
 			pathName = "PATH";
-			botExecuteData = Arrays.asList(new String[]{"/usr/bin/env","bash", "-c", processData});
+			processData = Arrays.asList(new String[]{"/usr/bin/env","bash", "-c", botExecuteData});
 		}
 
 		// create a processbuilder with the bot's commands and combined input and error streams
-		ProcessBuilder pb = new ProcessBuilder(botExecuteData).redirectErrorStream(true);
+		ProcessBuilder pb = new ProcessBuilder(processData).redirectErrorStream(true);
 
 		// append phantomjs and casperjs to the path (runs local installs first)
 		pb.environment().put(pathName, Bots.getBotEnvPath(pb.environment().get(pathName)));
