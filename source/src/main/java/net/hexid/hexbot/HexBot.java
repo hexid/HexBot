@@ -22,7 +22,7 @@ public class HexBot {
 
 		// if there are no arguments of the first is `gui`
 		if(args.length == 0 || args[0].equalsIgnoreCase("gui"))
-			BotGUI.init(Arrays.copyOfRange(args, (args.length > 0) ? 1 : 0, args.length));
+			BotGUI.init(Arrays.copyOfRange(args, args.length > 0 ? 1 : 0, args.length));
 		else // otherwise use the command line
 			BotCMD.init(args);
 	}

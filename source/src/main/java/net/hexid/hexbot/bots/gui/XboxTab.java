@@ -14,8 +14,6 @@ import net.hexid.jfx.UtilsFX;
 public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 	private HButton setupBtn, repeatBtn, stopBtn, loginBtn;
 	private String emailData, passwordData, codeData;
-	private TextField emailField, codeField;
-	private PasswordField passwordField;
 	private LabeledField email, password, code;
 
 	public XboxTab(String botID) {

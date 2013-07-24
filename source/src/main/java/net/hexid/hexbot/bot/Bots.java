@@ -52,7 +52,7 @@ public class Bots {
 		} else if(sysSpecific.contains("mac")) {
 			sysSpecific = "macosx";
 		} else {
-			sysSpecific += ("-" + System.getProperty("os.arch"));
+			sysSpecific += "-" + System.getProperty("os.arch");
 		}
 
 		String casper = Utils.joinFile(dir, "libs", "casperjs", casperBin);
@@ -99,7 +99,7 @@ public class Bots {
 	 * @return botData; null if nonexistant
 	 */
 	public static String getFromBot(String botID, int index) {
-		return (hasBot(botID)) ? getBot(botID)[index] : null;
+		return hasBot(botID) ? getBot(botID)[index] : null;
 	}
 	/**
 	 * @param botID
