@@ -1,4 +1,4 @@
-package net.hexid.hexbot.bots.gui;
+package net.hexid.hexbot.bots.gui.generic;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,32 +11,28 @@ import net.hexid.jfx.HButton;
 import net.hexid.jfx.LabeledField;
 import net.hexid.jfx.UtilsFX;
 
-public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
-	private HButton setupBtn, repeatBtn, stopBtn, loginBtn;
-	private String emailData, passwordData, codeData;
-	private TextField emailField, codeField;
-	private PasswordField passwordField;
-	private LabeledField email, password, code;
+public class UserPassTab extends net.hexid.hexbot.bot.gui.BotTab {
+	private HButton setupBtn, repeatBtn, loginBtn;
+	private String usernameData, passwordData;
+	private LabeledField username, password;
 
-	public XboxTab(String botID) {
+	public UserPassTab(String botID) {
 		super(botID);
 	}
 
 	protected Node defaultContent() {
-		return createSetupContent();
+		return createSetupContent(true);
 	}
 
 	public void processExitCode(int exitCode) {
-		stopBtn.disable();
 		setupBtn.enable();
 		if(exitCode != 2) repeatBtn.enable();
 	}
 
 	public String[] getBotExecuteData() {
 		return new String[]{
-			"--email="+emailData,
-			"--password="+passwordData,
-			"--code="+codeData
+			"--username="+usernameData,
+			"--password="+passwordData
 		};
 	}
 
@@ -49,44 +45,38 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 
 		setupBtn = new HButton("Setup", new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				setContent(createSetupContent());
+				setContent(createSetupContent(false));
 			}
 		}).disable().wide();
 
-		stopBtn = new HButton("Stop", new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e) {
-				killProcess();
-			}
-		}).cancelBtn();
-
-		return new Node[]{repeatBtn, setupBtn, stopBtn};
+		return new Node[]{repeatBtn, setupBtn};
 	}
 
-	private VBox createSetupContent() {
+	private VBox createSetupContent(boolean setDefaultValues) {
+		// create a setup pane withT/withoutF default values
 		VBox tabContent = new VBox();
 
-		email = new LabeledField(TextField.class, "Email: ");
+		username = new LabeledField(TextField.class, "Username: ");
 		password = new LabeledField(PasswordField.class, "Password: ");
-		code = new LabeledField(TextField.class, "Code: ");
 
 		HBox login = new HBox(7.5d);
 		UtilsFX.setVBoxMargin(login);
 		loginBtn = new HButton("Login", new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				emailData = email.getText();
+				usernameData = username.getText();
 				passwordData = password.getText();
-				codeData = code.getText();
 				createProcess();
 			}
 		}).wide().defaultBtn();
 		login.getChildren().addAll(loginBtn);
 
-		email.setText(emailData);
-		password.setText(passwordData);
-		code.setText(codeData);
+		if(!setDefaultValues) { // set previous values
+			username.setText(usernameData);
+			password.setText(passwordData);
+		}
 
 		// add all the elements to the container that will be added to the tab
-		tabContent.getChildren().addAll(email, password, code, login);
+		tabContent.getChildren().addAll(username, password, login);
 		return tabContent;
 	}
 }
