@@ -1,18 +1,19 @@
 package net.hexid.hexbot.bots.cmd;
 
-import java.util.ArrayList;
+import net.hexid.Utils;
 
 public class Bing extends net.hexid.hexbot.bot.cmd.BotCommand {
-	public Bing(String botID, ArrayList<String> botArgs) {
+	public Bing(String botID, String[] botArgs) {
 		super(botID, botArgs);
 	}
 
-	public ArrayList<String> getBotExecuteData() {
-		if(botArgs.size() == 0 || botArgs.size() > 5) {
+	public String[] getBotExecuteData() {
+		if(botArgs.length == 0 || botArgs.length > 5) {
 			System.out.println("botArgs: email [, password] [, queryCount [, minDelay [, maxDelay]]]");
 			System.exit(1);
-		} else if(botArgs.size() == 1 || botArgs.get(1).matches("-?\\d+(\\.\\d+)?")) {
-			botArgs.add("--password="+new String(System.console().readPassword("Password: ")));
+		} else if(botArgs.length == 1 || botArgs[1].matches("-?\\d+(\\.\\d+)?")) {
+			botArgs = Utils.appendStrToArray(botArgs, "--password=" +
+					new String(System.console().readPassword("Password: ")));
 		}
 		return botArgs;
 	}
