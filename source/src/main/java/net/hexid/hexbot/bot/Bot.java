@@ -17,7 +17,7 @@ public abstract class Bot {
 	/**
 	 * @return Console parameters for the bot
 	 */
-	public abstract java.util.List<String> getBotExecuteData();
+	public abstract String[] getBotExecuteData();
 
 	/**
 	 * @param exitCode Code returned when the Process exits

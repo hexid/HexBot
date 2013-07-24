@@ -1,7 +1,6 @@
 package net.hexid.hexbot.bot.cmd;
 
 import java.util.Arrays;
-import java.util.ArrayList;
 import net.hexid.hexbot.bot.Bot;
 import net.hexid.hexbot.bot.Bots;
 import net.hexid.hexbot.bot.BotProcess;
@@ -13,20 +12,22 @@ public class BotCMD {
 
 	public static void init(String[] args) {
 		try {
-			new BotCMD(new ArrayList<String>(Arrays.asList(args)));
+			new BotCMD(args);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public BotCMD(ArrayList<String> args) throws Exception {
+	public BotCMD(String[] args) throws Exception {
 		String botID = "";
-		if(args.size() > 0)
-			botClass = Bots.getBotCliClassPath(botID = args.remove(0));
+		if(args.length > 0) {
+			botClass = Bots.getBotCliClassPath(botID = args[0]);
+			args = Arrays.copyOfRange(args, 1, args.length);
+		}
 
 		if(botClass != null) {
 			bot = (BotCommand)Class.forName(botClass)
-					.getConstructor(String.class, ArrayList.class)
+					.getConstructor(String.class, String[].class)
 					.newInstance(botID, args);
 			createProcess();
 		} else {
