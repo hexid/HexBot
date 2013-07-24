@@ -26,7 +26,7 @@ public class Utils {
 	 * @return {@link #join(String,String...)}
 	 */
 	public static String join(String glue, List<String> str) {
-		return join(glue, str.toArray(new String[0]));
+		return join(glue, str.toArray(new String[str.size()]));
 	}
 
 	public static String joinFile(String... str) {
