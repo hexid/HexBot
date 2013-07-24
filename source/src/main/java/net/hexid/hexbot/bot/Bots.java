@@ -10,7 +10,7 @@ import net.hexid.Utils;
 
 public class Bots {
 	private static TreeMap<String, String[]> bots = new TreeMap<>();
-	private static int INDEX_NAME = 0, INDEX_CLI = 1, INDEX_GUI = 2, INDEX_FILE = 3;
+	public static int INDEX_NAME = 0, INDEX_CLI = 1, INDEX_GUI = 2, INDEX_FILE = 3;
 
 	/**
 	 * Add a new bot to the list of usable bots
