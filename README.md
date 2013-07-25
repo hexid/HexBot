@@ -39,7 +39,7 @@
     # CLI
     java -jar HexBot.jar botName [botArgs...]
 
-    # GUI
+    # GUI (in addition to double-clicking the jar file)
     java -jar HexBot.jar ['gui' [, botName...]
 
 In both cases, leaving out `botName` will print out a list of currently available bots
