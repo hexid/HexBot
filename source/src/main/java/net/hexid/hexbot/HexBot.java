@@ -1,7 +1,6 @@
 package net.hexid.hexbot;
 
 import java.util.Arrays;
-import java.util.Scanner;
 import net.hexid.hexbot.bot.Bots;
 import net.hexid.hexbot.bot.gui.BotGUI;
 import net.hexid.hexbot.bot.cmd.BotCMD;
