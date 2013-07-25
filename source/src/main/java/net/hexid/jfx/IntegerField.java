@@ -20,9 +20,9 @@ public class IntegerField extends javafx.scene.control.TextField {
 	}
 
 	public int getInteger() {
-		return Integer.parseInt(super.getText());
+		return Integer.parseInt(getText());
 	}
 	public void setInteger(int num) {
-		super.setText(Integer.toString(num));
+		setText(Integer.toString(num));
 	}
 }
