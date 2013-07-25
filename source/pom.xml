@@ -6,7 +6,7 @@
     <groupId>net.hexid.hexbot</groupId>
     <artifactId>HexBot</artifactId>
     <name>HexBot</name>
-    <version>1.1.0</version>
+    <version>1.1.1-SNAPSHOT</version>
 
     <build>
         <plugins>
