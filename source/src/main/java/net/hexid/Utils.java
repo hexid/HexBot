@@ -43,7 +43,7 @@ public class Utils {
 
 	public static String[] appendStrToArray(String[] arr, String str) {
 		String[] array = new String[arr.length+1];
-		for(int i = 0; i < arr.length-1; i++) {
+		for(int i = 0; i < arr.length; i++) {
 			array[i] = arr[i];
 		}
 		array[arr.length] = str;
