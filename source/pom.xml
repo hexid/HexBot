@@ -27,7 +27,6 @@
                     <vendor>Hexid</vendor>
                     <jfxMainAppJarName>${project.name}.jar</jfxMainAppJarName>
                     <mainClass>net.hexid.hexbot.HexBot</mainClass>
-                    <fallbackClass>net.hexid.hexbot.HexBotFallback</fallbackClass>
                 </configuration>
             </plugin>
         </plugins>
