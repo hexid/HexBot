@@ -31,6 +31,7 @@ public class BotCMD {
 					.newInstance(botID, args);
 			createProcess();
 		} else {
+			System.out.println("args: BotName [botArgs...]")
 			if(botID.length() > 0)
 				System.out.println(botID + " is an invalid bot.");
 			System.out.println("Available bots: " + Bots.botIDsString());
