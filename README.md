@@ -6,9 +6,9 @@
 ##### Dependencies
 - Install both [PhantomJS](http://phantomjs.org/download.html) and [CasperJS](http://casperjs.org/installation.html)
   - Refer to the individual instructions in the `libs` directory.
-  - These can also be installed independently on the system, but the binaries must be included in the PATH environment variable
+  - These can also be installed independently on the system, but the binaries would need to be included in the PATH environment variable
 
-##### Compile
+##### Compile GUI
     cd source/
     mvn jfx:jar
     mv target/jfx/app/HexBot.jar ../HexBot.jar
@@ -20,35 +20,35 @@
     bots/Bing.coffee # Bing Rewards
     bots/Astral.coffee # Astral WoW
     bots/Imgur.coffee # Imgur Albums
-    bots/Xbox.coffee # Xbox Codes
 
     # Modules (moving these will cause the associated bots to fail)
-    bots/libs/HexBot.coffee # HexBot
-    bots/libs/Microsoft.coffee # Microsoft
+    bots/libs/HexBot.coffee # Parse Arguments/Common Functions
 
     # Libraries (CasperJS/PhantomJS - required to run the bots)
     $PATH/%PATH% # these take precedence over the libs folder
     libs/**
 
     # Launcher
-    HexBot.jar
+    HexBot.jar # GUI
+    HexBot.py  # CLI
 
 ---
 
 ###Usage
     # CLI
-    java -jar HexBot.jar botName [botArgs...]
+    python HexBot.py botName [botArgs...]
+    python HexBot.py 'test' botName
 
     # GUI (in addition to double-clicking the jar file)
-    java -jar HexBot.jar ['gui' [, botName...]
+    java -jar HexBot.jar [, botName...]
 
 In both cases, leaving out `botName` will print out a list of currently available bots
 
 ---
 
 ###Requirements
-- PhantomJS >= 1.8.1 (>= 1.9.1 for Windows)
+- PhantomJS >= 1.9.0 (>= 1.9.1 for Windows)
 - CasperJS >= 1.1.0-DEV (from [GitHub/n1k0/casperjs](http://github.com/n1k0/casperjs))
 - Maven (for compiling from source)
 - Java (>= 7u6 required for GUI)
-- Python (only on Linux and Mac)
+- Python (required for CLI or for GUI on Linux/Mac)
