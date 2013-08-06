@@ -1,4 +1,4 @@
-package net.hexid.hexbot.bots.gui;
+package net.hexid.hexbot.bots;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,17 +7,17 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import net.hexid.hexbot.bot.BotTab;
 import net.hexid.jfx.HButton;
 import net.hexid.jfx.IntegerField;
 import net.hexid.jfx.LabeledField;
-import net.hexid.jfx.UtilsFX;
 
-public class BingTab extends net.hexid.hexbot.bot.gui.BotTab {
+public class Bing extends BotTab {
 	private HButton setupBtn, repeatBtn, stopBtn, loginBtn;
 	private String emailData, passwordData, queryCountData, delayMinData, delayMaxData;
 	private LabeledField email, password, queryCount, delayMin, delayMax;
 
-	public BingTab(String botID) {
+	public Bing(String botID) {
 		super(botID);
 	}
 
@@ -72,13 +72,13 @@ public class BingTab extends net.hexid.hexbot.bot.gui.BotTab {
 		queryCount = new LabeledField(IntegerField.class, "Queries: ");
 
 		HBox delay = new HBox(3);
-		UtilsFX.setVBoxMargin(delay);
+		VBox.setMargin(delay, BotTab.INSETS);
 		delayMin = new LabeledField(IntegerField.class, "Delay (Secs): ");
 		delayMax = new LabeledField(IntegerField.class, " to ");
 		delay.getChildren().addAll(delayMin, delayMax);
 
 		HBox login = new HBox(7.5d);
-		UtilsFX.setVBoxMargin(login);
+		VBox.setMargin(login, BotTab.INSETS);
 		loginBtn = new HButton("Login", new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				emailData = email.getText();

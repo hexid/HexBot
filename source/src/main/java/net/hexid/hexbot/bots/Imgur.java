@@ -1,20 +1,21 @@
-package net.hexid.hexbot.bots.gui;
+package net.hexid.hexbot.bots;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import net.hexid.hexbot.bot.BotTab;
 import net.hexid.jfx.HButton;
 import net.hexid.jfx.LabeledField;
 import net.hexid.Utils;
 
-public class ImgurTab extends net.hexid.hexbot.bot.gui.BotTab {
+public class Imgur extends BotTab {
 	private String albumData;
 	private LabeledField album;
 	private HButton downloadBtn;
 
-	public ImgurTab(String botID) {
+	public Imgur(String botID) {
 		super(botID);
 	}
 

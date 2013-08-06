@@ -7,19 +7,25 @@ import java.util.List;
 import java.util.Scanner;
 import net.hexid.Utils;
 
-public abstract class BotProcess extends Thread {
+public class BotProcess extends Thread {
 	private Process process;
 	private Scanner in;
-	protected Bot bot;
+	protected BotTab bot;
 
-	public BotProcess(Bot bot) throws IOException {
+	public BotProcess(BotTab bot) throws IOException {
 		super();
 		this.bot = bot;
 		this.process = startProcess();
 		this.in = new Scanner(this.process.getInputStream());
 	}
 
-	protected abstract void processInput(final String in);
+	protected void processInput(final String in) {
+		javafx.application.Platform.runLater(new Runnable() {
+			@Override public void run() {
+				bot.appendOutput(in);
+			}
+		});
+	}
 
 	protected Process startProcess() throws IOException {
 		List<String> processData;

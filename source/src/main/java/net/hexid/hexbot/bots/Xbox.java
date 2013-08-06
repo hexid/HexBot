@@ -1,4 +1,4 @@
-package net.hexid.hexbot.bots.gui;
+package net.hexid.hexbot.bots;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,16 +7,16 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import net.hexid.hexbot.bot.BotTab;
 import net.hexid.jfx.HButton;
 import net.hexid.jfx.LabeledField;
-import net.hexid.jfx.UtilsFX;
 
-public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
+public class Xbox extends BotTab {
 	private HButton setupBtn, repeatBtn, stopBtn, loginBtn;
 	private String emailData, passwordData, codeData;
 	private LabeledField email, password, code;
 
-	public XboxTab(String botID) {
+	public Xbox(String botID) {
 		super(botID);
 	}
 
@@ -68,7 +68,7 @@ public class XboxTab extends net.hexid.hexbot.bot.gui.BotTab {
 		code = new LabeledField(TextField.class, "Code: ");
 
 		HBox login = new HBox(7.5d);
-		UtilsFX.setVBoxMargin(login);
+		VBox.setMargin(login, BotTab.INSETS);
 		loginBtn = new HButton("Login", new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				emailData = email.getText();

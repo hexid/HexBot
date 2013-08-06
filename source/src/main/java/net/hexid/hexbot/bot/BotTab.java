@@ -1,4 +1,4 @@
-package net.hexid.hexbot.bot.gui;
+package net.hexid.hexbot.bot;
 
 import java.io.IOException;
 import javafx.geometry.Insets;
@@ -8,20 +8,24 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import net.hexid.hexbot.bot.Bot;
-import net.hexid.hexbot.bot.Bots;
 
-public abstract class BotTab extends Bot {
-	protected BotTabProcess process;
+public abstract class BotTab{
+	public static final Insets INSETS = new Insets(17.5d, 15.0d, 0.0d, 15.0d);
+
+	protected String botID;
+	protected BotProcess process;
 	protected TextArea output;
 	protected Tab tab;
 
 	public BotTab(String botID) {
-		super(botID);
+		this.botID = botID;
 		tab = new Tab(Bots.getBotName(botID));
 		setContent(defaultContent());
 	}
 
+	public String getBotID() {
+		return botID;
+	}
 	public Tab getTab() {
 		return tab;
 	}
@@ -32,11 +36,12 @@ public abstract class BotTab extends Bot {
 	public abstract void processExitCode(int exitCode);
 	protected abstract Node defaultContent(); // what is shown when the tab is created
 	protected abstract Node[] createBottomOutputContent();
+	public abstract String[] getBotExecuteData();
 
 	protected void createProcess() {
 		tab.setContent(createOutputContent()); // change to output mode
 		try { // create a new bot process and start it
-			process = new BotTabProcess(this);
+			process = new BotProcess(this);
 			process.start();
 		} catch (IOException e) {
 			appendOutput(e.getMessage());

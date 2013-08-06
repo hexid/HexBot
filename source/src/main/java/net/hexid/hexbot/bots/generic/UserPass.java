@@ -1,4 +1,4 @@
-package net.hexid.hexbot.bots.gui.generic;
+package net.hexid.hexbot.bots.generic;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,16 +7,16 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import net.hexid.hexbot.bot.BotTab;
 import net.hexid.jfx.HButton;
 import net.hexid.jfx.LabeledField;
-import net.hexid.jfx.UtilsFX;
 
-public class UserPassTab extends net.hexid.hexbot.bot.gui.BotTab {
+public class UserPass extends net.hexid.hexbot.bot.BotTab {
 	private HButton setupBtn, repeatBtn, loginBtn;
 	private String usernameData, passwordData;
 	private LabeledField username, password;
 
-	public UserPassTab(String botID) {
+	public UserPass(String botID) {
 		super(botID);
 	}
 
@@ -60,7 +60,7 @@ public class UserPassTab extends net.hexid.hexbot.bot.gui.BotTab {
 		password = new LabeledField(PasswordField.class, "Password: ");
 
 		HBox login = new HBox(7.5d);
-		UtilsFX.setVBoxMargin(login);
+		VBox.setMargin(login, BotTab.INSETS);
 		loginBtn = new HButton("Login", new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				usernameData = username.getText();

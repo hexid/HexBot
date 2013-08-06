@@ -1,16 +1,16 @@
-package net.hexid.hexbot.bots.gui.generic;
+package net.hexid.hexbot.bots.generic;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
-import net.hexid.hexbot.bot.Bots;
+import net.hexid.hexbot.bot.BotTab;
 import net.hexid.jfx.HButton;
 
-public class OutputTab extends net.hexid.hexbot.bot.gui.BotTab {
+public class Output extends BotTab {
 	private HButton startBtn, stopBtn;
 
-	public OutputTab(String botID) {
+	public Output(String botID) {
 		super(botID);
 	}
 
