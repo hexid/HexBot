@@ -14,7 +14,8 @@ offers = []; executed = 0; fb = false
 
 argData = [{name:'email'}, {name:'password'}, {name:'queryCount',default:0},
            {name:'minTime',default:20}, {name:'maxTime',default:40}]
-ARGS = hexBot.parseArgs(casper, argData)
+argStr = 'email , [password , [queryCount , [minTime , [maxTime]]]]'
+ARGS = hexBot.parseArgs(casper, argData, argStr)
 ARGS[3] = Math.abs ARGS[3]
 ARGS[4] = Math.abs ARGS[4]
 if ARGS[4] < ARGS[3] then ARGS[4] = ARGS[3] # ensure that maxTime >= minTime
@@ -26,8 +27,13 @@ casper.start 'http://www.bing.com/rewards/signin', goToLogin = ->
     @exit 3 # exit if it isn't the right page
   @click '#WLSignin' # Go to the windows live login page
 
-casper.then submitLoginData = ->
-  require('./libs/Microsoft.coffee').login(@, ARGS[0], ARGS[1])
+casper.then login = ->
+  @fill 'form[name="f1"]',
+    login: ARGS[0]
+    passwd: ARGS[1]
+    KMSI: true
+  , true
+  @wait 100
 
 casper.thenOpen DASHBOARD, openDashboard = ->
   [offers, ARGS[2], fb] = @evaluate (examineDashboard = (offers, queryCount, fb) ->
