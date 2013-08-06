@@ -1,5 +1,7 @@
 package net.hexid.jfx;
 
+import javafx.scene.control.TextField;
+
 public class IntegerField extends javafx.scene.control.TextField {
 	public IntegerField() {
 		super();
@@ -17,12 +19,5 @@ public class IntegerField extends javafx.scene.control.TextField {
 
 	@Override public void replaceSelection(String text) {
 		if(!text.matches("\\D")) super.replaceSelection(text);
-	}
-
-	public int getInteger() {
-		return Integer.parseInt(getText());
-	}
-	public void setInteger(int num) {
-		setText(Integer.toString(num));
 	}
 }
