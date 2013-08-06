@@ -10,7 +10,7 @@ import net.hexid.Utils;
 
 public class Bots {
 	private static TreeMap<String, String[]> bots = new TreeMap<>();
-	public static int INDEX_NAME = 0, INDEX_CLI = 1, INDEX_GUI = 2, INDEX_FILE = 3;
+	public static int INDEX_NAME = 0, INDEX_GUI = 1, INDEX_FILE = 2;
 
 	/**
 	 * Add a new bot to the list of usable bots
@@ -20,8 +20,8 @@ public class Bots {
 	 * @param guiClassPath
 	 * @param fileName
 	 */
-	public static void addBot(String id, String name, String cli, String gui, String file) {
-		bots.put(id.toLowerCase(), new String[]{name, cli, gui, file});
+	public static void addBot(String id, String name, String gui, String file) {
+		bots.put(id.toLowerCase(), new String[]{name, gui, file});
 	}
 
 	/**
@@ -118,9 +118,6 @@ public class Bots {
 	public static String getBotName(String botID) {
 		return getFromBot(botID, Bots.INDEX_NAME);
 	}
-	public static String getBotCliClassPath(String botID) {
-		return getFromBot(botID, Bots.INDEX_CLI);
-	}
 	public static String getBotGuiClassPath(String botID) {
 		return getFromBot(botID, Bots.INDEX_GUI);
 	}
@@ -130,9 +127,6 @@ public class Bots {
 
 	public static boolean setBotName(String botID, String newBotName) {
 		return setInBot(botID, Bots.INDEX_NAME, newBotName);
-	}
-	public static boolean setBotCliClassPath(String botID, String newCliClassPath) {
-		return setInBot(botID, Bots.INDEX_CLI, newCliClassPath);
 	}
 	public static boolean setBotGuiClassPath(String botID, String newGuiClassPath) {
 		return setInBot(botID, Bots.INDEX_GUI, newGuiClassPath);
@@ -144,7 +138,7 @@ public class Bots {
 	public static String getBotFile(String botID) {
 		return Utils.joinFile(Utils.getPWD().getPath(), "bots", getBotFileName(botID));
 	}
-	public static String getBotFile(Bot bot) {
+	public static String getBotFile(BotTab bot) {
 		return getBotFile(bot.getBotID());
 	}
 }
