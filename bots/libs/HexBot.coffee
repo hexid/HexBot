@@ -2,6 +2,7 @@
 
 require = patchRequire(global.require)
 utils = require('utils')
+sys = require('system')
 
 exports.createCasper = (casperOptions = {}) ->
   require('casper').create(
@@ -14,10 +15,10 @@ exports.createCasper = (casperOptions = {}) ->
     )
   )
 
-
 #argumentData = [{name:'argName1',default:'optionalArg'}, {name:'argName2',csv:true}, ...]
-exports.parseArgs = (casper, argumentData) ->
-  ARGS = []; missingRequired = []; posArg = -1; argCount = 0
+exports.parseArgs = (casper, argumentData, argumentString) ->
+  ARGS = []; posArg = -1; argCount = 0
+  missingRequired = []; missingIndex = -1
 
   for arg in argumentData # get the arguments from the command line
     if casper.cli.raw.has arg.name
@@ -28,12 +29,18 @@ exports.parseArgs = (casper, argumentData) ->
       ARGS[argCount] = arg.default
     else # if no default value is given then it is a required argument
       missingRequired.push arg.name
+      missingIndex = argCount
 
     if arg.csv and ARGS[argCount]?
       ARGS[argCount] = ARGS[argCount].split(',')
     argCount++
 
-  if missingRequired.length > 0 # if any required arguments were missing
+  if missingRequired.length is 1 and missingRequired[0] is 'password'
+    sys.stdout.write 'Password (will get printed): '
+    ARGS[missingIndex] = sys.stdin.readLine()
+  else if missingRequired.length > 0 # if any required arguments were missing
+    if argumentString?
+      casper.echo "args  : #{argumentString}"
     casper.echo "argErr: #{missingRequired} are required parameters."
     casper.exit 1
   ARGS # return
