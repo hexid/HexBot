@@ -40,13 +40,4 @@ public class Utils {
 	public static File getPWD() {
 		return new File(Utils.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParentFile();
 	}
-
-	public static String[] appendStrToArray(String[] arr, String str) {
-		String[] array = new String[arr.length+1];
-		for(int i = 0; i < arr.length; i++) {
-			array[i] = arr[i];
-		}
-		array[arr.length] = str;
-		return array;
-	}
 }
