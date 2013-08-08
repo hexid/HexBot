@@ -31,7 +31,6 @@ public class HexBot extends javafx.application.Application {
 		Bots.addBot("molten", "Molten WoW", "net.hexid.hexbot.bots.generic.UserPass", "Molten.coffee");
 		Bots.addBot("test-coffee", "Test-CF", "net.hexid.hexbot.bots.generic.Output", "Test.coffee");
 		Bots.addBot("test-js", "Test-JS", "net.hexid.hexbot.bots.generic.Output", "Test.js");
-		Bots.addBot("xbox", "Xbox Codes", "net.hexid.hexbot.bots.Xbox", "Xbox.coffee");
 	}
 
 	protected void init(String[] args) {

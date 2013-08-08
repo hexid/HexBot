@@ -35,8 +35,7 @@ def getBotFile(botIndex):
     'imgur': 'Imgur.coffee',
     'molten': 'Molten.coffee',
     'test-cf': 'Test.coffee',
-    'test-js': 'Test.js',
-    'xbox': 'Xbox.coffee'
+    'test-js': 'Test.js'
   }.items() if path.isfile(path.join(base, 'bots', v))}
 
   if len(argv) > botIndex:
