@@ -28,19 +28,25 @@
     $PATH/%PATH% # these take precedence over the libs folder
     libs/**
 
-    # Launcher
+    # Launchers
     HexBot.jar # GUI
     HexBot.py  # CLI
 
 ---
 
 ###Usage
-    # CLI
-    python HexBot.py botName [botArgs...]
-    python HexBot.py 'test' botName
+##### CLI
+    python HexBot.py <botName> [<botArgs>...]
 
-    # GUI (in addition to double-clicking the jar file)
-    java -jar HexBot.jar [, botName...]
+    # Read in a password that will be passed on to the bot
+    python HexBot.py pw <botName> [<botArgs>...]
+
+    # Run bot in test mode
+    python HexBot.py test <botName>
+
+##### GUI
+    # In addition to double-clicking the jar file
+    java -jar HexBot.jar [<botName>...]
 
 In both cases, leaving out `botName` will print out a list of currently available bots
 
