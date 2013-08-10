@@ -4,6 +4,7 @@ source/target/
 
 bots/Molten.coffee
 bots/Test.*
+bots/test/
 
 libs/phantomjs/**
 !libs/phantomjs/LICENSE.BSD
