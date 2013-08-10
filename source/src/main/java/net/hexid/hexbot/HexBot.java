@@ -58,7 +58,7 @@ public class HexBot extends javafx.application.Application {
 
 	protected void addTab(String botID) {
 		try { // create a new tab based on the bot's guiClassPath
-			tabPane.addBotTab((BotTab)Class.forName(Bots.getBotGuiClassPath(botID))
+			tabPane.addBotTab((BotTab)Class.forName(Bots.getBotClassPath(botID))
 					.getConstructor(String.class).newInstance(botID));
 		} catch(Exception e) {
 			e.printStackTrace();
