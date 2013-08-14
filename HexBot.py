@@ -7,10 +7,8 @@ import subprocess, getpass
 
 base = path.dirname(path.realpath(__file__))
 
-def getUpdatedPath():
+def getUpdatedEnv():
   oper = platform
-  casperBin = 'bin'
-
   if oper.startswith('win32') or oper.startswith('cygwin'):
     oper = 'windows'
   elif oper.startswith('darwin'):
@@ -24,9 +22,9 @@ def getUpdatedPath():
   phantomBin = path.join(phantom, 'bin')
   phantomBinOS = path.join(phantomBin, oper)
 
-  newPath = environ.copy()
-  newPath['PATH'] = pathsep.join([newPath['PATH'], casper, phantomBinOS, phantom, phantomBin])
-  return newPath
+  env = environ.copy()
+  env['PATH'] = pathsep.join([env['PATH'], casper, phantomBinOS, phantom, phantomBin])
+  return env
 
 def getBotFile(botIndex):
   bots = {k:v for k,v in {
@@ -54,13 +52,12 @@ def getBotFile(botIndex):
 def firstArgEquals(equals):
   return True if len(argv) > 1 and argv[1].lower() == equals else False
 
-def execute():
+def createProcess():
   botTest = firstArgEquals('test')
   botPassword = firstArgEquals('pw')
   botIndex = 2 if botTest or botPassword else 1
-  botFile = getBotFile(botIndex)
 
-  botArgs = ["casperjs", path.join(base, 'bots', botFile)]
+  botArgs = ["casperjs", path.join(base, 'bots', getBotFile(botIndex))]
   if botTest:
     botArgs.insert(1, 'test')
   else:
@@ -70,9 +67,8 @@ def execute():
     botArgs.append('--password=' + getpass.getpass())
 
   print('Executing %s' % argv[botIndex])
-  newEnv = getUpdatedPath()
-  p = subprocess.Popen(botArgs, env=newEnv)
+  p = subprocess.Popen(botArgs, env=getUpdatedEnv())
   p.wait()
 
 if __name__=="__main__":
-  execute()
+  createProcess()
