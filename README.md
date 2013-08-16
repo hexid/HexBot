@@ -1,4 +1,5 @@
 ![HexBot](/source/src/main/resources/HexBot.png "HexBot")
+#v1.2.0
 ===
 
 
@@ -55,6 +56,6 @@ In both cases, leaving out `botName` will print out a list of currently availabl
 ###Requirements
 - PhantomJS >= 1.9.0 (>= 1.9.1 for Windows)
 - CasperJS >= 1.1.0-DEV (from [GitHub/n1k0/casperjs](http://github.com/n1k0/casperjs))
-- Maven (for compiling from source)
+- Maven (for compiling GUI from source)
 - Java (>= 7u6 required for GUI)
 - Python (required for CLI or for GUI on Linux/Mac)
