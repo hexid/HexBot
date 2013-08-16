@@ -1,7 +1,5 @@
 ![HexBot](/source/src/main/resources/HexBot.png "HexBot")
-#v1.2.0
-===
-
+##v1.2.0
 
 ###Installation:
 ##### Dependencies
