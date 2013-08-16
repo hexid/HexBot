@@ -16,9 +16,9 @@ def getUpdatedEnv():
   elif oper.startswith('linux'):
     oper = 'linux-' + ('amd64' if arch() == 'x86_64' else 'i386')
 
-  libs = path.join(base, "libs")
+  libs = path.join(base, 'libs')
   casper = path.join(libs, 'casperjs', 'bin')
-  phantom = path.join(libs, "phantomjs")
+  phantom = path.join(libs, 'phantomjs')
   phantomBin = path.join(phantom, 'bin')
   phantomBinOS = path.join(phantomBin, oper)
 
@@ -32,7 +32,7 @@ def getBotFile(botIndex):
     'bing': 'Bing.coffee',
     'imgur': 'Imgur.coffee',
     'molten': 'Molten.coffee',
-    'test-cf': 'Test.coffee',
+    'test-coffee': 'Test.coffee',
     'test-js': 'Test.js'
   }.items() if path.isfile(path.join(base, 'bots', v))}
 
@@ -41,12 +41,15 @@ def getBotFile(botIndex):
     if botFile != None:
       return botFile
     else:
-      print("Bot not found: %s" % argv[botIndex].lower())
+      print('Bot not found: %s' % argv[botIndex].lower())
 
-  print("Usage:\t<botName> [<botArgs>...]"
-        "\n\tpw <botName> [<botArgs>...]"
-        "\n\ttest <botName>")
-  print("Available bots: %s" % sorted(list(bots.keys())))
+  print('Usage:\t<botName> [<botArgs>...]'
+        '\n\tpw <botName> [<botArgs>...]'
+        '\n\ttest <botName>')
+  if len(bots) > 0:
+    print('Available bots: %s' % sorted(list(bots.keys())))
+  else:
+    print('No bots available: %s' % path.join(base, 'bots'))
   exit()
 
 def firstArgEquals(equals):
@@ -57,7 +60,7 @@ def createProcess():
   botPassword = firstArgEquals('pw')
   botIndex = 2 if botTest or botPassword else 1
 
-  botArgs = ["casperjs", path.join(base, 'bots', getBotFile(botIndex))]
+  botArgs = ['casperjs', '--ignore-ssl-errors=true', path.join(base, 'bots', getBotFile(botIndex))]
   if botTest:
     botArgs.insert(1, 'test')
   else:
@@ -70,5 +73,5 @@ def createProcess():
   p = subprocess.Popen(botArgs, env=getUpdatedEnv())
   p.wait()
 
-if __name__=="__main__":
+if __name__ == '__main__':
   createProcess()
