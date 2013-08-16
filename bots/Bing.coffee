@@ -28,12 +28,14 @@ casper.start 'http://www.bing.com/rewards/signin', goToLogin = ->
   @click '#WLSignin' # Go to the windows live login page
 
 casper.then login = ->
+  url = @getCurrentUrl()
   @fill 'form[name="f1"]',
     login: ARGS[0]
     passwd: ARGS[1]
     KMSI: true
   , true
-  @wait 100
+  @waitFor urlChange = ->
+    return @getCurrentUrl() != url
 
 casper.thenOpen DASHBOARD, openDashboard = ->
   [offers, ARGS[2], fb] = @evaluate (examineDashboard = (offers, queryCount, fb) ->
