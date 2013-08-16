@@ -29,8 +29,8 @@ public class BotProcess extends Thread {
 
 	protected Process startProcess() throws IOException {
 		List<String> processData;
-		String botExecuteData = Utils.join(" ", "casperjs", Bots.getBotFile(bot),
-				Utils.join(" ", bot.getBotExecuteData()));
+		String botExecuteData = Utils.join(" ", "casperjs", "--ignore-ssl-errors=true",
+				Bots.getBotFile(bot), Utils.join(" ", bot.getBotExecuteData()));
 		String pathName;
 		if(File.pathSeparator.equals(";")) { // if windows
 			pathName = "Path";
