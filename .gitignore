@@ -1,6 +1,6 @@
 output/
 releases/
-source/target/
+source/bin/
 
 bots/Molten.coffee
 bots/Test.*
