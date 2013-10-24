@@ -6,7 +6,7 @@
   2 = error logging in (most likely an incorrect password)
   3 = internet connection error
 ###
-hexBot = require('./libs/HexBot.coffee')
+hexBot = require('libs/HexBot')
 fs = require('fs')
 casper = hexBot.createCasper(
   pageSettings:

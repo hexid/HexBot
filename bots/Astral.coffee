@@ -5,7 +5,7 @@
   1 = argument error
   2 = error logging in (most likely an incorrect password)
 ###
-hexBot = require('./libs/HexBot.coffee')
+hexBot = require('libs/HexBot')
 casper = hexBot.createCasper()
 FIRST_LOGIN = true; count = 0
 
