@@ -1,4 +1,4 @@
-![HexBot](/source/src/main/resources/HexBot.png "HexBot")
+![HexBot](/source/src/resources/HexBot.png "HexBot")
 ##v1.2.0
 
 ###Installation:
