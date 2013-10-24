@@ -7,9 +7,9 @@ import subprocess, getpass
 
 base = path.dirname(path.realpath(__file__))
 
-def getUpdatedEnv():
+def updateEnviron():
   oper = platform
-  if oper.startswith('win32') or oper.startswith('cygwin'):
+  if oper.startswith('win32'):
     oper = 'windows'
   elif oper.startswith('darwin'):
     oper = 'macosx'
@@ -17,14 +17,16 @@ def getUpdatedEnv():
     oper = 'linux-' + ('amd64' if arch() == 'x86_64' else 'i386')
 
   libs = path.join(base, 'libs')
-  casper = path.join(libs, 'casperjs', 'bin')
+  casper = path.join(libs, 'casperjs', ('bin' if oper is not 'windows' else 'batchbin'))
   phantom = path.join(libs, 'phantomjs')
   phantomBin = path.join(phantom, 'bin')
+
+  if oper.startswith('cygwin'):
+    oper = 'windows'
+
   phantomBinOS = path.join(phantomBin, oper)
 
-  env = environ.copy()
-  env['PATH'] = pathsep.join([env['PATH'], casper, phantomBinOS, phantom, phantomBin])
-  return env
+  environ['PATH'] += pathsep + pathsep.join([casper, phantomBinOS, phantom, phantomBin])
 
 def getBotFile(botIndex):
   bots = {k:v for k,v in {
@@ -59,8 +61,10 @@ def createProcess():
   botTest = firstArgEquals('test')
   botPassword = firstArgEquals('pw')
   botIndex = 2 if botTest or botPassword else 1
+  botFile = getBotFile(botIndex)
+  print('Executing %s' % argv[botIndex])
 
-  botArgs = ['casperjs', '--ignore-ssl-errors=true', path.join(base, 'bots', getBotFile(botIndex))]
+  botArgs = ['casperjs', '--ignore-ssl-errors=true', path.join(base, 'bots', botFile)]
   if botTest:
     botArgs.insert(1, 'test')
   else:
@@ -69,9 +73,12 @@ def createProcess():
   if botPassword:
     botArgs.append('--password=' + getpass.getpass())
 
-  print('Executing %s' % argv[botIndex])
-  p = subprocess.Popen(botArgs, env=getUpdatedEnv())
-  p.wait()
+  updateEnviron()
+
+  p = subprocess.call(' '.join(botArgs), env=environ, shell=True)
 
 if __name__ == '__main__':
-  createProcess()
+  try:
+    createProcess()
+  except KeyboardInterrupt:
+    pass
