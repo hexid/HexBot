@@ -41,17 +41,17 @@ casper.thenOpen DASHBOARD, openDashboard = ->
   [offers, ARGS[2], fb] = @evaluate (examineDashboard = (offers, queryCount, fb) ->
     for e in document.querySelectorAll 'ul.row li a div.check-wrapper div.open-check'
       elem = e.parentNode.parentNode
-      title = elem.querySelector('.title').innerText
-      if title is 'Join Now' # failed to login
+      title = elem.querySelector('.title').innerText.toLowerCase()
+      if title is 'join now' # failed to login
         return [['Login'], 0] # return fake offer to tell bot to halt
-      else if queryCount <= 0 and title in ['Search and Earn', 'Search Bing']
+      else if queryCount <= 0 and title in ['search and earn', 'search bing']
         [earn, per, upTo] = elem.querySelector('.desc').innerText.match(/\d+/g)[0..2]
         soFar = elem.querySelector('.progress').innerText.match(/\d+/)[0]
         # remainingQueries = queriesPerPoint * remainingPoints / earnedPerQueries
         queryCount = Math.ceil(per * (upTo - soFar) / earn)
-      else if title is 'Connect to Facebook'
+      else if title is 'connect to facebook'
         fb = true # free points by logging in with facebook
-      else if title not in ['Refer a Friend', 'Bing Newsletter']
+      else if title not in ['refer a friend', 'bing newsletter', 'invite friends']
         offers.push elem.href # add the link of the offer
     [offers, queryCount, fb] # return
   ), offers, ARGS[2], fb
