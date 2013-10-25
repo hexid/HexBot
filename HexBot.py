@@ -1,6 +1,6 @@
 #!/bin/env python
 
-from sys import argv, exit, platform
+from sys import argv, exit, platform, stdout
 from platform import machine as arch
 from os import environ, path, pathsep
 import subprocess, getpass
@@ -62,6 +62,8 @@ def createProcess():
   botPassword = firstArgEquals('pw')
   botIndex = 2 if botTest or botPassword else 1
   botFile = getBotFile(botIndex)
+
+  stdout.write("\x1b]2;HexBot : " + argv[botIndex].title() + "\x07")
   print('Executing %s' % argv[botIndex])
 
   botArgs = ['casperjs', '--ignore-ssl-errors=true', path.join(base, 'bots', botFile)]
@@ -81,4 +83,5 @@ if __name__ == '__main__':
   try:
     createProcess()
   except KeyboardInterrupt:
+    print()
     pass
