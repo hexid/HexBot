@@ -3,9 +3,18 @@
 from sys import argv, exit, platform, stdout
 from platform import machine as arch
 from os import environ, path, pathsep
-import subprocess, getpass
+import subprocess, getpass, argparse
 
 base = path.dirname(path.realpath(__file__))
+parser = None
+bots = {k:v for k,v in {
+  'astral': 'Astral.coffee',
+  'bing': 'Bing.coffee',
+  'imgur': 'Imgur.coffee',
+  'molten': 'Molten.coffee',
+  'test-coffee': 'Test.coffee',
+  'test-js': 'Test.js'
+}.items() if path.isfile(path.join(base, 'bots', v))}
 
 def updateEnviron():
   oper = platform
@@ -28,60 +37,58 @@ def updateEnviron():
 
   environ['PATH'] += pathsep + pathsep.join([casper, phantomBinOS, phantom, phantomBin])
 
-def getBotFile(botIndex):
-  bots = {k:v for k,v in {
-    'astral': 'Astral.coffee',
-    'bing': 'Bing.coffee',
-    'imgur': 'Imgur.coffee',
-    'molten': 'Molten.coffee',
-    'test-coffee': 'Test.coffee',
-    'test-js': 'Test.js'
-  }.items() if path.isfile(path.join(base, 'bots', v))}
+def getBotFile(botName):
+  botFile = bots.get(botName.lower())
+  if botFile != None:
+    return path.join(base, 'bots', botFile)
 
-  if len(argv) > botIndex:
-    botFile = bots.get(argv[botIndex].lower())
-    if botFile != None:
-      return botFile
-    else:
-      print('Bot not found: %s' % argv[botIndex].lower())
-
-  print('Usage:\t<botName> [<botArgs>...]'
-        '\n\tpw <botName> [<botArgs>...]'
-        '\n\ttest <botName>')
-  if len(bots) > 0:
-    print('Available bots: %s' % sorted(list(bots.keys())))
-  else:
-    print('No bots available: %s' % path.join(base, 'bots'))
+  parser.print_help()
+  print('Bot not found: %s' % botName.lower())
   exit()
 
-def firstArgEquals(equals):
-  return True if len(argv) > 1 and argv[1].lower() == equals else False
+def parseArgs():
+  global parser
+  parser = argparse.ArgumentParser(
+    epilog='Valid bots: %s' % sorted(list(bots.keys()))
+  )
+  parser.add_argument('botName', metavar='botName', type=str,
+    help='Bot name (valid bots below)')
+  parser.add_argument('-p', '--password', dest='botPassword', action='store_true',
+    help='Prompt for password and sent it on to the bot')
+  parser.add_argument('-t', '--test', dest='botTest', action='store_true',
+    help='Launch CasperJS in test mode')
+  parser.add_argument('botArgs', type=str, nargs='*',
+    help='Arguments that will be passed on to the bot')
+
+  return parser.parse_known_args()
 
 def createProcess():
-  botTest = firstArgEquals('test')
-  botPassword = firstArgEquals('pw')
-  botIndex = 2 if botTest or botPassword else 1
-  botFile = getBotFile(botIndex)
+  (args, unknown) = parseArgs()
+  botFile = getBotFile(args.botName)
 
-  stdout.write("\x1b]2;HexBot : " + argv[botIndex].title() + "\x07")
-  print('Executing %s' % argv[botIndex])
+  stdout.write("\x1b]2;HexBot : " + args.botName.title() + "\x07")
+  print('Executing %s' % args.botName.title())
 
-  botArgs = ['casperjs', '--ignore-ssl-errors=true', path.join(base, 'bots', botFile)]
-  if botTest:
-    botArgs.insert(1, 'test')
-  else:
-    botArgs.extend(argv[botIndex+1::])
+  cmdExec = ['casperjs', '--ignore-ssl-errors=true', botFile]
+  if unknown:
+    cmdExec.extend(unknown)
+  if args.botTest:
+    cmdExec.insert(1, 'test')
+  cmdExec.extend(args.botArgs)
 
-  if botPassword:
-    botArgs.append('--password=' + getpass.getpass())
+  if args.botPassword:
+    cmdExec.append('--password=' + getpass.getpass())
 
   updateEnviron()
 
-  p = subprocess.call(' '.join(botArgs), env=environ, shell=True)
+  p = subprocess.call(' '.join(cmdExec), env=environ, shell=True)
 
 if __name__ == '__main__':
   try:
-    createProcess()
+    if len(bots) is 0:
+      print('No bots available in: %s' % path.join(base, 'bots'))
+    else:
+      createProcess()
   except KeyboardInterrupt:
     print()
     pass
