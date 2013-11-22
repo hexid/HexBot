@@ -10,7 +10,7 @@ casper = hexBot.createCasper()
 FIRST_LOGIN = true; count = 0
 
 argData = [{name:'username'}, {name:'password'}]
-argStr = 'username , [password]'
+argStr = 'username , password'
 ARGS = hexBot.parseArgs(casper, argData, argStr)
 
 login = ->
