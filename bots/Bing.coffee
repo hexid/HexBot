@@ -8,13 +8,14 @@
   3 = internet connection error
 ###
 hexBot = require('libs/HexBot')
+words = require('libs/Words/Generator')
 casper = hexBot.createCasper()
 DASHBOARD = 'http://www.bing.com/rewards/dashboard'
 offers = []; executed = 0; fb = false
 
 argData = [{name:'email'}, {name:'password'}, {name:'queryCount',default:0},
            {name:'minTime',default:20}, {name:'maxTime',default:40}]
-argStr = 'email , [password , [queryCount , [minTime , [maxTime]]]]'
+argStr = 'email , password , [queryCount , [minTime , [maxTime]]]]'
 ARGS = hexBot.parseArgs(casper, argData, argStr)
 ARGS[3] = Math.abs ARGS[3]
 ARGS[4] = Math.abs ARGS[4]
@@ -71,22 +72,29 @@ casper.then execQueries = ->
   @repeat ARGS[2], execQuery = -> # repeat `queryCount` times
     # wait between queries
     @wait Math.floor(Math.random() * ((ARGS[4] - ARGS[3]) * 1000 + 1)) + (ARGS[3] * 1000), ->
-      @thenOpen 'http://randomword.setgetgo.com/get.php', (randomWordData) ->
-        word = ''; gen = false
-        # check if the random word was retrieved and if not then generate one
-        if not /^[a-zA-Z]{1,20}$/.test (word = @fetchText('body').trim())
-          gen = true; word = ''
-          CONSONANTS = 'bcdfghjklmnpqrstvwxyz'; VOWELS = 'aeiou'
-          len = Math.floor(Math.random() * 5) + 5 # letters in word (5..9)
-          for i in [1..len] by 2 # add letters two at a time (consonant followed by a vowel)
-            word += CONSONANTS[Math.floor(Math.random() * 21)] # add a consonant
-            if i < len # add a vowel if there is room
-              word += VOWELS[Math.floor(Math.random() * 5)]
-          if Math.floor(Math.random()*2) is 1
-            word = word[0].toUpperCase() + word[1..-1] # randomly capitalize word
-        # query bing with the word
-        @thenOpen "http://www.bing.com/search?scope=web&setmkt=en-US&q=#{word}", (data) ->
-          @echo "#{if data['status'] is 200 then ++executed else 'Failed'}#{if gen then '-gen' else ''}) #{word}"
+      word = words.generateWord()
+      # query bing with the word
+      @thenOpen "http://www.bing.com/search?scope=web&setmkt=en-US&q=#{word}", (data) ->
+        @echo "#{if data['status'] is 200 then ++executed else 'Failed'}) #{word}"
+
+percentToGoal = ''
+casper.thenOpen DASHBOARD, checkForPoints = ->
+  percentToGoal = @evaluate ->
+    return document.querySelector('.progress-value').children[0].innerText
+casper.then ->
+  if not (percentToGoal in ['100%'])
+    @echo "You are #{percentToGoal} of the way to your goal."
+    @bypass 4 # skip the next (3?) steps since there aren't enough points for the goal
+
+casper.thenOpen "http://www.bing.com/rewards/redeem/all", ->
+  @click "#goal" # visit the goal reward's page
+casper.then ->
+  @waitForSelector '#SingleProduct_SubmitForm', ->
+    @click '#SingleProduct_SubmitForm' # click the redeem button
+casper.then ->
+  @waitForSelector '#CheckoutReview_SubmitForm', ->
+    @click '#CheckoutReview_SubmitForm' # confirm order
+    @echo 'Redeemed your goal.'
 
 casper.thenOpen DASHBOARD, getTotalPoints = -> # get the number of unused points on the account
   totalPoints = @getElementInfo('#user-status .user-balance .data-value-text').text
