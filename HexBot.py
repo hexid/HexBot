@@ -53,12 +53,12 @@ def parseArgs():
   )
   parser.add_argument('botName', metavar='botName', type=str,
     help='Bot name (valid bots below)')
-  parser.add_argument('-p', '--password', dest='botPassword', action='store_true',
+  parser.add_argument('botArgs', type=str, nargs='*',
+    help='Arguments that will be passed on to the bot')
+  parser.add_argument('-p', '--pw', dest='botPassword', action='store_true',
     help='Prompt for password and sent it on to the bot')
   parser.add_argument('-t', '--test', dest='botTest', action='store_true',
     help='Launch CasperJS in test mode')
-  parser.add_argument('botArgs', type=str, nargs='*',
-    help='Arguments that will be passed on to the bot')
 
   return parser.parse_known_args()
 
