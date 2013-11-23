@@ -50,9 +50,9 @@ public class HexBot extends javafx.application.Application {
 		if(tabPane.getTabs().size() == 0) // if no arguments were passed to the gui
 			System.out.println("args: [BotName...]\nAvailable bots: " + Bots.botIDsString());
 
-		stage.getIcons().add(new Image(HexBot.class.getResourceAsStream("/HexBot.png")));
+		stage.getIcons().add(new Image(HexBot.class.getResourceAsStream("/HexBot-Icon.png")));
 		stage.setTitle("HexBot by Hexid");
-		stage.setScene(new Scene(root, 630, 300));
+		stage.setScene(new Scene(root, 750, 360));
 		stage.show();
 	}
 

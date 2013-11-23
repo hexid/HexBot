@@ -10,6 +10,12 @@ public class BotTabPane extends TabPane {
 	public BotTabPane() {
 		super();
 		setSide(Side.BOTTOM); // have the tabs along the bottom
+		setStyle(
+			"-fx-background-image: url('" + BotTabPane.class.getResource("/HexBot-Logo.png") + "');" +
+			"-fx-background-repeat: stretch;" +
+			"-fx-background-size: stretch;" +
+			"-fx-background-position: center center;"
+		);
 	}
 
 	public void addBotTab(final BotTab botTab) {
