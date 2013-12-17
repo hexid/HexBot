@@ -1,9 +1,9 @@
-all: prep csharp java
+all: csharp java
 
 prep:
 		mkdir -p bin
 
-csharp:
+csharp: prep
 		mcs -langversion:3 -out:bin/HexBot.exe -recurse:'src/csharp/**.cs'
 
 java:
