@@ -8,7 +8,7 @@
   3 = internet connection error
 ###
 hexBot = require('libs/HexBot')
-words = require('libs/Words/Generator')
+words = require('libs/Words/GenerateWord')
 casper = hexBot.createCasper()
 DASHBOARD = 'http://www.bing.com/rewards/dashboard'
 offers = []; executed = 0; fb = false
