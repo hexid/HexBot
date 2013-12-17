@@ -66,7 +66,6 @@ def createProcess():
   (args, unknown) = parseArgs()
   botFile = getBotFile(args.botName)
 
-  stdout.write("\x1b]2;HexBot : " + args.botName.title() + "\x07")
   print('Executing %s' % args.botName.title())
 
   cmdExec = ['casperjs', '--ignore-ssl-errors=true', botFile]
