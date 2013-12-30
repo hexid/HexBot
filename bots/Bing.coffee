@@ -74,7 +74,7 @@ casper.then execQueries = ->
     @wait Math.floor(Math.random() * ((ARGS[4] - ARGS[3]) * 1000 + 1)) + (ARGS[3] * 1000), ->
       word = words.generateWord()
       # query bing with the word
-      @thenOpen "http://www.bing.com/search?scope=web&setmkt=en-US&q=#{word}", (data) ->
+      @thenOpen "http://www.bing.com/search?q=#{word}", (data) ->
         @echo "#{if data['status'] is 200 then ++executed else 'Failed'}) #{word}"
 
 percentToGoal = ''
