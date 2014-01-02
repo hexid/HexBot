@@ -11,7 +11,7 @@ hexBot = require('libs/HexBot')
 words = require('libs/Words/GenerateWord')
 casper = hexBot.createCasper()
 DASHBOARD = 'http://www.bing.com/rewards/dashboard'
-offers = []; executed = 0; fb = false
+offers = []; executed = 0; fb = false; startingPoints = 0
 
 argData = [{name:'email'}, {name:'password'}, {name:'queryCount',default:0},
            {name:'minTime',default:20}, {name:'maxTime',default:40}]
@@ -39,6 +39,7 @@ casper.then login = ->
     return @getCurrentUrl() != url
 
 casper.thenOpen DASHBOARD, openDashboard = ->
+  startingPoints = @getElementInfo('#user-status .user-balance .data-value-text').text
   [offers, ARGS[2], fb] = @evaluate (examineDashboard = (offers, queryCount, fb) ->
     for e in document.querySelectorAll 'ul.row li a div.check-wrapper div.open-check'
       elem = e.parentNode.parentNode
@@ -98,6 +99,7 @@ casper.then ->
 
 casper.thenOpen DASHBOARD, getTotalPoints = -> # get the number of unused points on the account
   totalPoints = @getElementInfo('#user-status .user-balance .data-value-text').text
+  @echo "You earned #{totalPoints - startingPoints} points."
   @echo "You currently have #{totalPoints} points on this account."
 
 casper.run ->
