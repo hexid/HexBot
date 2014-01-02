@@ -2,7 +2,7 @@ require = patchRequire(global.require)
 chain = require('./libs/Words/_markov.json')
 
 depth   = chain['depth']
-numChar = '?' # holds the total number of words for that sequence
+numChar = '#' # holds the total number of words for that sequence
 endChar = '.' # holds the number of words that end with that sequence
 exports.generateWord = ->
   chars = (' ' for i in [0...depth-1])
