@@ -11,10 +11,8 @@ namespace Hexid.HexBot {
 	class HexBot {
 		static string BaseDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 		static Dictionary<string,string> Bots = (new Dictionary<string,string>() {
-			{"astral", "Astral.coffee"},
 			{"bing", "Bing.coffee"},
 			{"imgur", "Imgur.coffee"},
-			{"molten", "Molten.coffee"},
 			{"test-coffee", "Test.coffee"},
 			{"test-js", "Test.js"}
 		}).Where(b => File.Exists(Path.Combine(BaseDir, "bots", b.Value))).ToDictionary(i => i.Key, i => i.Value);

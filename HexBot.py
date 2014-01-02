@@ -8,10 +8,8 @@ import subprocess, getpass, argparse
 base = path.dirname(path.realpath(__file__))
 parser = None
 bots = {k:v for k,v in {
-  'astral': 'Astral.coffee',
   'bing': 'Bing.coffee',
   'imgur': 'Imgur.coffee',
-  'molten': 'Molten.coffee',
   'test-coffee': 'Test.coffee',
   'test-js': 'Test.js'
 }.items() if path.isfile(path.join(base, 'bots', v))}

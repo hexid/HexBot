@@ -2,7 +2,6 @@ output/
 releases/
 source/bin/
 
-bots/Molten.coffee
 bots/Test.*
 bots/test/
 
